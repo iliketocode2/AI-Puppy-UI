@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lessons Placemat</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core@0.4.46/dist/core.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <nav class="headbar">
+            <a href="index.html">Lesson 1</a>
+            <a href="lesson2.html">Lesson 2</a>
+            <a href="lesson3.html">Lesson 3</a>
+            <a href="lesson4.html">Lesson 4</a>
+            <a href="lesson5.html">Lesson 5</a>
+            <a href="lesson6.html">Lesson 6</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="section title-section">
+            <h1>AI Puppy Lesson 2: Happy and Sad</h1>
+            <p style="font-size:20px">Train your puppy to be happy when stroked and sad when pat.</p>
+        </div>
+        
+        <div class="two-boxes-container">
+            <div class="yellow-box">
+                <h2>Machine Learning Type</h2>
+                <p style="font-size:18px">1D K-Nearest Neighbor</p>
+            </div>
+            <div class="yellow-box">
+                <h2>Tools Used</h2>
+                <p style="font-size:18px">Touch sensor & provided code</p>
+            </div>
+        </div>
+
+        <div class="section go-sections">
+            <h2>Tips & Troubleshooting</h2>
+            <p>Make sure your distance sensor ("puppy") is reading values when you train it.</p>
+            <p>Make sure the hub buttons are accessible.</p>
+        </div>
+
+        <div class="section go-sections">
+        <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
+            <h2>Run it!</h2>
+            <div>
+                <button class="button" id="connect-spike">Connect Spike Prime</button>
+                <button class="button" id="download-code">Download Training Code</button>
+            </div>
+            <p>Sensor Readings: <span id="sensor-readings">No data</span></p>
+        </div>
+
+        <div class="section go-sections">
+            <h2>Terminal/Shell</h2>
+            <div id="repl"></div>
+        </div>
+    </div>
+</body>
+</html>
+

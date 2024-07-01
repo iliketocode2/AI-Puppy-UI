@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lessons Placemat</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core@0.4.46/dist/core.js"></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <nav class="headbar">
+            <a href="index.html">Lesson 1</a>
+            <a href="lesson2.html">Lesson 2</a>
+            <a href="lesson3.html">Lesson 3</a>
+            <a href="lesson4.html">Lesson 4</a>
+            <a href="lesson5.html">Lesson 5</a>
+            <a href="lesson6.html">Lesson 6</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="section title-section">
+            <h1>AI Puppy Lesson 1: Happy and Sad</h1>
+            <p style="font-size:20px">Train your puppy to be happy when stroked and sad when pat.</p>
+        </div>
+        
+        <div class="two-boxes-container">
+            <div class="yellow-box">
+                <h2>Machine Learning Type</h2>
+                <p style="font-size:18px">1D K-Nearest Neighbor</p>
+            </div>
+            <div class="yellow-box">
+                <h2>Tools Used</h2>
+                <p style="font-size:18px">Touch sensor & provided code</p>
+            </div>
+        </div>
+
+        <div class="section go-sections">
+            <h2>Tips & Troubleshooting</h2>
+            <p>Make sure your distance sensor ("puppy") is reading values when you train it.</p>
+            <p>Make sure the hub buttons are accessible.</p>
+        </div>
+
+        <div class="section go-sections">
+        <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
+            <h2>Run it!</h2>
+            <div>
+                <button class="button" id="connect-spike">Connect Spike Prime</button>
+                <button class="button" id="download-code">Download Training Code</button>
+            </div>
+            <p>
+                <button class="button" id="sensor_readings">Sensor Readings</button>
+            </p>
+        </div>
+        <div class="sensor-info-container">
+            <h3>Sensor Information</h3>
+            <div id="sensor-info"></div>
+        </div>
+
+        <style>
+        #gitpath {
+            display: none; /* Hide the textarea */
+        }
+        .sensor-info-container {
+                margin-top: 10px;
+                border: 3px solid #ff5eae; /* Match the pink border */
+                padding: 10px;
+                background-color: #fff;
+                width: 80%;
+                box-sizing: border-box;
+            }
+            .sensor-info-item {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #ccc;
+                padding: 5px 0;
+                margin-bottom: 5px;
+            }
+            .sensor-info-item span {
+                display: inline-block;
+                margin-right: 10px;
+            }
+           /*https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py*/
+        </style>
+
+        <!-- Style for the green editor (below)-->
+
+        <style>
+        .mpy-editor-container {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 3px solid #ff5eae; /* Match the pink border */
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+        </style>
+
+        <!-- Style for the green editor (above)-->
+
+
+        
+        <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
+        <select name="files" id="files"> </select>     <br><br>
+         <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container">
+         </script>
+        
+        <div class="section go-sections">
+            <h2>Terminal/Shell</h2>
+            <div id="repl" style="text-align: left;"></div>
+        </div>
+    </div>
+</body>
+</html>
+
