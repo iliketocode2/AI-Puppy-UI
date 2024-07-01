@@ -13,7 +13,8 @@
 }
 .title-section {
     text-align: center;
-    border: 3px solid #66ccff; /* Blue border color and thickness */
+    border: 7px solid #66ccff; /* Blue border color and thickness */
+    border-radius: 10px;
 }
 .button {
     margin: 5px;
@@ -33,7 +34,8 @@
 }
 .go-sections {
     text-align: center;
-    border: 3px solid #ff5eae; /* Pink border color and thickness */
+    border: 7px solid #ff5eae; /* Pink border color and thickness */
+    border-radius: 10px;
 }
 .no-center {
     text-align: left;
@@ -55,7 +57,8 @@
 }
 .yellow-box {
     background-color: #f9f9f9;
-    border: 3px solid #f9ee46; /* Yellow border color and thickness */
+    border: 7px solid #f9ee46;
+    border-radius: 10px;
     padding: 10px;
     width: 48%; /* Slightly less than 50% to fit within the parent container */
     box-sizing: border-box;
@@ -120,33 +123,41 @@ a:hover {
 /* Code for Sensor values display  (Below)*/
 
 .sensor-info-container {
-margin-top: 20px;
-border: 2px solid #ddd;
-padding: 10px;
-width: 80%;
-background-color: #f9f9f9;
-text-align: left;
+    margin-top: 10px;
+    border: 7px solid #ff5eae;
+    border-radius: 10px;
+    padding: 10px;
+    width: 80%;
+    background-color: #f9f9f9;
+    text-align: left;
+    box-sizing: border-box;
 }
 
 .sensor-info-container h3 {
-margin-top: 0;
+    margin-top: 0;
 }
 
 .sensor-info {
-display: flex;
-flex-direction: column;
-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .sensor-info-item {
-display: flex;
-justify-content: space-between;
-border-bottom: 1px solid #ccc;
-padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
 }
 
 .sensor-info-item:last-child {
-border-bottom: none;
+    border-bottom: none;
 }
+
+img.puppyPicture {
+    height: 15vw;
+    width: auto;
+    padding: 5px;
+  }
 
 /* Code for Sensor values display^^ */
