@@ -15,18 +15,6 @@
     text-align: center;
     border: 3px solid #66ccff; /* Blue border color and thickness */
 }
-.mpy-editor-container {
-    width: 100%;
-    max-width: 600px;
-    height: 400px; /* Set a maximum height for the editor */
-    margin: 20px auto;
-    padding: 10px;
-    border: 3px solid #ff5eae;
-    background-color: #fff;
-    box-sizing: border-box;
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
 .button {
     margin: 5px;
     padding: 10px;
