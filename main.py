@@ -356,6 +356,7 @@ async def on_load(event):
         download.disabled = True #dont enable user to click downaload again if already in downlaod
         sensors.disabled = True #dont let user run sensors
         connect.disabled = True #dont allow user to disconnect
+        document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
         git_paths = path.value.split() #gets arrays of urls
         #download_statuses = [] #will store statuses for each file 
@@ -372,6 +373,7 @@ async def on_load(event):
             connect.disabled = False
             if not status: 
                 window.alert(f"Failed to load {name}. Click Ok to continue downloading other files")  
+        document.getElementById('repl').style.display = 'block'
     else:
         window.alert('connect to a processor first')
 
