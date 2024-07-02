@@ -218,7 +218,11 @@ def on_connect(event):
         print("After paste")
         
         #initializng file list code
+        #hide scroll bar 
+        document.getElementById('terminalFrameId').style.overflow = 'hidden';
         await file_os.getList(terminal, file_list)
+        document.getElementById('terminalFrameId').style.overflow = 'scroll';
+        #show scroll bar
 
         #initializing user interface
         sensors.disabled = False 
