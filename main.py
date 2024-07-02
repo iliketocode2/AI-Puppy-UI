@@ -1,6 +1,7 @@
 # https://xtermjs.org/docs/api/terminal/classes/terminal/#options
 #https://pyscript.com/@agiammarchi/spike-ide-copy/latest
 #BLE_CEEO_url = 'https://raw.githubusercontent.com/chrisbuerginrogers/SPIKE_Prime/main/BLE/BLE_CEEO.py'
+#WEEE
 
 from pyscript import document, window
 import ampy

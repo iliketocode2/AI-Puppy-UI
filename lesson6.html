@@ -65,12 +65,69 @@
                 <button class="button" id="connect-spike">Connect Spike Prime</button>
                 <button class="button" id="download-code">Download Training Code</button>
             </div>
-            <p>Sensor Readings: <span id="sensor-readings">No data</span></p>
-        </div>
+                <button class="button" id="sensor_readings">Sensor Readings</button>
+            </div>
+
+
+                <!--Copy and paste from index.html (below)-->
+
+                <div class="sensor-info-container">
+                    <h3>Sensor Information</h3>
+                    <div id="sensor-info"></div>
+                </div>
+        
+                <style>
+                #gitpath {
+                    display: none; /* Hide the textarea */
+                }
+                .sensor-info-item {
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #ccc;
+                    padding: 5px 0;
+                    margin-bottom: 5px;
+                }
+                .sensor-info-item span {
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                   /*https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py*/
+                </style>
+        
+                <!-- Style for the green editor (below)-->
+        
+                <style>
+                .mpy-editor-container {
+                    width: 100%;
+                    max-width: 600px;
+                    height: 400px;
+                    margin: 20px auto;
+                    padding: 10px;
+                    border: 3px solid #ff5eae; /* Match the pink border */
+                    background-color: #fff;
+                    box-sizing: border-box;
+                }
+                </style>
+        
+                <!-- Style for the green editor (above)-->
+        
+        
+                <br>
+                <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
+                <!--<label for="files">Choose a file:</label> -->
+                <select name="files" id="files" class="files">
+                </select>     
+                <br>
+        
+                <div class ="terminalFrame" id="terminalFrameId">
+                    <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+                </div>
+        
+                <!--Copy and paste from index.html (above)-->
 
         <div class="section go-sections">
             <h2>Terminal/Shell</h2>
-            <div id="repl"></div>
+            <div id="repl" style = "text-align: left;"></div>
         </div>
 
         <div class="section go-sections">
