@@ -200,7 +200,7 @@ def on_disconnect():
     download.disabled = True
     
 
-def on_connect(event):
+async def on_connect(event):
     if terminal.connected:
         connect.innerText = 'connect up'
         await terminal.board.disconnect()
@@ -217,11 +217,11 @@ def on_connect(event):
         await terminal.paste(sensor_code, 'hidden')
         print("After paste")
         
-        #initializng file list code
-        #hide scroll bar 
-        document.getElementById('terminalFrameId').style.overflow = 'hidden';
+        #initializng file list code, hide scroll bar
+        document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
-        document.getElementById('terminalFrameId').style.overflow = 'scroll';
+        document.getElementById('terminalFrameId').style.overflow = 'scroll'
+        await on_select(None)
         #show scroll bar
 
         #initializing user interface
@@ -384,7 +384,7 @@ def handle_board(event):
     else:
         return True
 
-def on_select(event):
+async def on_select(event):
     my_green_editor.code = await file_os.read_code(terminal, file_list)
 
 connect = document.getElementById('connect-spike')
