@@ -377,7 +377,14 @@ async def on_load(event):
 
 #evaluates code when the green button is pressed
 def handle_board(event):
-    code = event.code
+
+    # run program for custom buttton to run pyscript editor
+    if event.type == 'mpy-run':
+        code = event.detail.code
+    # default program without custom button
+    else:
+        code = event.code
+
     if terminal.connected:
         await terminal.eval(code)
         terminal.focus()
@@ -395,6 +402,7 @@ sensors = document.getElementById('sensor_readings')
 #get_repl = document.getElementById('get_repl')
 
 my_green_editor = document.getElementById('MPcode') #for editor
+my_green_editor.addEventListener('mpy-run', handle_board)
 my_green_editor.handleEvent = handle_board
 
 #for list of files

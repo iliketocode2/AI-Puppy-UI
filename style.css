@@ -161,7 +161,13 @@ img.puppyPicture {
   }
 
 .terminalFrame{
-    height: 150px;
+    height: 300px;
     overflow-y: hidden;
 }
+
+/*hide green button from default pyscript editor*/
+.mpy-editor-run-button {
+    display: none !important;
+}
+
 /* Code for Sensor values display^^ */

@@ -111,14 +111,21 @@
 
 
         <br>
-        <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
-        <!--<label for="files">Choose a file:</label> -->
-        <select name="files" id="files" class="files">
-        </select>     
-        <br>
 
-        <div class ="terminalFrame" id="terminalFrameId">
-            <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+        <div class="section go-sections">
+            <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
+            <!--<label for="files">Choose a file:</label> -->
+            <select name="files" id="files" class="files">
+            </select>     
+            <br>
+           <button id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
+          
+          <!-- script for button to link to pyscript play button-->
+            <script src="script.js"></script>
+
+            <div class ="terminalFrame" id="terminalFrameId">
+                <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+            </div>
         </div>
 
         <div class="section go-sections">
