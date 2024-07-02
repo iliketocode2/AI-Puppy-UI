@@ -104,16 +104,21 @@
         <!-- Style for the green editor (above)-->
 
 
-        
+        <br>
         <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
-        <select name="files" id="files"> </select>     <br><br>
-         <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container">
-         </script>
-        
+        <label for="files">Choose a file:</label>
+        <select name="files" id="files"></select>     
+        <br>
+
+        <div class ="terminalFrame" id="terminalFrameId">
+            <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+        </div>
+
         <div class="section go-sections">
             <h2>Terminal/Shell</h2>
             <div id="repl" style="text-align: left;"></div>
         </div>
+
     </div>
 </body>
 </html>
