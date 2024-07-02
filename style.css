@@ -159,7 +159,11 @@ img.puppyPicture {
     width: auto;
     padding: 5px;
   }
-
+.img.gifthing {
+    height: 250px;
+    width: 800px;
+    padding: 5px 0;
+}
 .terminalFrame{
     height: 300px;
     overflow-y: hidden;
