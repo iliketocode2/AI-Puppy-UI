@@ -52,95 +52,66 @@
             <img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Spike with pet mechanism">
         </div>
 
-        
-
-        <div class="section go-sections">
-        <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
-            <h2>Run it!</h2>
-            <div>
-                <button class="button" id="connect-spike">Connect Spike Prime</button>
-                <button class="button" id="download-code">Download Training Code</button>
+      
+        <div class="container2">
+            <div class="header">
+                <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
+                <div class="topDisplay">
+                    <button class="button1" id="connect-spike">Connect Spike Prime</button>
+                    <button class="button1" id="download-code">Download Training Code</button>
+                    <button class="button1" id="sensor_readings">Sensor Readings</button>
+                    <div id="sensor-info" class="sensor-info-container"></div>
+                </div>
             </div>
-            <p>
-                <button class="button" id="sensor_readings">Sensor Readings</button>
-            </p>
-        </div>
-        <div class="sensor-info-container">
-            <h3>Sensor Information</h3>
-            <div id="sensor-info"></div>
-        </div>
 
-        <style>
-        #gitpath {
-            display: none; /* Hide the textarea */
-        }
-        .sensor-info-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #ccc;
-            padding: 5px 0;
-            margin-bottom: 5px;
-        }
-        .sensor-info-item span {
-            display: inline-block;
-            margin-right: 10px;
-        }
-           /*https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py*/
-        </style>
+            <div class="flexBox">
 
-        <!-- Style for the green editor (below)-->
+                <br>
+                <div class="box left-box">
+                    instructions/tips/goals
+                    <br>
+                    <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
+                    <!--<label for="files">Choose a file:</label> -->
+                    <div class="filesDiv">
+                        <select name="files" id="files" class="files">
+                            <!-- <option disabled>--Please select a file to run--</option> -->
+                        </select>     
+                    </div>
+                    <br>
+                    <button class="button1 runCode" id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
+                </div>
+                <div class="box right-container">
+                    <div class="box right-box">
+                    <!-- script for button to link to pyscript play button-->
+                        <script src="script.js"></script>
 
-        <style>
-        .mpy-editor-container {
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-            margin: 20px auto;
-            padding: 10px;
-            border: 3px solid #ff5eae; /* Match the pink border */
-            background-color: #fff;
-            box-sizing: border-box;
-        }
-        </style>
-
-        <!-- Style for the green editor (above)-->
-
-
-        <br>
-
-        <div class="section go-sections">
-            <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
-            <!--<label for="files">Choose a file:</label> -->
-            <select name="files" id="files" class="files">
-            </select>     
-            <br>
-           <button id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
-          
-          <!-- script for button to link to pyscript play button-->
-            <script src="script.js"></script>
-
-            <div class ="terminalFrame" id="terminalFrameId">
-                <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+                        <div class ="terminalFrame" id="terminalFrameId">Pyscript Editor
+                            <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+                        </div>
+                    </div>
+                    <div class="slider">...</div>
+                    <div class="box right-box" id="resizeBox">
+                        <!--style="display: none"-->
+                        Terminal/Shell
+                        <div id="repl" style="text-align: left;" ></div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div style = "display: none" class="section go-sections">
-            <h2>Terminal/Shell</h2>
-            <div id="repl" style="text-align: left;" ></div>
-        </div>
+        <!-- terminal to be removed from visual completely later: instructions will pop up based on this-->
         <div class="section go-sections">
             <h2>Extended Thinking</h2>
             <p>How does changing the amount of training data points collected impact the accuracy of displaying emotions?</p>
-            <img src="nobgimages/th-removebg-preview (1).png" Your brain if you think about this" width="100px" height=“60px”>
+            <img src="nobgimages/th-removebg-preview (1).png" alt="Your brain if you think about this" width="100px" height="60px">
         </div>
-        <sigmafooter>
-            <footer>
-                <p style="text-align: center;">
-                    <img src="images/tags2.png" alt="very sigma tags">
-                  </p>
-                <p>------------------------------------------------------------------------&copy;2024. All rights reserved.Tufts.edu.skibbidyslicers.com------------------------------------------------------------------------</p>
 
-            </footer>
+        <footer>
+            <p style="text-align: center;">
+                <img src="images/tags2.png" alt="very sigma tags">
+                </p>
+            <p>------------------------------------------------------------------------&copy;2024. All rights reserved.Tufts.edu.skibbidyslicers.com------------------------------------------------------------------------</p>
+        </footer>
     </div>
 </body>
 </html>

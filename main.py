@@ -196,32 +196,43 @@ def on_data_jav(chunk):
 
     
 def on_disconnect():
-    connect.innerText = 'connect up'
+    connect.innerText = 'Disconnected'
+    connect.style.backgroundColor = 'red'
+    document.getElementById('sensor_readings').style.backgroundColor = '#998887'
+    document.getElementById('download-code').style.backgroundColor = '#998887'
+    document.getElementById('custom-run-button').style.backgroundColor = '#998887'
     sensors.disabled = True
     download.disabled = True
     
 
 async def on_connect(event):
     if terminal.connected:
-        connect.innerText = 'connect up'
+        connect.innerText = 'Disconnected'
+        connect.style.backgroundColor = 'yellow'
         await terminal.board.disconnect()
     else:
         await terminal.board.connect('repl')
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
         if terminal.connected:
-            connect.innerText = 'disconnect'
-            
+            connect.innerText = 'Connected!'
+            connect.style.backgroundColor = 'green'
+                       
         #Initializing sensor code (below)
         print("Before paste")
         #await terminal.paste(sensor_code, 'hidden')
         await terminal.paste(sensor_code, 'hidden')
         print("After paste")
+
+        document.getElementById('sensor_readings').style.backgroundColor = '#111827'
+        document.getElementById('download-code').style.backgroundColor = '#111827'
+        document.getElementById('files').style.visibility = 'visible'
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
+        document.getElementById('custom-run-button').style.backgroundColor = '#111827'
         await on_select(None)
         #show scroll bar
 
@@ -269,7 +280,10 @@ def on_sensor_info(event):
             port_info_array = await terminal.eval("""port_info
                                 """, 'hidden')
             #clearing it every time (very important)
-            sensor_info_html = ""  # Initialize HTML content for sensor info
+
+            # sensor_info_html = ""  # Initialize HTML content for sensor info
+            sensor_info_html = "<div class='sensor-info-container'>" # Initialize HTML content for sensor info
+
             #iterating over tuples/ports
             for t in port_info_array: #if sensors are switched somewhere her, then error cause u don't udpate port_info_array
                 #solution would be to break out of loop if a bool is triggered(port disconnected)
@@ -296,22 +310,87 @@ def on_sensor_info(event):
                         color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
                         color_name = color_detected[color_info[0] - 1] if 0 < color_info[0] <= len(color_detected) else "Unknown"
                         sensor_info_html += f"""
+                        <div class="sensor-info">
                             <div class="sensor-info-item">
-                                <span>Number: {color_info} (Color: {color_name})</span>
-                                <span>Device: {device_names[t[2]]}</span>
-                                <span>Port: {port_names[t[1]]}</span>
+                                <div class="sensor-stack-left">
+                                    <span class="port-name">{port_names[t[1]]}</span>
+                                </div>
+                                <div class="sensor-stack-right">
+                                    <span><img src="images/spike color_sensor_display.png" alt="color sensor"></span>
+                                    <span class="sensor-value">
+                                        <div class="colorCircle" style="background-color: {color_name.lower()};"></div>
+                                        {color_detected[color_info[0] - 1]}
+                                    </span>
+                                </div>
                             </div>
+                        </div>
+                        """
+                        # document.querySelector('.colorCircle').style.backgroundColor = 'green'
+                        # <div class="sensor-info-item">
+                        #     <span>Number: {color_info} (Color: {color_name})</span>
+                        #     <span>Device: {device_names[t[2]]}</span>
+                        #     <span>Port: {port_names[t[1]]}</span>
+                        # </div>
+                        # """
+
+                    elif (t[2] == 48 or t[2] == 49): #medium motor
+                        sensor_info_html += f"""
+                        <div class="sensor-info">
+                            <div class="sensor-info-item">
+                                <div class="sensor-stack-left">
+                                    <span class="port-name">{port_names[t[1]]}</span>
+                                </div>
+                                <div class="sensor-stack-right">
+                                    <span><img src="images/spike medium_motor_display.png" alt="Motor"></span>
+                                    <span class="sensor-value">{number}&deg;</span>
+                                </div>
+                            </div>
+                        </div>
+                        """
+                    elif (t[2] == 62): #distance sensor
+                        sensor_info_html += f"""
+                        <div class="sensor-info">
+                            <div class="sensor-info-item">
+                                <div class="sensor-stack-left">
+                                    <span class="port-name">{port_names[t[1]]}</span>
+                                </div>
+                                <div class="sensor-stack-right">
+                                    <span><img src="images/spike distance_sensor_display.png" alt="distance sensor"></span>
+                                    <span class="sensor-value">{number} mm</span>
+                                </div>
+                            </div>
+                        </div>
+                        """
+                    elif (t[2] == 63): #force sensor
+                        sensor_info_html += f"""
+                        <div class="sensor-info">
+                            <div class="sensor-info-item">
+                                <div class="sensor-stack-left">
+                                    <span class="port-name">{port_names[t[1]]}</span>
+                                </div>
+                                <div class="sensor-stack-right">
+                                    <span><img src="images/spike push_sensor_display.png" alt="force sensor"></span>
+                                    <span class="sensor-value">{number} N</span>
+                                </div>
+                            </div>
+                        </div>
                         """
                     else:
                         sensor_info_html += f"""
                             <div class="sensor-info-item">
-                                <span>Number: {number}</span>
+                                <span>{number} </span>
                                 <span>Device: {device_names[t[2]]}</span>
                                 <span>Port: {port_names[t[1]]}</span>
                             </div>
-                        """
+                        """ 
+
+
+
+            sensor_info_html += "</div>"  # Close the container
             # Update the sensor info container with new HTML content
             document.getElementById('sensor-info').innerHTML = sensor_info_html
+            # document.querySelector('.colorCircle').style.backgroundColor = 'green'
+
             #await asyncio.sleep(0.3)
                         #print("NAHH")
                         #t is just 1 number (display that number)
