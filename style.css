@@ -15,6 +15,7 @@
     text-align: center;
     border: 7px solid #66ccff; /* Blue border color and thickness */
     border-radius: 10px;
+    background-color: #f9f9f9;
 }
 .button1.connected {
     background-color: green;
@@ -26,6 +27,7 @@
     border: 3px solid #f9ee46; /* Yellow border color and thickness */
 }
 .go-sections {
+    background-color: #f9f9f9;
     text-align: center;
     border: 7px solid #ff5eae; /* Pink border color and thickness */
     border-radius: 10px;
