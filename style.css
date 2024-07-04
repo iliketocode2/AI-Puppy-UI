@@ -239,7 +239,7 @@ img.puppyPicture {
 /*----------------------------------------------------*/
 .container2 {
     width: 80%;
-    height: 80vh;
+    height: 85vh;
     border-radius: 10px;
     background-color: #f9f9f9;
     border: 7px solid #000;
@@ -309,7 +309,7 @@ img.puppyPicture {
 }
 
 .right-box {
-    width: 55vw;
+    width: 50vw;
     margin-right: 10px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -336,17 +336,12 @@ img.puppyPicture {
 /*-----------------------------------------------------------------------*/
 
 .slider {
-    background: #ff5eae;
+    background: #f9f9f9;
     height: 8px;
     border-radius: 4px;
     cursor: row-resize;
     transition: all 0.3s ease;
     width: 99%;
-}
-
-.slider:hover {
-    background: #ff3e9e;
-    box-shadow: 2px 8px 20px #ff5eae;
 }
 
 #repl {
