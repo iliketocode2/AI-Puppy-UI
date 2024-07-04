@@ -201,6 +201,9 @@ def on_disconnect():
     document.getElementById('sensor_readings').style.backgroundColor = '#998887'
     document.getElementById('download-code').style.backgroundColor = '#998887'
     document.getElementById('custom-run-button').style.backgroundColor = '#998887'
+    document.getElementById('download-code').style.cursor = 'auto'
+    document.getElementById('sensor_readings').style.cursor = 'auto'
+    document.getElementById('custom-run-button').style.cursor = 'auto'
     sensors.disabled = True
     download.disabled = True
     
@@ -217,6 +220,9 @@ async def on_connect(event):
         if terminal.connected:
             connect.innerText = 'Connected!'
             connect.style.backgroundColor = 'green'
+            document.getElementById('download-code').style.cursor = 'pointer'
+            document.getElementById('sensor_readings').style.cursor = 'pointer'
+            document.getElementById('custom-run-button').style.cursor = 'pointer'
                        
         #Initializing sensor code (below)
         print("Before paste")
@@ -265,6 +271,7 @@ def on_sensor_info(event):
         connect.disabled = True
         sensor = False #so that on next click it displays terminal
         #turn off repl to prevent user from interfering with my repl sensor code
+        document.getElementById('download-code').style.backgroundColor = '#998887'
         document.getElementById('repl').style.display = 'none'
         sensors.innerText = 'Get Terminal'
     #execute code for thisL 
@@ -413,6 +420,7 @@ def on_sensor_info(event):
         sensor = True #so that next time it hides repls
         sensors.innerText = 'Sensor Readings'
         document.getElementById('repl').style.display = 'block'
+        document.getElementById('download-code').style.backgroundColor = '#111827'
 
         #this code is kind of important.
         #if the user spams the button, it prevents erros by disabling button for a short time

@@ -17,10 +17,6 @@
     border-radius: 10px;
     background-color: #f9f9f9;
 }
-.button1.connected {
-    background-color: green;
-    color: white;
-}
 .tips {
     text-align: center;
     background-color: #f9f9f9;
@@ -274,10 +270,35 @@ img.puppyPicture {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+#connect-spike{
+    cursor: pointer;
+}
+
+#download-code{
+    cursor: auto;
+}
+
+#sensor_readings{
+    cursor: auto;
+}
+
+#custom-run-button{
+    cursor: auto;
+}
+
 .button1:focus {
     box-shadow: none;
     outline: 2px solid transparent;
     outline-offset: 2px;
+}
+
+.button1.connected {
+    background-color: green;
+    color: white;
+}
+
+.button1.connected:hover {
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {
