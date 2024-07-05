@@ -193,12 +193,13 @@ def on_data_jav(chunk):
     print(chunk)
     #print("end-chunk")
 
-def on_disconnect(event=None):
+def on_custom_disconnect(event=None):
+    print('disconnect')
     global sensor
-    
+
     #if sensor data is displayed, hide it, bring back the terminal, and reset
     if not(sensor):
-        await close_sensor()
+        close_sensor()
         
     print('done clearing sensor data')
     terminal.board.disconnect()
@@ -229,14 +230,14 @@ async def on_connect(event):
         # connect.classList.remove('connected')
         await terminal.board.disconnect()
     else:
-        
+        sensors.disabled = True
         await terminal.board.connect('repl')
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
         if terminal.connected:
             connect.innerText = 'Connected!'
             connect.classList.add('connected')
-            connect.onclick = on_disconnect
+            connect.onclick = on_custom_disconnect
             
                
         #Initializing sensor code (below)
@@ -554,5 +555,5 @@ download.disabled = True
 #get_repl.onclick = display_repl
 
 terminal = ampy.Ampy(SPIKE)
-terminal.disconnect_callback = on_disconnect #defined for when physical or coded disconnection happens
-#terminal.newData_callback = on_data_jav
+terminal.disconnect_callback = on_custom_disconnect #defined for when physical or coded disconnection happens
+# terminal.disconnect_callback = print('disconnected from the spike manually')
