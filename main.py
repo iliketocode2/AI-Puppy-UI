@@ -193,52 +193,64 @@ def on_data_jav(chunk):
     print(chunk)
     #print("end-chunk")
 
-
+def on_disconnect(event=None):
+    global sensor
     
-def on_disconnect():
-    connect.innerText = 'Disconnected'
-    connect.style.backgroundColor = 'red'
-    document.getElementById('sensor_readings').style.backgroundColor = '#998887'
-    document.getElementById('download-code').style.backgroundColor = '#998887'
-    document.getElementById('custom-run-button').style.backgroundColor = '#998887'
-    document.getElementById('download-code').style.cursor = 'auto'
-    document.getElementById('sensor_readings').style.cursor = 'auto'
-    document.getElementById('custom-run-button').style.cursor = 'auto'
+    #if sensor data is displayed, hide it, bring back the terminal, and reset
+    if not(sensor):
+        await close_sensor()
+        
+    print('done clearing sensor data')
+    terminal.board.disconnect()
     sensors.disabled = True
     download.disabled = True
-    
+
+    #allow user to connect back
+    connect.disabled = False
+    connect.onclick = on_connect
+    connect.innerText = 'Connect Spike Prime'
+
+    #remove button active display when disconnect
+    if (document.getElementById("connect-spike").classList.contains('connected')):
+        document.getElementById("connect-spike").classList.remove('connected')
+    if (document.getElementById("custom-run-button").classList.contains('active')):
+        document.getElementById("custom-run-button").classList.remove('active')
+    if (document.getElementById("download-code").classList.contains('active')):
+        document.getElementById("download-code").classList.remove('active')
+    if (document.getElementById("sensor_readings").classList.contains('active')):
+        document.getElementById("sensor_readings").classList.remove('active')
+
+    #clear sensor display
+    document.getElementById('sensor-info').innerHTML = ""       
 
 async def on_connect(event):
     if terminal.connected:
-        connect.innerText = 'Disconnected'
-        connect.style.backgroundColor = 'yellow'
+        # connect.innerText = 'Disconnected'
+        # connect.classList.remove('connected')
         await terminal.board.disconnect()
     else:
+        
         await terminal.board.connect('repl')
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
         if terminal.connected:
             connect.innerText = 'Connected!'
-            connect.style.backgroundColor = 'green'
-            document.getElementById('download-code').style.cursor = 'pointer'
-            document.getElementById('sensor_readings').style.cursor = 'pointer'
-            document.getElementById('custom-run-button').style.cursor = 'pointer'
-                       
+            connect.classList.add('connected')
+            connect.onclick = on_disconnect
+            
+               
         #Initializing sensor code (below)
         print("Before paste")
         #await terminal.paste(sensor_code, 'hidden')
         await terminal.paste(sensor_code, 'hidden')
         print("After paste")
 
-        document.getElementById('sensor_readings').style.backgroundColor = '#111827'
-        document.getElementById('download-code').style.backgroundColor = '#111827'
         document.getElementById('files').style.visibility = 'visible'
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
-        document.getElementById('custom-run-button').style.backgroundColor = '#111827'
         await on_select(None)
         #show scroll bar
 
@@ -260,29 +272,33 @@ def display_repl(event):
 
 #sensor_info and get terminal in same button
 def on_sensor_info(event):  
+
     global sensor
     global stop_loop
     global device_names
     #print("STOP-LOOP", stop_loop)
 
     stop_loop = False
-    if sensor: #means you want to display sensors
-        download.disabled = True #disable it 
-        connect.disabled = True
+    if sensor: # this will display sensors!
+
+        # next time sensors clicked, will hide sensor info
+        sensors.onclick = close_sensor
+        download.disabled = True
+        connect.disabled = False
         sensor = False #so that on next click it displays terminal
-        #turn off repl to prevent user from interfering with my repl sensor code
-        document.getElementById('download-code').style.backgroundColor = '#998887'
+
         document.getElementById('repl').style.display = 'none'
+
         sensors.innerText = 'Get Terminal'
-    #execute code for thisL 
-    # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
+        #execute code for thisL 
+        # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
         #stop_loop = False
         # Add event listener for user input
         #event handler when user types in keyboard
         #counter = 0
         print("STOP-LOOP", stop_loop)
         while not stop_loop:
-              #two lines below should go in while loop (checks every time the port info)
+            #two lines below should go in while loop (checks every time the port info)
             await terminal.eval(execute_code, 'hidden')
             port_info_array = await terminal.eval("""port_info
                                 """, 'hidden')
@@ -303,11 +319,15 @@ def on_sensor_info(event):
                     #number is tuple with some sort of sensor value
                     #if anything but color sensor (just display 1 value)
                         #then 
+
+
                     number = await terminal.eval(f"""
                         number = function_dict[{t[2]}]({t[1]})
                         number
                         
                     """, 'hidden')
+
+
                     #if it is the color sensor process number as a tuple
                     #where tuple is (color from table 1, r, g , b)
                     if (t[2] == 61):
@@ -316,6 +336,13 @@ def on_sensor_info(event):
                         color_info = number
                         color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
                         color_name = color_detected[color_info[0] - 1] if 0 < color_info[0] <= len(color_detected) else "Unknown"
+                        # document.querySelector('.colorCircle').style.backgroundColor = 'green'
+                        # <div class="sensor-info-item">
+                        #     <span>Number: {color_info} (Color: {color_name})</span>
+                        #     <span>Device: {device_names[t[2]]}</span>
+                        #     <span>Port: {port_names[t[1]]}</span>
+                        # </div>
+                        # """
                         sensor_info_html += f"""
                         <div class="sensor-info">
                             <div class="sensor-info-item">
@@ -332,15 +359,7 @@ def on_sensor_info(event):
                             </div>
                         </div>
                         """
-                        # document.querySelector('.colorCircle').style.backgroundColor = 'green'
-                        # <div class="sensor-info-item">
-                        #     <span>Number: {color_info} (Color: {color_name})</span>
-                        #     <span>Device: {device_names[t[2]]}</span>
-                        #     <span>Port: {port_names[t[1]]}</span>
-                        # </div>
-                        # """
-
-                    elif (t[2] == 48 or t[2] == 49): #medium motor
+                    elif (t[2] == 48 or t[2] == 49 or t[2] == 65): #medium motor
                         sensor_info_html += f"""
                         <div class="sensor-info">
                             <div class="sensor-info-item">
@@ -382,6 +401,20 @@ def on_sensor_info(event):
                             </div>
                         </div>
                         """
+                    elif (t[2] == 64): #light matrix
+                        sensor_info_html += f"""
+                        <div class="sensor-info">
+                            <div class="sensor-info-item">
+                                <div class="sensor-stack-left">
+                                    <span class="port-name">{port_names[t[1]]}</span>
+                                </div>
+                                <div class="sensor-stack-right">
+                                    <span><img src="images/spike light_matrix_display.png" alt="light matrix"></span>
+                                    <span class="sensor-value">{number}</span>
+                                </div>
+                            </div>
+                        </div>
+                        """
                     else:
                         sensor_info_html += f"""
                             <div class="sensor-info-item">
@@ -396,7 +429,6 @@ def on_sensor_info(event):
             sensor_info_html += "</div>"  # Close the container
             # Update the sensor info container with new HTML content
             document.getElementById('sensor-info').innerHTML = sensor_info_html
-            # document.querySelector('.colorCircle').style.backgroundColor = 'green'
 
             #await asyncio.sleep(0.3)
                         #print("NAHH")
@@ -408,33 +440,47 @@ def on_sensor_info(event):
             #print("Number:", number)
             #time.sleep(1)
             #counter = counter + 1
+        print("STOP-LOOP True")
         #print("Back_HERE: ", port_info_array)
-    else: #go back to terminal
-        #enable download button
-        download.disabled = False
-        connect.disabled = False
-        stop_loop = True
-        #asyncio.
-        #time.sleep_ms(1000) #to allow while loop to finish current iteration
-        #await asyncio.sleep(0.1)
-        sensor = True #so that next time it hides repls
-        sensors.innerText = 'Sensor Readings'
-        document.getElementById('repl').style.display = 'block'
-        document.getElementById('download-code').style.backgroundColor = '#111827'
+    else: # this will go back to the terminal!
+        close_sensor
 
-        #this code is kind of important.
-        #if the user spams the button, it prevents erros by disabling button for a short time
-        #so that if multiple clicks are made quickly, the same while loop below the if
-        #statement is not called twice
-        #this would result on calling eval again when the first eval call has not yet 
-        #finished. (resulting in error: can't eval 2 things at once)
-        sensor_button = document.getElementById('sensor_readings')
-        sensor_button.disabled = True
-        download.disabled = True #prevent from downloading straight away also 
-        await asyncio.sleep(0.2)  # Wait for 2 seconds
-        sensor_button.disabled = False  # Re-enable the button
-        download.disabled = False
-       # document.getElementById('sensor_readings').style.display = 'block'
+def close_sensor(event=None):
+
+    global stop_loop
+    global sensor
+
+    # next time sensors clicked, will hide sensor info
+    sensors.onclick = on_sensor_info
+
+    
+     #enable download button
+    download.disabled = False
+    connect.disabled = False
+    stop_loop = True
+    #asyncio.
+    #time.sleep_ms(1000) #to allow while loop to finish current iteration
+    #await asyncio.sleep(0.1)
+    sensor = True #so that next time it hides repls
+    sensors.innerText = 'Sensor Readings'
+
+    #this code is kind of important.
+    #if the user spams the button, it prevents erros by disabling button for a short time
+    #so that if multiple clicks are made quickly, the same while loop below the if
+    #statement is not called twice
+    #this would result on calling eval again when the first eval call has not yet 
+    #finished. (resulting in error: can't eval 2 things at once)
+    sensor_button = document.getElementById('sensor_readings')
+    sensor_button.disabled = True
+    download.disabled = True #prevent from downloading straight away also 
+    await asyncio.sleep(0.2)  # Wait for 2 seconds
+    sensor_button.disabled = False  # Re-enable the button
+    download.disabled = False
+
+    #clear all sensor info -- redundant but prevents lag errors
+    document.getElementById('sensor-info').innerHTML = "" 
+    #show terminal
+    document.getElementById('repl').style.display = 'block'
     
 
 #NEXT STEP: download more tha n 1 file (length of path). make for loop (chat)
@@ -501,6 +547,7 @@ file_list.onchange = on_select
 connect.onclick = on_connect
 download.onclick = on_load
 sensors.onclick = on_sensor_info
+
 #start disabled until connected
 sensors.disabled = True 
 download.disabled = True

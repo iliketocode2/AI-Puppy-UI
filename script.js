@@ -1,8 +1,43 @@
 document.addEventListener('DOMContentLoaded', function() {
     //change colors of download block and sensor data block
-    document.getElementById('sensor_readings').style.backgroundColor = '#998887'
-    document.getElementById('download-code').style.backgroundColor = '#998887'
-    document.getElementById('custom-run-button').style.backgroundColor = '#998887'
+    const connectButton = document.getElementById('connect-spike');
+    const downloadButton = document.getElementById('download-code');
+    const sensorButton = document.getElementById('sensor_readings');
+    const runButton = document.getElementById('custom-run-button');
+
+    function setButtonState(button, isActive) {
+        if (isActive) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    }
+
+    function updateButtonStates(isConnected, isSensorMode) {
+        setButtonState(downloadButton, isConnected && !isSensorMode);
+        setButtonState(sensorButton, isConnected);
+        setButtonState(runButton, isConnected && !isSensorMode);
+    }
+
+    // Initial state
+    updateButtonStates(false, false);
+
+    // Connect button click handler
+    connectButton.addEventListener('click', function() {
+        const isConnected = !this.classList.contains('connected');
+        this.classList.toggle('connected');
+        this.textContent = isConnected ? 'Connected!' : 'Connect Spike Prime';
+        updateButtonStates(isConnected, false);
+    });
+
+    // Sensor button click handler
+    sensorButton.addEventListener('click', function() {
+        if (this.classList.contains('active')) {
+            const isSensorMode = this.textContent === 'Sensor Readings';
+            this.textContent = isSensorMode ? 'Get Terminal' : 'Sensor Readings';
+            updateButtonStates(true, isSensorMode);
+        }
+    });
 
     //connect js button to mpy-editor
     document.getElementById('custom-run-button').addEventListener('click', function() {

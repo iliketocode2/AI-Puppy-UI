@@ -238,7 +238,7 @@ img.puppyPicture {
     height: 85vh;
     border-radius: 10px;
     background-color: #f9f9f9;
-    border: 7px solid #000;
+    /* border: 7px solid #000; */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     padding-top: 20px; 
@@ -252,38 +252,32 @@ img.puppyPicture {
 }
 
 .button1 {
-    background-color: #f33232;
+    background-color: #998887;
     border: none;
     border-radius: 50px;
     color: #ffffff;
     font-weight: bold;
     padding: 12px 25px;
-    transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     margin-right: 7px;
     margin-left: 7px;
+    transition: all 0.3s ease;
 }
 
-.button1:hover {
-    background-color: #c0392b;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+.button1:not(.active):not(:hover) {
+    background-color: #998887;
+    cursor: default;
 }
 
-#connect-spike{
+.button1.active {
+    background-color: #111827;
     cursor: pointer;
 }
 
-#download-code{
-    cursor: auto;
-}
-
-#sensor_readings{
-    cursor: auto;
-}
-
-#custom-run-button{
-    cursor: auto;
+.button1.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .button1:focus {
@@ -292,19 +286,25 @@ img.puppyPicture {
     outline-offset: 2px;
 }
 
-.button1.connected {
-    background-color: green;
-    color: white;
-}
-
-.button1.connected:hover {
-    cursor: pointer;
-}
-
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .button1 {
         padding: .75rem 1.5rem;
     }
+} */
+
+#connect-spike {
+    background-color: #f33232;
+    cursor: pointer;
+}
+
+#connect-spike.connected {
+    background-color: green;
+    cursor: pointer;
+}
+
+#connect-spike:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .flexBox {
@@ -381,4 +381,14 @@ img.puppyPicture {
 
 .runCode{
     margin: auto;
+}
+
+.popUps{
+    margin-top: 10px;
+    max-width: 300px;
+    width:100%;
+    height: auto;
+    border: 2px solid red;
+    overflow: hidden;
+    justify-content: center;
 }
