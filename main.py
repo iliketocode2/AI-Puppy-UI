@@ -4,6 +4,7 @@
 #WEEE
 
 from pyscript import document, window
+from js import window
 import ampy
 import restapi
 import asyncio
@@ -194,7 +195,8 @@ def on_data_jav(chunk):
     #print("end-chunk")
 
 def on_custom_disconnect(event=None):
-    print('disconnect')
+    print_custom_terminal("Disconnected from your Spike Prime.")
+    display_gif("nobgimages/aipuppy2_360-removebg-preview.png")
     global sensor
 
     #if sensor data is displayed, hide it, bring back the terminal, and reset
@@ -239,7 +241,8 @@ async def on_connect(event):
             connect.innerText = 'Connected!'
             connect.classList.add('connected')
             connect.onclick = on_custom_disconnect
-            print_custom_terminal("Welcome!")
+            print_custom_terminal("Connected to your Spike Prime. Welcome!")
+            display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
             
                
         #Initializing sensor code (below)
@@ -539,6 +542,11 @@ async def on_select(event):
 def print_custom_terminal(string):
     document.getElementById('customTerminalMessage').innerHTML += string + " <br>"
 
+#display custom gifs in side panel
+def display_gif(imageName):
+    window.fadeImage(imageName)
+# def display_gif(imageName):
+#     document.getElementById("gif").src = imageName
 
 connect = document.getElementById('connect-spike')
 download = document.getElementById('download-code')

@@ -383,14 +383,21 @@ img.puppyPicture {
     margin: auto;
 }
 
-.popUps{
-    margin-top: 10px;
-    max-width: 300px;
-    width:100%;
+.gifFrame{
+    /* border: 2px solid black; */
+    border-radius: 5px;
     height: auto;
-    border: 2px solid red;
-    overflow: hidden;
-    justify-content: center;
+    margin: auto;
+    margin-top: 25px;
+    width: 100%;
+}
+
+#gif{
+    max-height: 350px;
+    width: 300px;
+    height: auto;
+    opacity: 1; 
+    transition: opacity 0.5s ease-in-out;
 }
 
 /*--------------------css for tabs and content for terminal and debugger------------------------*/

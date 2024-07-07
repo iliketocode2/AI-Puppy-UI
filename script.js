@@ -115,4 +115,15 @@ document.addEventListener('DOMContentLoaded', function() {
         evt.currentTarget.className += " active";
     }
 
+    /*fade the gifs in and out*/
+    window.fadeImage = fadeImage;
+    function fadeImage(newSrc) {
+        const img = document.getElementById('gif');
+        img.style.opacity = '0';
+        setTimeout(() => {
+            img.src = newSrc;
+            img.style.opacity = '1';
+        }, 500);
+    }
+
 });
