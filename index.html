@@ -6,6 +6,7 @@
     <title>AI Lessons Placemat</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core@0.4.46/dist/core.js"></script>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -22,7 +23,7 @@
     <div class="container">
         <div class="section title-section">
             <h1>AI Puppy Lesson 1: Happy and Sad</h1>
-            <p style="font-size:20px">Train your puppy to be happy when stroked and sad when pat.</p>
+            <p style="font-size:20px">Train your puppy to be happy when stroked and sad when patted.</p>
         </div>
         
         <div class="two-boxes-container">
@@ -75,7 +76,7 @@
                     <div class="filesDiv">
                         <select name="files" id="files" class="files">
                             <!-- <option disabled>--Please select a file to run--</option> -->
-                        </select>     
+                        </select>
                     </div>
                     <br>
                     <button class="button1 runCode" id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
@@ -85,18 +86,22 @@
                 </div>
                 <div class="right-container">
                     <div class="box right-box">
-                    <!-- script for button to link to pyscript play button-->
-                        <script src="script.js"></script>
-
                         <div class ="terminalFrame" id="terminalFrameId">Pyscript Editor
                             <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
                         </div>
                     </div>
                     <div class="slider"></div>
                     <div class="box right-box" id="resizeBox">
-                        <!--style="display: none"-->
-                        Terminal/Shell
-                        <div id="repl" style="text-align: left;" ></div>
+                        <div class="tab">
+                            <button class="tablinks active" id="customTerminalButton">Terminal</button>
+                            <button class="tablinks" id="defaultTerminalButton">Debug</button>
+                        </div>
+                        <div id="debug" class="tabcontent">
+                            <div id="repl" style="text-align: left;" ></div>
+                        </div>
+                        <div id="terminal" class="tabcontent">
+                            <div id="customTerminalMessage" style="text-align: left;" class="messagesGoHere"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,9 +118,9 @@
 
         <footer>
             <p style="text-align: center;">
-                <img src="images/tags2.png" alt="very sigma tags">
-                </p>
-            <p>----------------------------------------------------------------------- &copy;2024. All rights reserved.Tufts.edu.skibbidyslicers.com -----------------------------------------------------------------------</p>
+                <img style="height:50px;width:auto;"src="images/tags2.png" alt="intermediate ai animals">
+            </p>
+            <p>----------------------------------------------------------------------- &copy;2024. All rights reserved.Tufts.edu.com -----------------------------------------------------------------------</p>
         </footer>
     </div>
 </body>

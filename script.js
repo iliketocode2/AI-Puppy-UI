@@ -87,4 +87,32 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.removeEventListener('mousemove', doDrag, false);
         document.documentElement.removeEventListener('mouseup', stopDrag, false);
     }
+
+
+    // Switch between the custom terminal and the debugger
+    let customTerminal = document.getElementById('customTerminalButton');
+    let defaultTerminal = document.getElementById('defaultTerminalButton');
+
+    customTerminal.addEventListener("click", (event) => {
+        changeTabTerminal(event, 'terminal');
+    });
+
+    defaultTerminal.addEventListener("click", (event) => {
+        changeTabTerminal(event, 'debug');
+    });
+      
+    function changeTabTerminal(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
 });

@@ -392,3 +392,65 @@ img.puppyPicture {
     overflow: hidden;
     justify-content: center;
 }
+
+/*--------------------css for tabs and content for terminal and debugger------------------------*/
+
+.tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+  
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border-top: none;
+}
+
+#customTerminalButton{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#defaultTerminalButton{
+    border-left: 2px solid black;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/*hide actual terminal on load*/
+#debug{
+    display: none;
+}
+
+#terminal{
+    background: white;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 15px;
+    height: 100%;
+    margin-top: 5px;
+    margin-bottom:5px;
+    padding: 5px;
+}

@@ -199,7 +199,7 @@ def on_custom_disconnect(event=None):
 
     #if sensor data is displayed, hide it, bring back the terminal, and reset
     if not(sensor):
-        close_sensor()
+        await close_sensor()
         
     print('done clearing sensor data')
     terminal.board.disconnect()
@@ -230,6 +230,7 @@ async def on_connect(event):
         # connect.classList.remove('connected')
         await terminal.board.disconnect()
     else:
+        
         sensors.disabled = True
         await terminal.board.connect('repl')
         #enable buttons
@@ -238,6 +239,7 @@ async def on_connect(event):
             connect.innerText = 'Connected!'
             connect.classList.add('connected')
             connect.onclick = on_custom_disconnect
+            print_custom_terminal("Welcome!")
             
                
         #Initializing sensor code (below)
@@ -516,6 +518,7 @@ def handle_board(event):
 
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
+        print_custom_terminal("Running code...")
         code = event.detail.code
     # default program without custom button
     else:
@@ -530,6 +533,12 @@ def handle_board(event):
 
 async def on_select(event):
     my_green_editor.code = await file_os.read_code(terminal, file_list)
+
+
+#display custom code in editor
+def print_custom_terminal(string):
+    document.getElementById('customTerminalMessage').innerHTML += string + " <br>"
+
 
 connect = document.getElementById('connect-spike')
 download = document.getElementById('download-code')
