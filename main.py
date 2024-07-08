@@ -282,7 +282,7 @@ async def on_connect(event):
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
         if terminal.connected:
-            connect.innerText = 'Disconnect!'
+            # connect.innerText = 'Connected!'
             connect.classList.add('connected')
             connect.onclick = on_custom_disconnect
             print_custom_terminal("Connected to your Spike Prime. Welcome!")
@@ -539,9 +539,11 @@ async def on_load(event):
         download.disabled = True #dont enable user to click downaload again if already in downlaod
         sensors.disabled = True #dont let user run sensors
         connect.disabled = True #dont allow user to disconnect
+        print_custom_terminal("Downloading code, please wait...")
+        document.getElementById('download-code').innerHTML = 'Downloading Code'
         sensors.classList.remove('active')
         custom_run_button.classList.remove('active')
-        #document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
+        # document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
         git_paths = path.value.split() #gets arrays of urls
         #download_statuses = [] #will store statuses for each file 
@@ -564,6 +566,8 @@ async def on_load(event):
         connect.disabled = False 
         sensors.classList.add('active') #controls display
         custom_run_button.classList.add('active') #controls display
+        print_custom_terminal("Download complete!")
+        document.getElementById('download-code').innerHTML = 'Download Training Code'
         
         #document.getElementById('repl').style.display = 'block'
         

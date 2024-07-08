@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     connectButton.addEventListener('click', function() {
         const isConnected = !this.classList.contains('connected');
         this.classList.toggle('connected');
-        this.textContent = isConnected ? 'Connected!' : 'Connect Spike Prime';
+        this.textContent = isConnected ? 'Disconnect' : 'Connect Spike Prime';
         updateButtonStates(isConnected, false);
     });
 
@@ -39,16 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // // Downlaod button click handler
-    // downloadButton.addEventListener('click', function() {
-    //     if (this.classList.contains('active')) {
-    //         const isSensorMode = this.textContent === 'Sensor Readings';
-    //         this.textContent = isSensorMode ? 'Get Terminal' : 'Sensor Readings';
-    //         updateButtonStates(true, isSensorMode);
-    //     }
-    // });
 
-    //connect js button to mpy-editor
+    //connect 'run python code' js button to mpy-editor
     document.getElementById('custom-run-button').addEventListener('click', function() {
    
         const editor = document.getElementById(this.getAttribute('data-editor-id'));

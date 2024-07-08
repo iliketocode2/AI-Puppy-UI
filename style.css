@@ -293,12 +293,12 @@ img.puppyPicture {
 } */
 
 #connect-spike {
-    background-color: #f33232;
+    background-color: green;
     cursor: pointer;
 }
 
 #connect-spike.connected {
-    background-color: green;
+    background-color: #f33232;
     cursor: pointer;
 }
 
