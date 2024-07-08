@@ -271,17 +271,18 @@ def on_custom_disconnect(event=None):
 
 async def on_connect(event):
     if terminal.connected:
-        # connect.innerText = 'Disconnected'
-        # connect.classList.remove('connected')
+        connect.innerText = 'Connect back'
+        #connect.classList.remove('connected')
         await terminal.board.disconnect()
     else:
         
         sensors.disabled = True
+        download.disabled = True
         await terminal.board.connect('repl')
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
         if terminal.connected:
-            connect.innerText = 'Connected!'
+            connect.innerText = 'Disconnect!'
             connect.classList.add('connected')
             connect.onclick = on_custom_disconnect
             print_custom_terminal("Connected to your Spike Prime. Welcome!")
@@ -300,7 +301,7 @@ async def on_connect(event):
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
-        await on_select(None)
+        await on_select(None) #**needed for uploading 1st file
         #show scroll bar
 
         #initializing user interface
@@ -538,7 +539,9 @@ async def on_load(event):
         download.disabled = True #dont enable user to click downaload again if already in downlaod
         sensors.disabled = True #dont let user run sensors
         connect.disabled = True #dont allow user to disconnect
-        document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
+        sensors.classList.remove('active')
+        custom_run_button.classList.remove('active')
+        #document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
         git_paths = path.value.split() #gets arrays of urls
         #download_statuses = [] #will store statuses for each file 
@@ -555,7 +558,23 @@ async def on_load(event):
             connect.disabled = False
             if not status: 
                 window.alert(f"Failed to load {name}. Click Ok to continue downloading other files")  
-        document.getElementById('repl').style.display = 'block'
+
+        download.disabled = False #dont enable user to click downaload again if already in downlaod
+        sensors.disabled = False #dont let user run sensors
+        connect.disabled = False 
+        sensors.classList.add('active') #controls display
+        custom_run_button.classList.add('active') #controls display
+        
+        #document.getElementById('repl').style.display = 'block'
+        
+        #copy
+        #initializng file list code, hide scroll bar
+        document.getElementById('terminalFrameId').style.overflow = 'hidden'
+        await file_os.getList(terminal, file_list)
+        document.getElementById('terminalFrameId').style.overflow = 'scroll'
+        #await on_select(None)
+        #show scroll bar
+        #copy
     else:
         window.alert('connect to a processor first')
 
@@ -598,6 +617,7 @@ connect = document.getElementById('connect-spike')
 download = document.getElementById('download-code')
 path    = document.getElementById('gitpath')
 sensors = document.getElementById('sensor_readings')
+custom_run_button = document.getElementById('custom-run-button')
 #get_repl = document.getElementById('get_repl')
 
 my_green_editor = document.getElementById('MPcode') #for editor
