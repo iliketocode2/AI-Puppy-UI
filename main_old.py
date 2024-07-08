@@ -27,7 +27,6 @@ device_names = {
     63: "force_sensor",
     64: "light_matrix",
     65: "small_motor"
-    
 }
 
 #making 
@@ -39,6 +38,20 @@ port_names = {
     4: 'E',
     5: 'F'
 }
+
+#instructions_lesson_1 = {
+
+#}
+
+#defining function responsibel for telling me what instruction to display
+
+lesson_1_func = """
+
+def display_this(val):
+    return val
+
+"""
+
 sensor_code = """
 
 import device
@@ -182,61 +195,17 @@ execute_code = """
 #execute code for thisL 
 # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
 #
-#codesfds\n sf, 
-# PRINT_KEY: print statement
 
 
 
 # Function to handle user input event
-#mycodePRINT_KEY
-#running_code = False
-javi_buffer = ""
-#Function that reads unti
-#reads until last print statement with new line at end
-#mycode More robust code(taking into account that thing to print could be seen when scanning code as well)
 
-def find_print_statements(buffer):
-    statements = [] #where the print lines will be stored
-    start_index = 0
-    #iterate through javi_buffer, finding all current print statements 
-    while True:
-        key_index = buffer.find("PRINT_KEY:", start_index) #find "PRINT_key" after start_index
-        if key_index == -1: #key was not found, so break loop 
-            break
-        #ensures that thing before PRINT_KEY is a new line (that way it doesnt add 'print("PRINT_KEY:...")')
-        #if PRINT_KEY at very beginning and not preceded by anything (key_index !=0), then u want that
-        if key_index != 0 and buffer[key_index - 1] != "\n": #print statements are preceded by a new line
-            start_index = key_index + len("PRINT_KEY:") #update start_index
-            continue
-        newline_index = buffer.find("\n", key_index) #find new line after the key_index
-        if newline_index == -1: #case where there is no new line after key
-            break
-        #skip over Print_key and go until newline (not including it)
-        statement = buffer[key_index + len("PRINT_KEY:"):newline_index] 
-        statements.append(statement) #add statements to list
-        start_index = newline_index + 1 #update index to start checing next thing
-    return statements
 
-def process_chunks(javi_buffer, chunk):
-    javi_buffer += chunk
-    #find and extract statements from current jav_buffer
-    print_statements = find_print_statements(javi_buffer) 
-    #print("HERE")
-    if print_statements: #if print statemtns were found, print them 
-        for statement in print_statements:
-            print(f"Extracted print statement: {statement.strip()}") #call function here
-            #print_custom_terminal #Todo here - pass in string
-        last_newline_pos = javi_buffer.rfind("\n") #find position of last new line character
-        javi_buffer = javi_buffer[last_newline_pos + 1:] #get rid of already processed data
-    return javi_buffer
-
-# Example usage in your `on_data_jav` function:
 def on_data_jav(chunk):
-    print("ON-DATA: ", chunk)
-    global javi_buffer
-    #print(chunk)
-    javi_buffer = process_chunks(javi_buffer, chunk)
-
+    #print("IN data_jav")
+    #print("Start-chunk")
+    print(chunk)
+    #print("end-chunk")
 
 
     
@@ -261,7 +230,17 @@ async def on_connect(event):
         print("Before paste")
         #await terminal.paste(sensor_code, 'hidden')
         await terminal.paste(sensor_code, 'hidden')
+        #await terminal.paste(lesson_1_func, 'hidden')
         print("After paste")
+        
+        #testing jav
+       # await terminal.eval("""num_jav = display_this(23)
+       #                             """, 'hidden')
+        #instruction_val
+      #  instr_val = await terminal.eval("""num_jav
+      #  """, 'hidden')
+
+       # print(instr_val)
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
@@ -287,7 +266,7 @@ def display_repl(event):
 
 
 #sensor_info and get terminal in same button
-def on_sensor_info(event):  
+async def on_sensor_info():  
     global sensor
     global stop_loop
     global device_names
@@ -323,7 +302,7 @@ def on_sensor_info(event):
                     #call corresponding funcitons with corresponding ports
                     #t[2] is function/device id & t[1] is port #
                     if stop_loop:
-                        break;
+                        break
                     #number is tuple with some sort of sensor value
                     #if anything but color sensor (just display 1 value)
                         #then 
@@ -392,6 +371,7 @@ def on_sensor_info(event):
         await asyncio.sleep(0.2)  # Wait for 2 seconds
         sensor_button.disabled = False  # Re-enable the button
         download.disabled = False
+        return #go back to call_function
        # document.getElementById('sensor_readings').style.display = 'block'
     
 
@@ -401,6 +381,7 @@ async def on_load(event):
         download.disabled = True #dont enable user to click downaload again if already in downlaod
         sensors.disabled = True #dont let user run sensors
         connect.disabled = True #dont allow user to disconnect
+        document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
         git_paths = path.value.split() #gets arrays of urls
         #download_statuses = [] #will store statuses for each file 
@@ -417,11 +398,13 @@ async def on_load(event):
             connect.disabled = False
             if not status: 
                 window.alert(f"Failed to load {name}. Click Ok to continue downloading other files")  
+        document.getElementById('repl').style.display = 'block'
     else:
         window.alert('connect to a processor first')
 
-#evaluates code when the green button is pressed
-def handle_board(event):
+#evaluates code when the green button is pressed (when run button is pressed)
+async def handle_board(event):
+    global running_editor_code #TEST
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
         code = event.detail.code
@@ -430,16 +413,27 @@ def handle_board(event):
         code = event.code
 
     if terminal.connected:
-        #await terminal.eval(code)
-        await terminal.eval('\x05'+code+'\x04') #very important: somehow pastes the whole code before running
-        print("Hello_ish")
+        running_editor_code = True #TEST
+        #wait so to give enough time for global variable begin_print_check to change to True so that check_buffer while loop activates
+        await asyncio.sleep(0.1) #might be unnecessary
+        await terminal.eval(code) #when this eval is executed (this is the code being executed)
         terminal.focus()
+        running_editor_code = False #TEST
+
+        #buffer_jav = terminal.buffer
+        #print(buffer_jav)
         return False  # return False to avoid executing on browser
     else:
         return True
 
 async def on_select(event):
-    my_green_editor.code = await file_os.read_code(terminal, file_list)
+    #await means that you should wait for this function to finish before letting other code run
+    my_green_editor.code = await file_os.read_code(terminal, file_list) 
+
+#I am doing this so that I can await ()
+async def call_sensor_program(event):
+    await on_sensor_info()
+
 
 connect = document.getElementById('connect-spike')
 download = document.getElementById('download-code')
@@ -457,14 +451,80 @@ file_list.onchange = on_select
 
 connect.onclick = on_connect
 download.onclick = on_load
-sensors.onclick = on_sensor_info
+sensors.onclick = call_sensor_program
 #start disabled until connected
 sensors.disabled = True 
 download.disabled = True
 #get_repl.onclick = display_repl
 
+
+
+javi_buffer = ''
+
+running_editor_code = False
+key = "PRINT_KEY:"
+def jav_new_data(chunk): #called in every single incoming data 
+    #iterate over chunk (proved to be relatively small)
+    #Find key 
+    print(chunk)
+    global javi_buffer, running_editor_code
+    if (running_editor_code):
+        javi_buffer = process_chunks(javi_buffer, chunk)
+        #trash = test_funct
+        
+
+def test_funct():
+    return 1
+
 terminal = ampy.Ampy(SPIKE)
 terminal.disconnect_callback = on_disconnect #defined for when physical or coded disconnection happens
-terminal.newData_callback = on_data_jav
+terminal.newData_callback = jav_new_data
+#terminal.newData_callback = on_data_jav
 
+# Function to process accumulated buffer and extract print statements
+def extract_print_statements(javi_buffer):
+    # Create the regex pattern without using raw f-string\
+    print("HERE111")
+    pattern = re.compile(key + r"(.*?)\n")
+    print("HERE222")
+    matches = pattern.findall(javi_buffer)
+    print("HERE333")
+    return matches
+
+# Function to process chunks and maintain buffer state
+def process_chunks(javi_buffer, chunk):
+    javi_buffer += chunk
+    print_statements = extract_print_statements(javi_buffer)
+    # Only clear javi_buffer up to the last newline of a complete print statement
+    if print_statements:
+        for statement in print_statements:
+            print(f"Extracted print statement: {statement.strip()}")
+        
+        # Remove processed part of the javi_buffer
+        last_newline_pos = javi_buffer.rfind("\n")
+        javi_buffer = javi_buffer[last_newline_pos + 1:]
+    
+    return javi_buffer
+
+
+
+
+
+
+#
+#
+#PUT THIS ON A NEW FILE CALLED  print_tables.py
+#
+#
+
+
+
+
+
+
+#
+#
+#PUT THIS ON A NEW FILE CALLED  print_tables.py
+#
+#
 
