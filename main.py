@@ -224,14 +224,15 @@ def process_chunks(javi_buffer, chunk):
     #print("HERE")
     if print_statements: #if print statemtns were found, print them 
         for statement in print_statements:
-            print(f"Extracted print statement: {statement.strip()}") #call function here
+            # print(f"Extracted print statement: {statement.strip()}") #call function here
+            print_custom_terminal(statement.strip())
             #print_custom_terminal #Todo here - pass in string
         last_newline_pos = javi_buffer.rfind("\n") #find position of last new line character
         javi_buffer = javi_buffer[last_newline_pos + 1:] #get rid of already processed data
     return javi_buffer
 
 def on_data_jav(chunk):
-    print("ON-DATA: ", chunk)
+    # print("ON-DATA: ", chunk)
     global javi_buffer
     #print(chunk)
     javi_buffer = process_chunks(javi_buffer, chunk)

@@ -332,8 +332,8 @@ img.puppyPicture {
 .right-box {
     width: 50vw;
     margin-right: 10px;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 /*--------------------------------------------------------------*/
@@ -369,6 +369,7 @@ img.puppyPicture {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     font-family: 'Courier New', monospace;
+    border: 2px solid green;
 }
 
 
@@ -433,6 +434,7 @@ img.puppyPicture {
 .tabcontent {
     padding: 6px 12px;
     border-top: none;
+    text-align: left;
 }
 
 #customTerminalButton{
@@ -449,6 +451,7 @@ img.puppyPicture {
 /*hide actual terminal on load*/
 #debug{
     display: none;
+    border: 2px solid red;
 }
 
 #terminal{
@@ -456,7 +459,7 @@ img.puppyPicture {
     border-radius: 5px;
     font-family: monospace;
     font-size: 15px;
-    height: 100%;
+    height: 80%;
     margin-top: 5px;
     margin-bottom:5px;
     padding: 5px;
