@@ -186,13 +186,55 @@ execute_code = """
 
 
 # Function to handle user input event
+#codesfds\n sf, 
+# PRINT_KEY: print statement
+#mycodePRINT_KEY
+#running_code = False
+javi_buffer = ""
+#Function that reads unti
+#reads until last print statement with new line at end
+#mycode More robust code(taking into account that thing to print could be seen when scanning code as well)
 
+def find_print_statements(buffer):
+    statements = [] #where the print lines will be stored
+    start_index = 0
+    #iterate through javi_buffer, finding all current print statements 
+    while True:
+        key_index = buffer.find("PRINT_KEY:", start_index) #find "PRINT_key" after start_index
+        if key_index == -1: #key was not found, so break loop 
+            break
+        #ensures that thing before PRINT_KEY is a new line (that way it doesnt add 'print("PRINT_KEY:...")')
+        #if PRINT_KEY at very beginning and not preceded by anything (key_index !=0), then u want that
+        if key_index != 0 and buffer[key_index - 1] != "\n": #print statements are preceded by a new line
+            start_index = key_index + len("PRINT_KEY:") #update start_index
+            continue
+        newline_index = buffer.find("\n", key_index) #find new line after the key_index
+        if newline_index == -1: #case where there is no new line after key
+            break
+        #skip over Print_key and go until newline (not including it)
+        statement = buffer[key_index + len("PRINT_KEY:"):newline_index] 
+        statements.append(statement) #add statements to list
+        start_index = newline_index + 1 #update index to start checing next thing
+    return statements
+
+def process_chunks(javi_buffer, chunk):
+    javi_buffer += chunk
+    #find and extract statements from current jav_buffer
+    print_statements = find_print_statements(javi_buffer) 
+    #print("HERE")
+    if print_statements: #if print statemtns were found, print them 
+        for statement in print_statements:
+            print(f"Extracted print statement: {statement.strip()}") #call function here
+            #print_custom_terminal #Todo here - pass in string
+        last_newline_pos = javi_buffer.rfind("\n") #find position of last new line character
+        javi_buffer = javi_buffer[last_newline_pos + 1:] #get rid of already processed data
+    return javi_buffer
 
 def on_data_jav(chunk):
-    #print("IN data_jav")
-    #print("Start-chunk")
-    print(chunk)
-    #print("end-chunk")
+    print("ON-DATA: ", chunk)
+    global javi_buffer
+    #print(chunk)
+    javi_buffer = process_chunks(javi_buffer, chunk)
 
 def on_custom_disconnect(event=None):
     print_custom_terminal("Disconnected from your Spike Prime.")
@@ -528,7 +570,9 @@ def handle_board(event):
         code = event.code
 
     if terminal.connected:
-        await terminal.eval(code)
+        #await terminal.eval(code)
+        await terminal.eval('\x05'+code+'\x04') #very important: somehow pastes the whole code before running
+        print("Hello_ish")
         terminal.focus()
         return False  # return False to avoid executing on browser
     else:
@@ -572,5 +616,5 @@ download.disabled = True
 #get_repl.onclick = display_repl
 
 terminal = ampy.Ampy(SPIKE)
-terminal.disconnect_callback = on_custom_disconnect #defined for when physical or coded disconnection happens
-# terminal.disconnect_callback = print('disconnected from the spike manually')
+terminal.disconnect_callback = on_custom_disconnect
+terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
