@@ -583,10 +583,11 @@ async def on_select(event):
     my_green_editor.code = await file_os.read_code(terminal, file_list)
 
 
-#display custom code in editor
+#display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):
     document.getElementById('customTerminalMessage').innerHTML += string + " <br>"
-
+    window.setTimeout(window.scrollTerminalToBottom, 0)
+    
 #display custom gifs in side panel
 def display_gif(imageName):
     window.fadeImage(imageName)

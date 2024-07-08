@@ -370,8 +370,9 @@ img.puppyPicture {
     border-radius: 10px;
     font-family: 'Courier New', monospace;
     border: 2px solid green;
+    height: 100px;
+    /* height: calc(100% - 200px); */
 }
-
 
 .filesDiv{
     visibility: hidden;
@@ -451,7 +452,6 @@ img.puppyPicture {
 /*hide actual terminal on load*/
 #debug{
     display: none;
-    border: 2px solid red;
 }
 
 #terminal{
@@ -459,9 +459,13 @@ img.puppyPicture {
     border-radius: 5px;
     font-family: monospace;
     font-size: 15px;
-    height: 80%;
+    height: calc(100% - 40px); /* Adjust based on your tab height */
     margin-top: 5px;
     margin-bottom:5px;
     padding: 5px;
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+
+#terminalMessages {
+    min-height: 100%;
 }
