@@ -195,6 +195,7 @@ javi_buffer = ""
 #reads until last print statement with new line at end
 #mycode More robust code(taking into account that thing to print could be seen when scanning code as well)
 
+print_statement_counter = 0
 def find_print_statements(buffer):
     statements = [] #where the print lines will be stored
     start_index = 0
@@ -218,6 +219,7 @@ def find_print_statements(buffer):
     return statements
 
 def process_chunks(javi_buffer, chunk):
+    global print_statement_counter, my_gif_dict_L1, stop_switching_gifs
     javi_buffer += chunk
     #find and extract statements from current jav_buffer
     print_statements = find_print_statements(javi_buffer) 
@@ -225,11 +227,76 @@ def process_chunks(javi_buffer, chunk):
     if print_statements: #if print statemtns were found, print them 
         for statement in print_statements:
             # print(f"Extracted print statement: {statement.strip()}") #call function here
-            print_custom_terminal(statement.strip())
+            print("AQUI:", print_statement_counter)
+            print_custom_terminal(statement.strip()) #print to print terminal
+            stop_switching_gifs = True
+            get_gif(current_gif_dictionary, print_statement_counter)
+            print_statement_counter = print_statement_counter + 1
+
             #print_custom_terminal #Todo here - pass in string
         last_newline_pos = javi_buffer.rfind("\n") #find position of last new line character
         javi_buffer = javi_buffer[last_newline_pos + 1:] #get rid of already processed data
     return javi_buffer
+
+#[NULL, gif1, NULL, gif2] = gif_array
+
+#key is print statement number (in order) and key is string associated with it
+
+my_gif_dict_L1 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif",
+    12: "gifs/Lesson1/holding_button.png"    #because numbers also adjust counter
+    #13: put image of just pressing force sensor
+}
+
+stop_switching_gifs = True
+def switch_gifs():
+    global stop_switching_gifs
+    stop_switching_gifs = False
+    while not stop_switching_gifs:
+        display_gif("gifs/Lesson2/Sitting_pupy.gif")
+        time.sleep(3)
+        display_gif("gifs/Lesson1/force_sensor_touch_button.gif")
+        time.sleep(3)
+
+
+
+
+
+   # "gifs/Lesson2/Sitting_pupy.gif"
+
+my_gif_dict_L2 = {
+    3: switch_gifs
+}
+
+
+    
+
+def get_gif(gif_dict, counter):
+    #if counter in my_dict, then display gif 
+    if counter in gif_dict: #counter represents number of print statement
+        display_gif(gif_dict[counter])
+
+current_gif_dictionary = {}
+
+def set_dictionary():
+    global current_gif_dictionary
+    lesson_num = window.checkCurrentLesson() #fixx this to call js function
+    print("Curr_lesson: ", lesson_num)
+    if lesson_num == 1:
+        current_gif_dictionary = my_gif_dict_L1
+    elif lesson_num == 2:
+        current_gif_dictionary = my_gif_dict_L2
+    #elif lesson_num == 3:
+    #    current_gif_dictionary = my_gif_dict_L3
+   # elif lesson_num == 4:
+    #    current_gif_dictionary = my_gif_dict_L4
+    #elif lesson_num == 5:
+    #    current_gif_dictionary = my_gif_dict_L5
+    #elif lesson_num == 6:
+    #   current_gif_dictionary = my_gif_dict_L6
+
+
+
 
 def on_data_jav(chunk):
     # print("ON-DATA: ", chunk)
@@ -239,13 +306,13 @@ def on_data_jav(chunk):
 
 def on_custom_disconnect(event=None):
     print_custom_terminal("Disconnected from your Spike Prime.")
-    display_gif("nobgimages/aipuppy2_360-removebg-preview.png")
-    global sensor
+    #display_gif("nobgimages/aipuppy2_360-removebg-preview.png")
+    #global sensor
 
     #if sensor data is displayed, hide it, bring back the terminal, and reset
-    if not(sensor):
-        await close_sensor()
-        
+    #if not(sensor):
+       # await close_sensor()
+    terminal.send('\x03') #to stop any program that is running
     print('done clearing sensor data')
     terminal.board.disconnect()
     sensors.disabled = True
@@ -270,12 +337,14 @@ def on_custom_disconnect(event=None):
     document.getElementById('sensor-info').innerHTML = ""       
 
 async def on_connect(event):
+    global lesson_num
     if terminal.connected:
         connect.innerText = 'Connect back'
         #connect.classList.remove('connected')
         await terminal.board.disconnect()
     else:
-        
+       # if (lesson_num == 4):
+       #    print("YUIAIOFJFDAAAAAAA")
         sensors.disabled = True
         download.disabled = True
         await terminal.board.connect('repl')
@@ -640,3 +709,6 @@ download.disabled = True
 terminal = ampy.Ampy(SPIKE)
 terminal.disconnect_callback = on_custom_disconnect
 terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
+
+set_dictionary()
+
