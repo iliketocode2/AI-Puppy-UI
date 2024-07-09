@@ -271,7 +271,8 @@ current_gif_dictionary = {}
 
 def set_dictionary():
     global current_gif_dictionary
-    lesson_num = window.checkCurrentLesson() #fixx this to call js function
+    # global lesson_num
+    lesson_num = window.checkCurrentLesson()  #fix this to call js function
     print("Curr_lesson: ", lesson_num)
     if lesson_num == 1:
         current_gif_dictionary = my_gif_dict_L1
@@ -331,7 +332,7 @@ def second_half_disconnect(event=None):
         document.getElementById("sensor_readings").classList.remove('active')
 
 async def on_connect(event):
-    global lesson_num
+    # global lesson_num
     if terminal.connected:
         connect.innerText = 'Connect back'
         #connect.classList.remove('connected')

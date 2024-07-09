@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkCurrentLesson() {
         // Get the ID of the body element
         var currentLesson = document.body.id;
+
+        if (currentLesson === 'lesson1' || currentLesson === 'lesson2'){
+            document.getElementById('hide_on_1_and_2').style.display = 'none';
+        }
+        else{
+            document.getElementById('hide_on_1_and_2').style.display = 'block';
+        }
         
         // Use the currentLesson variable to determine which lesson you are in
         switch (currentLesson) {
