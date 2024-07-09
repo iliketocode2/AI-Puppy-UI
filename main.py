@@ -306,14 +306,23 @@ def on_data_jav(chunk):
 
 def on_custom_disconnect(event=None):
     print_custom_terminal("Disconnected from your Spike Prime.")
+    global sensor
     #display_gif("nobgimages/aipuppy2_360-removebg-preview.png")
     #global sensor
 
     #if sensor data is displayed, hide it, bring back the terminal, and reset
-    #if not(sensor):
-       # await close_sensor()
+    if not(sensor):
+        print('clearing sensor data')
+        await close_sensor()
+
+    second_half_disconnect()
+
+    #clear sensor display
+    document.getElementById('sensor-info').innerHTML = ""   
+
+def second_half_disconnect(event=None):    
+    print_custom_terminal("Disconnected from your Spike Prime.")
     terminal.send('\x03') #to stop any program that is running
-    print('done clearing sensor data')
     terminal.board.disconnect()
     sensors.disabled = True
     download.disabled = True
@@ -332,9 +341,6 @@ def on_custom_disconnect(event=None):
         document.getElementById("download-code").classList.remove('active')
     if (document.getElementById("sensor_readings").classList.contains('active')):
         document.getElementById("sensor_readings").classList.remove('active')
-
-    #clear sensor display
-    document.getElementById('sensor-info').innerHTML = ""       
 
 async def on_connect(event):
     global lesson_num
@@ -355,7 +361,7 @@ async def on_connect(event):
             connect.classList.add('connected')
             connect.onclick = on_custom_disconnect
             print_custom_terminal("Connected to your Spike Prime. Welcome!")
-            display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
+            # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
             
                
         #Initializing sensor code (below)
@@ -382,11 +388,7 @@ async def on_connect(event):
 
 def display_repl(event):
     document.getElementById('repl').style.display = 'block'
-    #terminal.setOption('disableStdin', True)  # Disable user input
-
-
-#def on_user_input(event):
-#    print("asdlkjfd;slkfj;l kjlk;sdjafl;kdsajf;l ksdjl;ksazjf")    
+    #terminal.setOption('disableStdin', True)  # Disable user input 
 
 
 #sensor_info and get terminal in same button
@@ -683,8 +685,6 @@ def print_custom_terminal(string):
 #display custom gifs in side panel
 def display_gif(imageName):
     window.fadeImage(imageName)
-# def display_gif(imageName):
-#     document.getElementById("gif").src = imageName
 
 connect = document.getElementById('connect-spike')
 download = document.getElementById('download-code')
@@ -711,7 +711,7 @@ download.disabled = True
 #get_repl.onclick = display_repl
 
 terminal = ampy.Ampy(SPIKE)
-terminal.disconnect_callback = on_custom_disconnect
+terminal.disconnect_callback = second_half_disconnect
 terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
 
 set_dictionary()

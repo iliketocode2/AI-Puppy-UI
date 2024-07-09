@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 
-    //connect 'run python code' js button to mpy-editor
+    // connect 'run python code' js button to mpy-editor
     document.getElementById('custom-run-button').addEventListener('click', function() {
    
         const editor = document.getElementById(this.getAttribute('data-editor-id'));
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
         evt.currentTarget.className += " active";
     }
 
-    /*fade the gifs in and out*/
+    // fade the gifs in and out
     window.fadeImage = fadeImage;
     function fadeImage(newSrc) {
         const img = document.getElementById('gif');
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 
-    //make the custom terminal auto scroll on overflow
+    // make the custom terminal auto scroll on overflow
     window.scrollTerminalToBottom = function() {
         const terminal = document.getElementById('terminal');
         const messages = document.getElementById('terminalMessages');
