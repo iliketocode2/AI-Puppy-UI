@@ -184,59 +184,65 @@ execute_code = """
 #
 
 
-
-# Function to handle user input event
-#codesfds\n sf, 
-# PRINT_KEY: print statement
-#mycodePRINT_KEY
-#running_code = False
 javi_buffer = ""
-#Function that reads unti
-#reads until last print statement with new line at end
-#mycode More robust code(taking into account that thing to print could be seen when scanning code as well)
-
+found_key = False
 print_statement_counter = 0
+##**END-CODE**# sfjflk \n
+#(this is when find_print_statemetns should be called)1st print \n
 def find_print_statements(buffer):
-    statements = [] #where the print lines will be stored
+    statements = []
     start_index = 0
-    #iterate through javi_buffer, finding all current print statements 
-    while True:
-        key_index = buffer.find("PRINT_KEY:", start_index) #find "PRINT_key" after start_index
-        if key_index == -1: #key was not found, so break loop 
+    while start_index < len(buffer):
+        end_new_line_index = buffer.find("\n", start_index)
+        if end_new_line_index == -1:
             break
-        #ensures that thing before PRINT_KEY is a new line (that way it doesnt add 'print("PRINT_KEY:...")')
-        #if PRINT_KEY at very beginning and not preceded by anything (key_index !=0), then u want that
-        if key_index != 0 and buffer[key_index - 1] != "\n": #print statements are preceded by a new line
-            start_index = key_index + len("PRINT_KEY:") #update start_index
-            continue
-        newline_index = buffer.find("\n", key_index) #find new line after the key_index
-        if newline_index == -1: #case where there is no new line after key
-            break
-        #skip over Print_key and go until newline (not including it)
-        statement = buffer[key_index + len("PRINT_KEY:"):newline_index] 
-        statements.append(statement) #add statements to list
-        start_index = newline_index + 1 #update index to start checing next thing
+        statement = buffer[start_index:end_new_line_index]
+        statements.append(statement)
+        start_index = end_new_line_index + 1
     return statements
 
 def process_chunks(javi_buffer, chunk):
-    global print_statement_counter, my_gif_dict_L1, stop_switching_gifs
+    global print_statement_counter, found_key
+    
     javi_buffer += chunk
-    #find and extract statements from current jav_buffer
-    print_statements = find_print_statements(javi_buffer) 
-    #print("HERE")
-    if print_statements: #if print statemtns were found, print them 
-        for statement in print_statements:
-            # print(f"Extracted print statement: {statement.strip()}") #call function here
-            print("AQUI:", print_statement_counter)
-            print_custom_terminal(statement.strip()) #print to print terminal
-            stop_switching_gifs = True
-            get_gif(current_gif_dictionary, print_statement_counter)
-            print_statement_counter = print_statement_counter + 1
+    #print("BUFFER:",javi_buffer)
+    
+    if not found_key:
+        key_index = javi_buffer.find("#**END-CODE**#")
+        if key_index == -1: #if not found
+            last_newline_pos = javi_buffer.rfind("\n")
+            if last_newline_pos != -1: #if new line is found
+                javi_buffer = javi_buffer[last_newline_pos + 1:] #look for things after new line
+        else:
+            print("FOUND)")
+            found_key = True
+            start_point = javi_buffer.find("\n", key_index)
+            javi_buffer = javi_buffer[start_point + 1:] #start at key index
+    
+    if found_key:
+        #print("HERE")
+        print_statements = find_print_statements(javi_buffer)
+        if print_statements:
+            for statement in print_statements:
+                #print(f"Extracted print statement: {statement.strip()}")
+                #print("AQUI:", print_statement_counter)
+                print_statement_counter += 1
 
-            #print_custom_terminal #Todo here - pass in string
-        last_newline_pos = javi_buffer.rfind("\n") #find position of last new line character
-        javi_buffer = javi_buffer[last_newline_pos + 1:] #get rid of already processed data
+                print_custom_terminal(statement.strip()) #print to print terminal
+                #get_gif(current_gif_dictionary, print_statement_counter)
+
+            
+            last_newline_pos = javi_buffer.rfind("\n")
+            if last_newline_pos != -1:
+                javi_buffer = javi_buffer[last_newline_pos + 1:]
+    
     return javi_buffer
+
+def on_data_jav(chunk):
+    # print("ON-DATA: ", chunk)
+    global javi_buffer
+    #print("HERERE", javi_buffer)
+    javi_buffer = process_chunks(javi_buffer, chunk)
 
 #[NULL, gif1, NULL, gif2] = gif_array
 
@@ -248,25 +254,10 @@ my_gif_dict_L1 = {
     #13: put image of just pressing force sensor
 }
 
-stop_switching_gifs = True
-def switch_gifs():
-    global stop_switching_gifs
-    stop_switching_gifs = False
-    while not stop_switching_gifs:
-        display_gif("gifs/Lesson2/Sitting_pupy.gif")
-        time.sleep(3)
-        display_gif("gifs/Lesson1/force_sensor_touch_button.gif")
-        time.sleep(3)
 
-
-
-
-
-   # "gifs/Lesson2/Sitting_pupy.gif"
-
-my_gif_dict_L2 = {
-    3: switch_gifs
-}
+#my_gif_dict_L2 = {
+#    3: switch_gifs
+#}
 
 
     
@@ -296,13 +287,6 @@ def set_dictionary():
     #   current_gif_dictionary = my_gif_dict_L6
 
 
-
-
-def on_data_jav(chunk):
-    # print("ON-DATA: ", chunk)
-    global javi_buffer
-    #print(chunk)
-    javi_buffer = process_chunks(javi_buffer, chunk)
 
 def on_custom_disconnect(event=None):
     print_custom_terminal("Disconnected from your Spike Prime.")
@@ -397,6 +381,7 @@ def on_sensor_info(event):
     global sensor
     global stop_loop
     global device_names
+    #await terminal.send('\x03')
     #print("STOP-LOOP", stop_loop)
 
     stop_loop = False
@@ -408,7 +393,7 @@ def on_sensor_info(event):
         connect.disabled = False
         sensor = False #so that on next click it displays terminal
 
-        document.getElementById('repl').style.display = 'none'
+        #document.getElementById('repl').style.display = 'none'
 
         sensors.innerText = 'Get Terminal'
         #execute code for thisL 
@@ -655,6 +640,8 @@ async def on_load(event):
 
 #evaluates code when the green button is pressed
 def handle_board(event):
+    global found_key
+    found_key = False #to prevent code from showing in print terminal next time you hit run
 
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
@@ -666,9 +653,10 @@ def handle_board(event):
 
     if terminal.connected:
         #await terminal.eval(code)
-        await terminal.eval('\x05'+code+'\x04') #very important: somehow pastes the whole code before running
-        print("Hello_ish")
+        await terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
+        #await terminal.eval('\x05'+"#**END-CODE**#"+'\x04')
         terminal.focus()
+        print("Hello_ish")
         return False  # return False to avoid executing on browser
     else:
         return True
