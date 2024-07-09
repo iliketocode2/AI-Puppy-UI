@@ -255,9 +255,9 @@ my_gif_dict_L1 = {
 }
 
 
-#my_gif_dict_L2 = {
-#    3: switch_gifs
-#}
+# my_gif_dict_L2 = {
+#     3: switch_gifs
+# }
 
 
     
@@ -307,6 +307,7 @@ def on_custom_disconnect(event=None):
 def second_half_disconnect(event=None):    
     print_custom_terminal("Disconnected from your Spike Prime.")
     terminal.send('\x03') #to stop any program that is running
+    print('after disconnect, passed x03')
     terminal.board.disconnect()
     sensors.disabled = True
     download.disabled = True
@@ -315,6 +316,9 @@ def second_half_disconnect(event=None):
     connect.disabled = False
     connect.onclick = on_connect
     connect.innerText = 'Connect Spike Prime'
+
+    # hide any gifs
+    document.getElementById("gif").style.display = 'none'
 
     #remove button active display when disconnect
     if (document.getElementById("connect-spike").classList.contains('connected')):
@@ -355,6 +359,7 @@ async def on_connect(event):
         print("After paste")
 
         document.getElementById('files').style.visibility = 'visible'
+        document.getElementById("gif").style.display = 'block'
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
@@ -638,32 +643,52 @@ async def on_load(event):
     else:
         window.alert('connect to a processor first')
 
+isRunning = False
 #evaluates code when the green button is pressed
 def handle_board(event):
+    global isRunning
     global found_key
-    found_key = False #to prevent code from showing in print terminal next time you hit run
-
+    found_key = False
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
         print_custom_terminal("Running code...")
         code = event.detail.code
-    # default program without custom button
     else:
         code = event.code
 
-    if terminal.connected:
-        #await terminal.eval(code)
-        await terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
-        #await terminal.eval('\x05'+"#**END-CODE**#"+'\x04')
-        terminal.focus()
-        print("Hello_ish")
-        return False  # return False to avoid executing on browser
+    if terminal.connected and not isRunning:
+        isRunning = True
+        try:
+            await terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
+            #await terminal.eval('\x05'+"#**END-CODE**#"+'\x04')
+            terminal.focus()
+            print("Hello_ish")
+        except:
+            print('EXCEPT ERROR')
+            pass
+        finally:
+            if isRunning:  #only print completion if not stopped manually
+                print_custom_terminal("Code execution completed")
+            isRunning = False
+        return False  #return False to avoid executing on browser
     else:
         return True
 
+def stop_running_code():
+    global isRunning
+    if terminal.connected:
+        await terminal.send('\x03')
+        print('stopped code')
+    
+    isRunning = False
+    print_custom_terminal("Code execution ended. Please press the button to run the code again.")
+
+# expose stop_running_code function to JavaScript
+window.stop_running_code = stop_running_code
+
+
 async def on_select(event):
     my_green_editor.code = await file_os.read_code(terminal, file_list)
-
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):

@@ -91,18 +91,27 @@ document.addEventListener('DOMContentLoaded', function() {
             updateButtonStates(true, isSensorMode);
         }
     });
-    
 
+    let is_running = false;
     // connect 'run python code' js button to mpy-editor
-    document.getElementById('custom-run-button').addEventListener('click', function() {
-   
-        const editor = document.getElementById(this.getAttribute('data-editor-id'));
-        if (editor) {
-            const event = new CustomEvent('mpy-run', {
-                bubbles: true,
-                detail: { code: editor.code }
-            });
-            editor.dispatchEvent(event);
+    runButton.addEventListener('click', function() {
+        if (!is_running) {
+            // run the code
+            const editor = document.getElementById(this.getAttribute('data-editor-id'));
+            if (editor) {
+                const event = new CustomEvent('mpy-run', {
+                    bubbles: true,
+                    detail: { code: editor.code }
+                });
+                editor.dispatchEvent(event);
+                this.innerHTML = 'Stop Running Code';
+                is_running = true;
+            }
+        } else {
+            // stop the code
+            window.stop_running_code();
+            this.innerHTML = 'Run Python Code';
+            is_running = false;
         }
     });
 
