@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    checkCurrentLesson(); //get rid of this
+    //checkCurrentLesson(); //get rid of this
 
     function createObject(object, variableName) {
         globalThis[variableName] = object
