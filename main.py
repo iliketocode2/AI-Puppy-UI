@@ -229,7 +229,7 @@ def process_chunks(javi_buffer, chunk):
                 print_statement_counter += 1
 
                 print_custom_terminal(statement.strip()) #print to print terminal
-                #get_gif(current_gif_dictionary, print_statement_counter)
+                get_gif(current_gif_dictionary, print_statement_counter)
 
             
             last_newline_pos = javi_buffer.rfind("\n")
@@ -254,12 +254,25 @@ my_gif_dict_L1 = {
     #13: put image of just pressing force sensor
 }
 
+my_gif_dict_L2 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+}
 
-# my_gif_dict_L2 = {
-#     3: switch_gifs
-# }
+my_gif_dict_L3 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+}
 
+my_gif_dict_L4 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+}
 
+my_gif_dict_L5 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+}
+
+my_gif_dict_L6 = {
+    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+}
     
 
 def get_gif(gif_dict, counter):
@@ -278,14 +291,14 @@ def set_dictionary():
         current_gif_dictionary = my_gif_dict_L1
     elif lesson_num == 2:
         current_gif_dictionary = my_gif_dict_L2
-    #elif lesson_num == 3:
-    #    current_gif_dictionary = my_gif_dict_L3
-   # elif lesson_num == 4:
-    #    current_gif_dictionary = my_gif_dict_L4
-    #elif lesson_num == 5:
-    #    current_gif_dictionary = my_gif_dict_L5
-    #elif lesson_num == 6:
-    #   current_gif_dictionary = my_gif_dict_L6
+    elif lesson_num == 3:
+        current_gif_dictionary = my_gif_dict_L3
+    elif lesson_num == 4:
+        current_gif_dictionary = my_gif_dict_L4
+    elif lesson_num == 5:
+        current_gif_dictionary = my_gif_dict_L5
+    elif lesson_num == 6:
+        current_gif_dictionary = my_gif_dict_L6
 
 
 
@@ -319,7 +332,7 @@ def second_half_disconnect(event=None):
     connect.innerText = 'Connect Spike Prime'
 
     # hide any gifs
-    document.getElementById("gif").style.display = 'none'
+    document.getElementById('gif').style.display = 'none'
 
     #remove button active display when disconnect
     if (document.getElementById("connect-spike").classList.contains('connected')):
@@ -342,36 +355,43 @@ async def on_connect(event):
        #    print("YUIAIOFJFDAAAAAAA")
         sensors.disabled = True
         download.disabled = True
+        connect.disabled = True
+        custom_run_button.disabled = True
+        connect.innerHTML = 'Connecting...'
         await terminal.board.connect('repl')
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
-        if terminal.connected:
-            # connect.innerText = 'Connected!'
-            connect.classList.add('connected')
-            connect.onclick = on_custom_disconnect
-            print_custom_terminal("Connected to your Spike Prime. Welcome!")
-            # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
-            
-               
+                  
         #Initializing sensor code (below)
         print("Before paste")
         #await terminal.paste(sensor_code, 'hidden')
         await terminal.paste(sensor_code, 'hidden')
         print("After paste")
-
-        document.getElementById('files').style.visibility = 'visible'
-        document.getElementById("gif").style.display = 'block'
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
         await on_select(None) #**needed for uploading 1st file
-        #show scroll bar
+
+         #enable disconnect
+        if terminal.connected:
+            # connect.innerText = 'Connected!'
+            connect.classList.add('connected')
+            connect.innerHTML = 'Disconnect'
+            connect.onclick = on_custom_disconnect
+            print_custom_terminal("Connected to your Spike Prime. Welcome!")
+            # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
 
         #initializing user interface
+        connect.disabled = False
+        custom_run_button.disabled = False
         sensors.disabled = False 
         download.disabled = False
+        #show gifs and files
+        document.getElementById('files').style.visibility = 'visible'
+        document.getElementById('gif').style.display = 'block'
+        document.getElementById('gif').style.visibility = 'visible'
         document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
         #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
     
@@ -397,11 +417,13 @@ def on_sensor_info(event):
         sensors.onclick = close_sensor
         download.disabled = True
         connect.disabled = False
+        custom_run_button.disabled = True
         sensor = False #so that on next click it displays terminal
 
         #document.getElementById('repl').style.display = 'none'
 
-        sensors.innerText = 'Get Terminal'
+        # sensors.innerText = 'Get Terminal'
+        sensors.innerText = 'Close'
         #execute code for thisL 
         # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
         #stop_loop = False
@@ -569,6 +591,7 @@ def close_sensor(event=None):
      #enable download button
     download.disabled = False
     connect.disabled = False
+    custom_run_button.disabled = False
     stop_loop = True
     #asyncio.
     #time.sleep_ms(1000) #to allow while loop to finish current iteration
@@ -652,6 +675,8 @@ def handle_board(event):
     found_key = False
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
+        sensors.disabled = True 
+        download.disabled = True
         print_custom_terminal("Running code...")
         code = event.detail.code
     else:
@@ -676,6 +701,8 @@ def handle_board(event):
         return True
 
 def stop_running_code():
+    sensors.disabled = False 
+    download.disabled = False
     global isRunning
     if terminal.connected:
         await terminal.send('\x03')

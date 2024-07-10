@@ -12,13 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get the ID of the body element
         var currentLesson = document.body.id;
 
+        //hide mpy editor for lesson 1 and 2
         if (currentLesson === 'lesson1' || currentLesson === 'lesson2'){
             document.getElementById('hide_on_1_and_2').style.display = 'none';
         }
         else{
             document.getElementById('hide_on_1_and_2').style.display = 'block';
         }
-        
+
         // Use the currentLesson variable to determine which lesson you are in
         switch (currentLesson) {
             case "lesson1":
@@ -34,11 +35,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 return 3;
                 // Additional actions specific to Lesson 3
             case "lesson4":
+                console.log("JS:You are in Lesson 4");
                 return 4;
+                // Additional actions specific to Lesson 4
             case "lesson5":
+                console.log("JS:You are in Lesson 5");
                 return 5;
+                // Additional actions specific to Lesson 5
             case "lesson6":
+                console.log("JS:You are in Lesson 6");
                 return 6;
+                // Additional actions specific to Lesson 6
             default:
                 console.log("Unknown lesson");
         }
@@ -60,9 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
     //}
 
     //JAV-CODE (above)
-   
-
-
 
 
     function setButtonState(button, isActive) {
@@ -104,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
     runButton.addEventListener('click', function() {
         if (!is_running) {
             // run the code
+            sensorButton.classList.remove('active');
+            downloadButton.classList.remove('active');
             const editor = document.getElementById(this.getAttribute('data-editor-id'));
             if (editor) {
                 const event = new CustomEvent('mpy-run', {
@@ -116,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             // stop the code
+            sensorButton.classList.add('active');
+            downloadButton.classList.add('active');
             window.stop_running_code();
             this.innerHTML = 'Run Python Code';
             is_running = false;

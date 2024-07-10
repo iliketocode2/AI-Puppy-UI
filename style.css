@@ -66,11 +66,14 @@ body {
     width: 100%;
 }
 
+/*nav bar tabs css*/
+
 .headbar {
     display: flex;
     justify-content: space-around;
     align-items: center;
     background-color: #4CAF50; /* Dark green */
+    border-radius: 5px;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -81,18 +84,30 @@ body {
     padding: 14px 20px;
     text-decoration: none;
     font-size: 18px;
-    transition: background-color 0.3s, color 0.3s;
+    font-weight: 300;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    border-radius: 25px;
 }
 
 .headbar a:hover {
     background-color: #45a049; /* Lighter green */
     color: #fff;
+    transform: scale(1.1);
 }
 
 .headbar a.active {
     background-color: #66bb6a; /* Even lighter green */
     color: white;
+    font-weight: 700;
+    /* text-decoration: underline; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* shadow for active tab */
 }
+
+.headbar a.active:hover {
+    transform: none;
+}
+
+/*-----------------------------------------------------------------------------*/
 
 main {
     padding: 20px;

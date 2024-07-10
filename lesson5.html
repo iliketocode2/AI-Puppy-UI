@@ -6,6 +6,7 @@
     <title>AI Lessons Placemat</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core@0.4.46/dist/core.js"></script>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body id = "lesson5">
@@ -15,7 +16,7 @@
             <a href="lesson2.html">Lesson 2</a>
             <a href="lesson3.html">Lesson 3</a>
             <a href="lesson4.html">Lesson 4</a>
-            <a href="lesson5.html">Lesson 5</a>
+            <a href="lesson5.html" class="active">Lesson 5</a>
             <a href="lesson6.html">Lesson 6</a>
         </nav>
     </header>
@@ -24,15 +25,15 @@
             <h1>AI Puppy Lesson 5: Heel</h1>
             <p style="font-size:20px">Code your puppy to follow your hand with the distance sensor using one machine learning method.</p>
         </div>
-        
+
         <div class="two-boxes-container">
             <div class="yellow-box">
                 <h2>Machine Learning Type</h2>
-                <p style="font-size:18px">1D K-Nearest Neighbor Linear Position</p>
+                <p style="font-size:18px">1D K-Nearest Neighbor</p>
             </div>
             <div class="yellow-box">
                 <h2>Tools Used</h2>
-                <p style="font-size:18px">Distance sensor, motors, & starter code</p>
+                <p style="font-size:18px">Touch sensor & provided code</p>
             </div>
         </div>
 
@@ -46,100 +47,79 @@
 
         <div class="section go-sections">
             <h2>Tips & Troubleshooting</h2>
-            <p>Check sensors & motors are defined correctly</p>
-            <p>Check syntax & typos</p>
-            <p>Look at the line the error is being called at</p>
-            <p>Make sure motors spin in the correct direction</p>
-            <p>Make sure the left, center, and right hub buttons are easily accessible</p>
+            <p>Make sure your distance sensor ("puppy") is reading values when you train it.</p>
+            <p>Make sure the hub buttons are accessible.</p>
             <img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Spike with pet mechanism">
-        </div>
-       
-        <div class="section go-sections">
-        <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
-            <h2>Run it!</h2>
-            <div>
-                <button class="button" id="connect-spike">Connect Spike Prime</button>
-                <button class="button" id="download-code">Download Training Code</button>
-            </div>
-                <button class="button" id="sensor_readings">Sensor Readings</button>
-            </div>
-
-        <!--Copy and paste from index.html (below)-->
-
-        <div class="sensor-info-container">
-            <h3>Sensor Information</h3>
-            <div id="sensor-info"></div>
+            <img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Spike with pet mechanism">
         </div>
 
-        <style>
-        #gitpath {
-            display: none; /* Hide the textarea */
-        }
-        .sensor-info-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #ccc;
-            padding: 5px 0;
-            margin-bottom: 5px;
-        }
-        .sensor-info-item span {
-            display: inline-block;
-            margin-right: 10px;
-        }
-            /*https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py*/
-        </style>
+      
+        <div class="container2">
+            <div class="header">
+                
+                <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
+                <div class="topDisplay">
+                    <button class="button1" id="connect-spike">Connect Spike Prime</button>
+                    <button class="button1" id="download-code">Download Training Code</button>
+                    <button class="button1" id="sensor_readings">Sensor Readings</button>
+                    <div id="sensor-info" class="sensor-info-container"></div>
+                </div>
+            </div>
 
-        <!-- Style for the green editor (below)-->
+            <div class="flexBox">
 
-        <style>
-        .mpy-editor-container {
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-            margin: 20px auto;
-            padding: 10px;
-            border: 3px solid #ff5eae; /* Match the pink border */
-            background-color: #fff;
-            box-sizing: border-box;
-        }
-        </style>
-
-        <!-- Style for the green editor (above)-->
-
-
-        <br>
-        <div class="section go-sections">
-            <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_1_working.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/CEEO_AI.py </textarea>
-            <!--<label for="files">Choose a file:</label> -->
-            <select name="files" id="files" class="files">
-            </select>     
-            <br>
-           <button id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
-          
-          <!-- script for button to link to pyscript play button-->
-            <script src="script.js"></script>
-
-            <div class ="terminalFrame" id="terminalFrameId">
-                <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+                <br>
+                <div class="box left-box">
+                    Run Code and Gifs
+                    <br>
+                    <textarea id='gitpath' >https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_files/Main_Lesson1.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_files/CEEO_AI.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_files/Main_Lesson2.py https://raw.githubusercontent.com/javier-la200426/CEEO/main/AI-Puppy/Lesson_files/Main_Lesson3.py </textarea>
+                    <!--<label for="files">Choose a file:</label> -->
+                    <div class="filesDiv">
+                        <select name="files" id="files" class="files">
+                            <!-- <option disabled>--Please select a file to run--</option> -->
+                        </select>
+                    </div>
+                    <br>
+                    <button class="button1 runCode" id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
+                    <div class="gifFrame"><img id="gif"></div>     
+                </div>
+                <div class="right-container">
+                    <div class="box right-box" id="hide_on_1_and_2">
+                        <div class ="terminalFrame" id="terminalFrameId">Pyscript Editor
+                            <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
+                        </div>
+                    </div>
+                    <div class="slider"></div>
+                    <div class="box right-box" id="resizeBox">
+                        <div class="tab">
+                            <button class="tablinks active" id="customTerminalButton">Terminal</button>
+                            <button class="tablinks" id="defaultTerminalButton">Debug</button>
+                        </div>
+                        <div id="debug" class="tabcontent">
+                            <div id="repl"></div>
+                        </div>
+                        <div id="terminal" class="tabcontent">
+                            <div id="terminalMessages">
+                                <div id="customTerminalMessage">Please connect to a Spike Prime to begin programming.<br></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="section go-sections">
-            <h2>Terminal/Shell</h2>
-            <div id="repl" style="text-align: left;"></div>
+            <h2>Extended Thinking</h2>
+            <p>How does changing the amount of training data points collected impact the accuracy of displaying emotions?</p>
+            <img src="nobgimages/th-removebg-preview (1).png" alt="Your brain if you think about this" width="100px" height="auto">
         </div>
-        <div class="section go-sections">
-            <h2>Challenge yourself</h2>
-            <p>Try using the other machine learning method to get your puppy to follow you.</p>
-            <img src="nobgimages/th__1_-removebg-preview (1).png" If you do this challenge, your brain will become this size!" width="100px" height=“60px”>
-        </div>
-        <sigmafooter>
-            <footer>
-                <p style="text-align: center;">
-                    <img src="images/tags2.png" alt="very sigma tags">
-                <p>------------------------------------------------------------------------&copy;2024. All rights reserved.Tufts.edu------------------------------------------------------------------------</p>
 
-            </footer>
+        <footer>
+            <p style="text-align: center;">
+                <img style="height:50px;width:auto;"src="images/tags2.png" alt="intermediate ai animals">
+            </p>
+            <p>----------------------------------------------------------------------- &copy;2024. All rights reserved.Tufts.edu.com -----------------------------------------------------------------------</p>
+        </footer>
     </div>
 </body>
 </html>
