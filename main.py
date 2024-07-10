@@ -186,7 +186,6 @@ execute_code = """
 
 javi_buffer = ""
 found_key = False
-print_statement_counter = 0
 ##**END-CODE**# sfjflk \n
 #(this is when find_print_statemetns should be called)1st print \n
 def find_print_statements(buffer):
@@ -202,7 +201,7 @@ def find_print_statements(buffer):
     return statements
 
 def process_chunks(javi_buffer, chunk):
-    global print_statement_counter, found_key
+    global found_key
     
     javi_buffer += chunk
     #print("BUFFER:",javi_buffer)
@@ -225,11 +224,17 @@ def process_chunks(javi_buffer, chunk):
         if print_statements:
             for statement in print_statements:
                 #print(f"Extracted print statement: {statement.strip()}")
+<<<<<<< Updated upstream
                 #print("AQUI:", print_statement_counter)
                 print_statement_counter += 1
 
                 print_custom_terminal(statement.strip()) #print to print terminal
                 get_gif(current_gif_dictionary, print_statement_counter)
+=======
+                print_statement = statement.strip()
+                print_custom_terminal(print_statement) #print to print terminal
+                get_gif(current_gif_dictionary, print_statement)
+>>>>>>> Stashed changes
 
             
             last_newline_pos = javi_buffer.rfind("\n")
@@ -249,8 +254,9 @@ def on_data_jav(chunk):
 #key is print statement number (in order) and key is string associated with it
 
 my_gif_dict_L1 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif",
-    12: "gifs/Lesson1/holding_button.png"    #because numbers also adjust counter
+    "**Train your puppy to be HAPPY when stroked or patted!": "gifs/Lesson1/force_sensor_touch_button.gif",
+    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson1/holding_button.png",    #because numbers also adjust counter
+    "**Puppy is trained!":"gifs/Lesson1/Javier-gif.gif"
     #13: put image of just pressing force sensor
 }
 
@@ -275,17 +281,24 @@ my_gif_dict_L6 = {
 }
     
 
-def get_gif(gif_dict, counter):
+def get_gif(gif_dict, print_statement):
     #if counter in my_dict, then display gif 
-    if counter in gif_dict: #counter represents number of print statement
-        display_gif(gif_dict[counter])
+    if print_statement in gif_dict: #counter represents number of print statement
+        display_gif(gif_dict[print_statement])
 
 current_gif_dictionary = {}
+lesson_num = -1
 
+#function responsible for changing lesson_num
 def set_dictionary():
+<<<<<<< Updated upstream
     global current_gif_dictionary
     # global lesson_num
     lesson_num = window.checkCurrentLesson()  #fix this to call js function
+=======
+    global current_gif_dictionary, lesson_num
+    lesson_num = window.checkCurrentLesson() #fixx this to call js function
+>>>>>>> Stashed changes
     print("Curr_lesson: ", lesson_num)
     if lesson_num == 1:
         current_gif_dictionary = my_gif_dict_L1
@@ -420,7 +433,7 @@ def on_sensor_info(event):
         custom_run_button.disabled = True
         sensor = False #so that on next click it displays terminal
 
-        #document.getElementById('repl').style.display = 'none'
+        document.getElementById('repl').style.display = 'none'
 
         # sensors.innerText = 'Get Terminal'
         sensors.innerText = 'Close'
@@ -756,4 +769,5 @@ terminal.disconnect_callback = second_half_disconnect
 terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
 
 set_dictionary()
+
 
