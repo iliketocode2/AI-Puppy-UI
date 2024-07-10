@@ -365,13 +365,11 @@ file_list_element = document.getElementById('files')
 options = file_list_element.options
 
 async def on_connect(event):
-<<<<<<< Updated upstream
+
     global file_list_element
     global options
-    # global lesson_num
-=======
     global lesson_num
->>>>>>> Stashed changes
+
     if terminal.connected:
         connect.innerText = 'Connect back'
         #connect.classList.remove('connected')
@@ -385,50 +383,17 @@ async def on_connect(event):
         custom_run_button.disabled = True
         connect.innerHTML = 'Connecting...'
         await terminal.board.connect('repl')
-<<<<<<< Updated upstream
-        #enable buttons
-        document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
-                  
-        #Initializing sensor code (below)
-        print("Before paste")
-        #await terminal.paste(sensor_code, 'hidden')
-        await terminal.paste(sensor_code, 'hidden')
-        print("After paste")
-        
-        #initializng file list code, hide scroll bar
-        document.getElementById('terminalFrameId').style.overflow = 'hidden'
-        await file_os.getList(terminal, file_list)
-        document.getElementById('terminalFrameId').style.overflow = 'scroll'
-        
-        # make only the file that matches the page appear
-        for i in range(options.length - 1, -1, -1):
-            option = options.item(i)
-            option_text = option.text
-            if option_text != proper_name_of_file[lesson_num]:
-                file_list_element.removeChild(option)
-        
-        if file_list_element.options.length == 0:
-            new_option = document.createElement('option')
-            new_option.text = "You do not have the right file. Please click the download button"
-            # new_option.value = "new_file.py" # how you could add a new file
-            file_list_element.appendChild(new_option)
-            print('end of if statement')
-        else:
-            await on_select(None) #**needed for uploading 1st file
 
-         #enable disconnect
-=======
->>>>>>> Stashed changes
         if terminal.connected:
             #enable buttons
             document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
-                    
+
             #Initializing sensor code (below)
             print("Before paste")
             #await terminal.paste(sensor_code, 'hidden')
             await terminal.paste(sensor_code, 'hidden')
             print("After paste")
-            
+
             #initializng file list code, hide scroll bar
             document.getElementById('terminalFrameId').style.overflow = 'hidden'
             print("Before-THEE-LIST")
@@ -436,20 +401,34 @@ async def on_connect(event):
             #print(file_list)
             print("THEE-LIST")
             document.getElementById('terminalFrameId').style.overflow = 'scroll'
-            await on_select(None) #**needed for uploading 1st file
 
             if lesson_num == 3: #display this at the very beginning
                 display_gif("gifs/Lesson3/Multiple_sensors.gif")
             
+            
+            # make only the file that matches the page appear
+            for i in range(options.length - 1, -1, -1):
+                option = options.item(i)
+                option_text = option.text
+                if option_text != proper_name_of_file[lesson_num]:
+                    file_list_element.removeChild(option)
+            
+            if file_list_element.options.length == 0:
+                new_option = document.createElement('option')
+                new_option.text = "You do not have the right file. Please click the download button"
+                # new_option.value = "new_file.py" # how you could add a new file
+                file_list_element.appendChild(new_option)
+                print('end of if statement')
+            else:
+                await on_select(None) #**needed for uploading 1st file
+                
 
             #enable disconnect
-            if terminal.connected:
-                # connect.innerText = 'Connected!'
-                connect.classList.add('connected')
-                connect.innerHTML = 'Disconnect'
-                connect.onclick = on_custom_disconnect
-                print_custom_terminal("Connected to your Spike Prime. Welcome!")
-                # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
+            connect.classList.add('connected')
+            connect.innerHTML = 'Disconnect'
+            connect.onclick = on_custom_disconnect
+            print_custom_terminal("Connected to your Spike Prime. Welcome!")
+            # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
 
             #initializing user interface
             connect.disabled = False
