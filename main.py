@@ -224,17 +224,9 @@ def process_chunks(javi_buffer, chunk):
         if print_statements:
             for statement in print_statements:
                 #print(f"Extracted print statement: {statement.strip()}")
-<<<<<<< Updated upstream
-                #print("AQUI:", print_statement_counter)
-                print_statement_counter += 1
-
-                print_custom_terminal(statement.strip()) #print to print terminal
-                get_gif(current_gif_dictionary, print_statement_counter)
-=======
                 print_statement = statement.strip()
                 print_custom_terminal(print_statement) #print to print terminal
                 get_gif(current_gif_dictionary, print_statement)
->>>>>>> Stashed changes
 
             
             last_newline_pos = javi_buffer.rfind("\n")
@@ -291,14 +283,8 @@ lesson_num = -1
 
 #function responsible for changing lesson_num
 def set_dictionary():
-<<<<<<< Updated upstream
-    global current_gif_dictionary
-    # global lesson_num
-    lesson_num = window.checkCurrentLesson()  #fix this to call js function
-=======
     global current_gif_dictionary, lesson_num
     lesson_num = window.checkCurrentLesson() #fixx this to call js function
->>>>>>> Stashed changes
     print("Curr_lesson: ", lesson_num)
     if lesson_num == 1:
         current_gif_dictionary = my_gif_dict_L1
@@ -357,7 +343,21 @@ def second_half_disconnect(event=None):
     if (document.getElementById("sensor_readings").classList.contains('active')):
         document.getElementById("sensor_readings").classList.remove('active')
 
+proper_name_of_file = {
+    1: "/flash/Main_Lesson1.py",
+    2: "/flash/Main_Lesson2.py",
+    3: "/flash/Main_Lesson3.py",
+    4: "/flash/Main_Lesson4.py",
+    5: "/flash/Main_Lesson5.py",
+    6: "/flash/Main_Lesson6.py"
+}
+
+file_list_element = document.getElementById('files')
+options = file_list_element.options
+
 async def on_connect(event):
+    global file_list_element
+    global options
     # global lesson_num
     if terminal.connected:
         connect.innerText = 'Connect back'
@@ -385,7 +385,22 @@ async def on_connect(event):
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         await file_os.getList(terminal, file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
-        await on_select(None) #**needed for uploading 1st file
+        
+        # make only the file that matches the page appear
+        for i in range(options.length - 1, -1, -1):
+            option = options.item(i)
+            option_text = option.text
+            if option_text != proper_name_of_file[lesson_num]:
+                file_list_element.removeChild(option)
+        
+        if file_list_element.options.length == 0:
+            new_option = document.createElement('option')
+            new_option.text = "You do not have the right file. Please click the download button"
+            # new_option.value = "new_file.py" # how you could add a new file
+            file_list_element.appendChild(new_option)
+            print('end of if statement')
+        else:
+            await on_select(None) #**needed for uploading 1st file
 
          #enable disconnect
         if terminal.connected:
@@ -729,7 +744,8 @@ window.stop_running_code = stop_running_code
 
 
 async def on_select(event):
-    my_green_editor.code = await file_os.read_code(terminal, file_list)
+    global file_list_element
+    my_green_editor.code = await file_os.read_code(terminal, file_list_element)
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):
