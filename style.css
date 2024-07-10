@@ -47,6 +47,7 @@
     box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 .yellow-box {
+    text-align: center;
     background-color: #f9f9f9;
     border: 7px solid #f9ee46;
     border-radius: 10px;

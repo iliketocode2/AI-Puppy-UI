@@ -441,6 +441,10 @@ async def on_connect(event):
             document.getElementById('gif').style.visibility = 'visible'
             document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
             #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
+
+        else:
+            #allow user to connect back if they clicked 'cancel' when choosing the port to connect to
+            second_half_disconnect()
     
 
 def display_repl(event):
@@ -725,6 +729,7 @@ def handle_board(event):
         sensors.disabled = True 
         download.disabled = True
         print_custom_terminal("Running code...")
+        document.getElementById('gif').style.display = 'block'
         code = event.detail.code
     else:
         code = event.code
@@ -741,7 +746,7 @@ def handle_board(event):
             pass
         finally:
             if isRunning:  #only print completion if not stopped manually
-                print_custom_terminal("Code execution completed")
+                print_custom_terminal("Code stopped due to error")
             isRunning = False
         return False  #return False to avoid executing on browser
     else:
@@ -756,6 +761,7 @@ def stop_running_code():
         print('stopped code')
     
     isRunning = False
+    document.getElementById('gif').style.display = 'none'
     print_custom_terminal("Code execution ended. Please press the button to run the code again.")
 
 # expose stop_running_code function to JavaScript
