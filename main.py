@@ -245,19 +245,26 @@ def on_data_jav(chunk):
 
 #key is print statement number (in order) and key is string associated with it
 
+#done
 my_gif_dict_L1 = {
     "**Train your puppy to be HAPPY when stroked or patted!": "gifs/Lesson1/force_sensor_touch_button.gif",
-    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson1/holding_button.png",    #because numbers also adjust counter
+    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson2/Press_right_button.gif",    #because numbers also adjust counter
     "**Puppy is trained!":"gifs/Lesson1/Javier-gif.gif"
     #13: put image of just pressing force sensor
 }
-
+#done
 my_gif_dict_L2 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+    "**Move the legs of your puppy so that it is sitting!": "gifs/Lesson2/Sitting_Down.gif", #this gif is a placeholder -- CHANGE LATER
+    "**You should hear a beep when a data point is recorded.": "gifs/Lesson2/Recording_sitting.gif",
+    "**Move the legs of your puppy so that it is standing!": "gifs/Lesson2/Standing-up.gif",
+    "**Now add 5 data samples for standing!":"gifs/Lesson2/Recording_sitting.gif",
+    "**Press right button to exit training mode and play with your puppy!" : "gifs/Lesson3/holding_button.png"
 }
 
+#done
 my_gif_dict_L3 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
+    "**Use your chosen sensor to train your puppy to do tricks!": "gifs/Lesson3/getting_data.gif", #this gif is a placeholder -- CHANGE LATER
+    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson3/holding_button.png"
 }
 
 my_gif_dict_L4 = {
@@ -291,6 +298,8 @@ def set_dictionary():
     elif lesson_num == 2:
         current_gif_dictionary = my_gif_dict_L2
     elif lesson_num == 3:
+        #call_si
+        #display_gif("gifs/Lesson3/Multiple_sensors.gif")
         current_gif_dictionary = my_gif_dict_L3
     elif lesson_num == 4:
         current_gif_dictionary = my_gif_dict_L4
@@ -356,9 +365,13 @@ file_list_element = document.getElementById('files')
 options = file_list_element.options
 
 async def on_connect(event):
+<<<<<<< Updated upstream
     global file_list_element
     global options
     # global lesson_num
+=======
+    global lesson_num
+>>>>>>> Stashed changes
     if terminal.connected:
         connect.innerText = 'Connect back'
         #connect.classList.remove('connected')
@@ -372,6 +385,7 @@ async def on_connect(event):
         custom_run_button.disabled = True
         connect.innerHTML = 'Connecting...'
         await terminal.board.connect('repl')
+<<<<<<< Updated upstream
         #enable buttons
         document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
                   
@@ -403,25 +417,51 @@ async def on_connect(event):
             await on_select(None) #**needed for uploading 1st file
 
          #enable disconnect
+=======
+>>>>>>> Stashed changes
         if terminal.connected:
-            # connect.innerText = 'Connected!'
-            connect.classList.add('connected')
-            connect.innerHTML = 'Disconnect'
-            connect.onclick = on_custom_disconnect
-            print_custom_terminal("Connected to your Spike Prime. Welcome!")
-            # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
+            #enable buttons
+            document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
+                    
+            #Initializing sensor code (below)
+            print("Before paste")
+            #await terminal.paste(sensor_code, 'hidden')
+            await terminal.paste(sensor_code, 'hidden')
+            print("After paste")
+            
+            #initializng file list code, hide scroll bar
+            document.getElementById('terminalFrameId').style.overflow = 'hidden'
+            print("Before-THEE-LIST")
+            await file_os.getList(terminal, file_list)
+            #print(file_list)
+            print("THEE-LIST")
+            document.getElementById('terminalFrameId').style.overflow = 'scroll'
+            await on_select(None) #**needed for uploading 1st file
 
-        #initializing user interface
-        connect.disabled = False
-        custom_run_button.disabled = False
-        sensors.disabled = False 
-        download.disabled = False
-        #show gifs and files
-        document.getElementById('files').style.visibility = 'visible'
-        document.getElementById('gif').style.display = 'block'
-        document.getElementById('gif').style.visibility = 'visible'
-        document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
-        #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
+            if lesson_num == 3: #display this at the very beginning
+                display_gif("gifs/Lesson3/Multiple_sensors.gif")
+            
+
+            #enable disconnect
+            if terminal.connected:
+                # connect.innerText = 'Connected!'
+                connect.classList.add('connected')
+                connect.innerHTML = 'Disconnect'
+                connect.onclick = on_custom_disconnect
+                print_custom_terminal("Connected to your Spike Prime. Welcome!")
+                # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
+
+            #initializing user interface
+            connect.disabled = False
+            custom_run_button.disabled = False
+            sensors.disabled = False 
+            download.disabled = False
+            #show gifs and files
+            document.getElementById('files').style.visibility = 'visible'
+            document.getElementById('gif').style.display = 'block'
+            document.getElementById('gif').style.visibility = 'visible'
+            document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
+            #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
     
 
 def display_repl(event):
@@ -785,5 +825,6 @@ terminal.disconnect_callback = second_half_disconnect
 terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
 
 set_dictionary()
+
 
 
