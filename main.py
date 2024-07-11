@@ -341,6 +341,7 @@ def second_half_disconnect(event=None):
 
     # hide any gifs
     document.getElementById('gif').style.display = 'none'
+    # document.getElementById('portInfo').style.display = 'block'
 
     #remove button active display when disconnect
     if (document.getElementById("connect-spike").classList.contains('connected')):
@@ -437,8 +438,6 @@ async def on_connect(event):
             download.disabled = False
             #show gifs and files
             document.getElementById('files').style.visibility = 'visible'
-            document.getElementById('gif').style.display = 'block'
-            document.getElementById('gif').style.visibility = 'visible'
             document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
             #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
 
@@ -729,6 +728,8 @@ def handle_board(event):
         sensors.disabled = True 
         download.disabled = True
         print_custom_terminal("Running code...")
+        # document.getElementById('portInfo').style.display = 'none'
+        document.getElementById('gif').style.visibility = 'visible'
         document.getElementById('gif').style.display = 'block'
         code = event.detail.code
     else:
@@ -746,7 +747,7 @@ def handle_board(event):
             pass
         finally:
             if isRunning:  #only print completion if not stopped manually
-                print_custom_terminal("Code stopped due to error")
+                print_custom_terminal("...")
             isRunning = False
         return False  #return False to avoid executing on browser
     else:
@@ -762,6 +763,7 @@ def stop_running_code():
     
     isRunning = False
     document.getElementById('gif').style.display = 'none'
+    # document.getElementById('portInfo').style.display = 'block'
     print_custom_terminal("Code execution ended. Please press the button to run the code again.")
 
 # expose stop_running_code function to JavaScript

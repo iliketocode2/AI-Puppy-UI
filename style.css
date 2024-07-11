@@ -430,6 +430,46 @@ img.puppyPicture {
     margin: auto;
 }
 
+.portInstructions {
+    width: 50%;
+    height: auto;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.portInstructions h3 {
+    text-decoration: underline;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.portInstructions .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Center the flex items horizontally */
+}
+
+.portInstructions p {
+    margin: 2px;
+}
+
+.portInstructions p.big {
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.portInstructions img{
+    height: 24px;
+    width: auto;
+    margin-right: 2px;
+}
+
 .gifFrame{
     /* border: 2px solid black; */
     border-radius: 5px;
