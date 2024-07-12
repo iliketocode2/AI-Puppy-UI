@@ -66,3 +66,4 @@ def set_dictionary():
         my_globals.current_gif_dictionary = my_gif_dict_L5
     elif my_globals.lesson_num == 6:
         my_globals.current_gif_dictionary = my_gif_dict_L6
+

@@ -2,6 +2,7 @@ import my_globals
 import asyncio
 from pyscript import document
 import time
+import helper_mod
 
 #defi
 #making dictionary here because I think that it is less efficient if I were
@@ -61,7 +62,7 @@ White - 9
 '''
 #returns tuple with (color from table 1, r, g , b)
 def color_sensor_print(port_num):
-    print("color sensor", port_num)
+    #print("color sensor", port_num)
     color_info = [-1,-1,-1,-1] #tuple with, color, r,g,b values 
     #variable I will use to identify color based on Table 1
     my_color = -1 #if not color is detected
@@ -100,21 +101,21 @@ def color_sensor_print(port_num):
     return color_info_tuple
     
 def distance_sensor_print(port_num):
-    print("distance sensor", port_num)
+    #print("distance sensor", port_num)
     return distance_sensor.distance(port_num)
     
 def force_sensor_print(port_num):
-    print("force sensor", port_num)
+    #print("force sensor", port_num)
     return force_sensor.force(port_num)
     
     
 def light_matrix_print(port_num):
-    print("light matrix", port_num)
+    #print("light matrix", port_num)
     return 1 #change this
 
 #test this
 def small_motor_print(port_num):
-    print("small motor", port_num)
+    #print("small motor", port_num)
     abs_pos = motor.absolute_position(port_num)
     if (abs_pos < 0):
         abs_pos = abs_pos + 360
@@ -124,7 +125,7 @@ def small_motor_print(port_num):
 #want 0...179, 180, 181,... 360 (then go back to 0)
 #so return 360 + val
 def medium_motor_print(port_num):
-    print("medium motor", port_num)
+    #print("medium motor", port_num)
     abs_pos = motor.absolute_position(port_num)
     if (abs_pos < 0):
         abs_pos = abs_pos + 360
@@ -170,7 +171,8 @@ execute_code = """
 
 
 #sensor_info and get terminal in same button
-async def on_sensor_info(event):  
+async def on_sensor_info(event):
+    print("ON-SENSOR")  
 
     #global sensor
     global device_names
@@ -181,9 +183,7 @@ async def on_sensor_info(event):
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = close_sensor
-    my_globals.download.disabled = True
-    my_globals.connect.disabled = False
-    my_globals.custom_run_button.disabled = True
+    helper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button])
     sensor = False #so that on next click it displays terminal
 
     document.getElementById('repl').style.display = 'none'
@@ -219,7 +219,6 @@ async def on_sensor_info(event):
             
             if t[0] == 1: #if something is connected to port
                 #call corresponding funcitons with corresponding ports
-                #t[2] is function/device id & t[1] is port #
                 if my_globals.stop_loop:
                     break
                 #number is tuple with some sort of sensor value
@@ -228,6 +227,7 @@ async def on_sensor_info(event):
 
                 if not my_globals.terminal.connected:
                     break
+                #t[2] is function/device id & t[1] is port #
                 number = await my_globals.terminal.eval(f"""
                     number = function_dict[{t[2]}]({t[1]})
                     number
@@ -331,39 +331,21 @@ async def on_sensor_info(event):
                         </div>
                     """ 
 
-
-
         sensor_info_html += "</div>"  # Close the container
         # Update the sensor info container with new HTML content
         print("In_LOOOP")
         document.getElementById('sensor-info').innerHTML = sensor_info_html
 
-        #await asyncio.sleep(0.3)
-                    #print("NAHH")
-                    #t is just 1 number (display that number)
-                    
-                #now display number, device (t[2]), and port t[1]
-                #instead of returning #, return array of tuple
-                
-        #print("Number:", number)
-        #time.sleep(1)
-        #counter = counter + 1
     print("STOP-LOOP True")
-    #print("Back_HERE: ", port_info_array)
 
 async def close_sensor(event=None):
     print("In_CLose")
     my_globals.stop_loop = True
-    await asyncio.sleep(0.1) #to allow while loop to finish its current iteration
+    await asyncio.sleep(0.3) #to allow while loop to finish its current iteration
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = on_sensor_info
-
-    
-     #enable download button
-    my_globals.download.disabled = False
-    my_globals.connect.disabled = False
-    my_globals.custom_run_button.disabled = False
+    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button])
    # await asyncio.sleep(1)  # Wait for 2 seconds
     document.getElementById('sensor-info').innerHTML = " "
     print("CLEARED")

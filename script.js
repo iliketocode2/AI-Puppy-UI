@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //JAV-CODE (above)
 
-
+/*
     function setButtonState(button, isActive) {
         if (isActive) {
             button.classList.add('active');
@@ -91,9 +91,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const isConnected = !this.classList.contains('connected');
         this.classList.toggle('connected');
         this.textContent = isConnected ? 'Disconnect' : 'Connect Spike Prime';
+        //isConnected = isConnected && python_funct.
         updateButtonStates(isConnected, false);
     });
+    */
 
+    /*
     // Sensor button click handler
     sensorButton.addEventListener('click', function() {
         if (this.classList.contains('active')) {
@@ -102,14 +105,13 @@ document.addEventListener('DOMContentLoaded', function() {
             updateButtonStates(true, isSensorMode);
         }
     });
+    */
 
     let is_running = false;
     // connect 'run python code' js button to mpy-editor
     runButton.addEventListener('click', function() {
         if (!is_running) {
             // run the code
-            sensorButton.classList.remove('active');
-            downloadButton.classList.remove('active');
             const editor = document.getElementById(this.getAttribute('data-editor-id'));
             if (editor) {
                 const event = new CustomEvent('mpy-run', {
@@ -122,9 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             // stop the code
-            sensorButton.classList.add('active');
-            downloadButton.classList.add('active');
-            window.stop_running_code();
+            window.stop_running_code(); //calling python function
             this.innerHTML = 'Run Python Code';
             is_running = false;
         }
