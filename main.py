@@ -10,334 +10,52 @@ import restapi
 import asyncio
 import time
 import file_os
+import my_globals
+import sensor_mod
+import print_jav
+import my_gif
+
+my_globals.init()
 
 ARDUINO_NANO = 128
 SPIKE = 256
 
-stop_loop = False #indicates when to stop loop (u want it to stop when user has access to repl)
-sensor = True #for switching between if and else statements (going from user repl to sensors)
-#defi
-#making dictionary here because I think that it is less efficient if I were
-# to send all these strings from chip to computer (thus chip only sends digits)
-device_names = {
-    48: "medium_motor",
-    49: "big_motor",
-    61: "color_sensor",
-    62: "distance_sensor",
-    63: "force_sensor",
-    64: "light_matrix",
-    65: "small_motor"
     
-}
-
-#making 
-port_names = {
-    0: 'A',
-    1: 'B',
-    2: 'C',
-    3: 'D',
-    4: 'E',
-    5: 'F'
-}
-sensor_code = """
-
-import device
-import motor
-import color_sensor
-import color
-import distance_sensor
-import force_sensor
-
-#test this
-def big_motor_print(port_num):
-    print("big_motor", port_num)
-    abs_pos = motor.absolute_position(port_num)
-    if (abs_pos < 0):
-        abs_pos = abs_pos + 360
-    return abs_pos
-
-#color.RED = 1
-#9 colors:
-''' 
-Table 1:
-
-Red - 1
-Green - 2
-Blue - 3
-Magenta - 4
-Yellow 5
-Orange - 6
-Azure - 7 
-Black - 8
-White - 9
-
-'''
-#returns tuple with (color from table 1, r, g , b)
-def color_sensor_print(port_num):
-    print("color sensor", port_num)
-    color_info = [-1,-1,-1,-1] #tuple with, color, r,g,b values 
-    #variable I will use to identify color based on Table 1
-    my_color = -1 #if not color is detected
-    sensor_color = color_sensor.color(port_num) #color that sensor detects
-    if sensor_color is color.RED:
-        my_color = 1
-    elif sensor_color is color.GREEN:
-        my_color = 2
-    elif sensor_color is color.BLUE:
-        my_color = 3
-    elif sensor_color is color.MAGENTA:
-        my_color = 4
-    elif sensor_color is color.YELLOW:
-        my_color = 5
-    elif sensor_color is color.ORANGE:
-        my_color = 6
-    elif sensor_color is color.AZURE:
-        my_color = 7
-    elif sensor_color is color.BLACK:
-        my_color = 8
-    elif sensor_color is color.WHITE:
-        my_color = 9
-    
-    color_info[0] = my_color
-    
-    rgbi = color_sensor.rgbi(port_num)
-    
-    color_info[1] = rgbi[0] #red
-    color_info[2] = rgbi[1] #green
-    color_info[3] = rgbi[2] #blue
-    
-    color_info_tuple = tuple(color_info)
-        
-    #print("My-COlor: ", color_info_tuple)
-    
-    return color_info_tuple
-    
-def distance_sensor_print(port_num):
-    print("distance sensor", port_num)
-    return distance_sensor.distance(port_num)
-    
-def force_sensor_print(port_num):
-    print("force sensor", port_num)
-    return force_sensor.force(port_num)
-    
-    
-def light_matrix_print(port_num):
-    print("light matrix", port_num)
-    return 1 #change this
-
-#test this
-def small_motor_print(port_num):
-    print("small motor", port_num)
-    abs_pos = motor.absolute_position(port_num)
-    if (abs_pos < 0):
-        abs_pos = abs_pos + 360
-    return abs_pos
-
-#absolute position goes like 0...179, -180, -179 = vals
-#want 0...179, 180, 181,... 360 (then go back to 0)
-#so return 360 + val
-def medium_motor_print(port_num):
-    print("medium motor", port_num)
-    abs_pos = motor.absolute_position(port_num)
-    if (abs_pos < 0):
-        abs_pos = abs_pos + 360
-    return abs_pos
-
-function_dict = {
-    48: medium_motor_print,
-    49: big_motor_print,
-    61: color_sensor_print,
-    62: distance_sensor_print,
-    63: force_sensor_print,
-    64: light_matrix_print,
-    65: small_motor_print
-}
-
-
-"""
-#code for getting port information in tuple form
-#tuple = (1 if connected & recognized, port number, sensor_id)
-execute_code = """
-    port_info = [()] * 6
-    for i in range(6):
-        #for each port get the device Id
-        current_port = i
-        try:
-            #below is line that will give you error (potentially)
-            port_id = device.id(current_port) #this should be either 49, or 61 or 62 or... 65 #handle exception when not found
-            # Call the corresponding function if the device ID is found
-            if port_id in function_dict:
-                #function_dict[port_id](i)
-                port_info[i] = (1, i, port_id)
-            else:
-                #print(f"No function defined for device ID {port_id}")
-                port_info[i] = (0,0,0)
-        except OSError as e: #nothing connected to it
-            # Means port does not have any sensor connected to it
-            port_info[i] = (0,0,0)
-            #print("YAA")
-            #print(f"Port {current_port} error: {e}")
-"""
-
-#execute code for thisL 
-# [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
-#
-
-
-javi_buffer = ""
-found_key = False
-##**END-CODE**# sfjflk \n
-#(this is when find_print_statemetns should be called)1st print \n
-def find_print_statements(buffer):
-    statements = []
-    start_index = 0
-    while start_index < len(buffer):
-        end_new_line_index = buffer.find("\n", start_index)
-        if end_new_line_index == -1:
-            break
-        statement = buffer[start_index:end_new_line_index]
-        statements.append(statement)
-        start_index = end_new_line_index + 1
-    return statements
-
-def process_chunks(javi_buffer, chunk):
-    global found_key
-    
-    javi_buffer += chunk
-    #print("BUFFER:",javi_buffer)
-    
-    if not found_key:
-        key_index = javi_buffer.find("#**END-CODE**#")
-        if key_index == -1: #if not found
-            last_newline_pos = javi_buffer.rfind("\n")
-            if last_newline_pos != -1: #if new line is found
-                javi_buffer = javi_buffer[last_newline_pos + 1:] #look for things after new line
-        else:
-            print("FOUND)")
-            found_key = True
-            start_point = javi_buffer.find("\n", key_index)
-            javi_buffer = javi_buffer[start_point + 1:] #start at key index
-    
-    if found_key:
-        #print("HERE")
-        print_statements = find_print_statements(javi_buffer)
-        if print_statements:
-            for statement in print_statements:
-                #print(f"Extracted print statement: {statement.strip()}")
-                print_statement = statement.strip()
-                print_custom_terminal(print_statement) #print to print terminal
-                get_gif(current_gif_dictionary, print_statement)
-
-            
-            last_newline_pos = javi_buffer.rfind("\n")
-            if last_newline_pos != -1:
-                javi_buffer = javi_buffer[last_newline_pos + 1:]
-    
-    return javi_buffer
-
-def on_data_jav(chunk):
-    # print("ON-DATA: ", chunk)
-    global javi_buffer
-    #print("HERERE", javi_buffer)
-    javi_buffer = process_chunks(javi_buffer, chunk)
-
-#[NULL, gif1, NULL, gif2] = gif_array
-
-#key is print statement number (in order) and key is string associated with it
-
-#done
-my_gif_dict_L1 = {
-    "**Train your puppy to be HAPPY when stroked or patted!": "gifs/Lesson1/force_sensor_touch_button.gif",
-    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson2/Press_right_button.gif",    #because numbers also adjust counter
-    "**Puppy is trained!":"gifs/Lesson1/Javier-gif.gif"
-    #13: put image of just pressing force sensor
-}
-#done
-my_gif_dict_L2 = {
-    "**Move the legs of your puppy so that it is sitting!": "gifs/Lesson2/Sitting_Down.gif", #this gif is a placeholder -- CHANGE LATER
-    "**You should hear a beep when a data point is recorded.": "gifs/Lesson2/Recording_sitting.gif",
-    "**Move the legs of your puppy so that it is standing!": "gifs/Lesson2/Standing-up.gif",
-    "**Now add 5 data samples for standing!":"gifs/Lesson2/Recording_sitting.gif",
-    "**Press right button to exit training mode and play with your puppy!" : "gifs/Lesson3/holding_button.png"
-}
-
-#done
-my_gif_dict_L3 = {
-    "**Use your chosen sensor to train your puppy to do tricks!": "gifs/Lesson3/getting_data.gif", #this gif is a placeholder -- CHANGE LATER
-    "**Press right button to exit training mode and play with your puppy!": "gifs/Lesson3/holding_button.png"
-}
-
-my_gif_dict_L4 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
-}
-
-my_gif_dict_L5 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
-}
-
-my_gif_dict_L6 = {
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" #this gif is a placeholder -- CHANGE LATER
-}
-    
-
-def get_gif(gif_dict, print_statement):
-    #if counter in my_dict, then display gif 
-    if print_statement in gif_dict: #counter represents number of print statement
-        display_gif(gif_dict[print_statement])
-
-current_gif_dictionary = {}
-lesson_num = -1
-
-#function responsible for changing lesson_num
-def set_dictionary():
-    global current_gif_dictionary, lesson_num
-    lesson_num = window.checkCurrentLesson() #fixx this to call js function
-    print("Curr_lesson: ", lesson_num)
-    if lesson_num == 1:
-        current_gif_dictionary = my_gif_dict_L1
-    elif lesson_num == 2:
-        current_gif_dictionary = my_gif_dict_L2
-    elif lesson_num == 3:
-        #call_si
-        #display_gif("gifs/Lesson3/Multiple_sensors.gif")
-        current_gif_dictionary = my_gif_dict_L3
-    elif lesson_num == 4:
-        current_gif_dictionary = my_gif_dict_L4
-    elif lesson_num == 5:
-        current_gif_dictionary = my_gif_dict_L5
-    elif lesson_num == 6:
-        current_gif_dictionary = my_gif_dict_L6
-
 
 
 def on_custom_disconnect(event=None):
     print_custom_terminal("Disconnected from your Spike Prime.")
-    global sensor
     #display_gif("nobgimages/aipuppy2_360-removebg-preview.png")
     #global sensor
 
     #if sensor data is displayed, hide it, bring back the terminal, and reset
-    if not(sensor):
+    if (my_globals.sensors.onclick == sensor_mod.close_sensor):
         print('clearing sensor data')
-        await close_sensor()
+        await sensor_mod.close_sensor()
 
     second_half_disconnect()
+    my_globals.physical_disconnect = False
 
     #clear sensor display
     document.getElementById('sensor-info').innerHTML = ""   
 
-def second_half_disconnect(event=None):    
+def second_half_disconnect(event=None):
+    if(my_globals.sensors.onclick == sensor_mod.close_sensor and my_globals.physical_disconnect): 
+        print_custom_terminal("Physically Disconnected while reading sensors - RELOAD PAGE")
+        document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reloadp
+    if my_globals.terminal.connected:
+        print('connected')
     print_custom_terminal("Disconnected from your Spike Prime.")
-    terminal.send('\x03') #to stop any program that is running
+    #my_globals.terminal.send('\x03') #to stop any program that is running
     print('after disconnect, passed x03')
-    terminal.board.disconnect()
-    sensors.disabled = True
-    download.disabled = True
+    my_globals.terminal.board.disconnect()
+    my_globals.sensors.disabled = True
+    my_globals.download.disabled = True
 
     #allow user to connect back
-    connect.disabled = False
-    connect.onclick = on_connect
-    connect.innerText = 'Connect Spike Prime'
+    my_globals.connect.disabled = False
+    my_globals.connect.onclick = on_connect
+    my_globals.connect.innerText = 'Connect Spike Prime'
 
     # hide any gifs
     document.getElementById('gif').style.display = 'none'
@@ -369,41 +87,40 @@ async def on_connect(event):
 
     global file_list_element
     global options
-    global lesson_num
 
-    if terminal.connected:
-        connect.innerText = 'Connect back'
+    if my_globals.terminal.connected:
+        my_globals.connect.innerText = 'Connect back'
         #connect.classList.remove('connected')
-        await terminal.board.disconnect()
+        await my_globals.terminal.board.disconnect()
     else:
        # if (lesson_num == 4):
        #    print("YUIAIOFJFDAAAAAAA")
-        sensors.disabled = True
-        download.disabled = True
-        connect.disabled = True
-        custom_run_button.disabled = True
-        connect.innerHTML = 'Connecting...'
-        await terminal.board.connect('repl')
+        my_globals.sensors.disabled = True
+        my_globals.download.disabled = True
+        my_globals.connect.disabled = True
+        my_globals.custom_run_button.disabled = True
+        my_globals.connect.innerHTML = 'Connecting...'
+        await my_globals.terminal.board.connect('repl')
 
-        if terminal.connected:
+        if my_globals.terminal.connected:
             #enable buttons
             document.getElementById('repl').style.display = 'none' #to prevent user from inputting during paste
 
             #Initializing sensor code (below)
             print("Before paste")
             #await terminal.paste(sensor_code, 'hidden')
-            await terminal.paste(sensor_code, 'hidden')
+            await my_globals.terminal.paste(sensor_mod.sensor_code, 'hidden')
             print("After paste")
 
             #initializng file list code, hide scroll bar
             document.getElementById('terminalFrameId').style.overflow = 'hidden'
             print("Before-THEE-LIST")
-            await file_os.getList(terminal, file_list)
+            await file_os.getList(my_globals.terminal, my_globals.file_list)
             #print(file_list)
             print("THEE-LIST")
             document.getElementById('terminalFrameId').style.overflow = 'scroll'
 
-            if lesson_num == 3: #display this at the very beginning
+            if my_globals.lesson_num == 3: #display this at the very beginning
                 display_gif("gifs/Lesson3/Multiple_sensors.gif")
             
             
@@ -411,7 +128,7 @@ async def on_connect(event):
             for i in range(options.length - 1, -1, -1):
                 option = options.item(i)
                 option_text = option.text
-                if option_text != proper_name_of_file[lesson_num]:
+                if option_text != proper_name_of_file[my_globals.lesson_num]:
                     file_list_element.removeChild(option)
             
             if file_list_element.options.length == 0:
@@ -425,17 +142,17 @@ async def on_connect(event):
                 
 
             #enable disconnect
-            connect.classList.add('connected')
-            connect.innerHTML = 'Disconnect'
-            connect.onclick = on_custom_disconnect
+            my_globals.connect.classList.add('connected')
+            my_globals.connect.innerHTML = 'Disconnect'
+            my_globals.connect.onclick = on_custom_disconnect
             print_custom_terminal("Connected to your Spike Prime. Welcome!")
             # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
 
             #initializing user interface
-            connect.disabled = False
-            custom_run_button.disabled = False
-            sensors.disabled = False 
-            download.disabled = False
+            my_globals.connect.disabled = False
+            my_globals.custom_run_button.disabled = False
+            my_globals.sensors.disabled = False 
+            my_globals.download.disabled = False
             #show gifs and files
             document.getElementById('files').style.visibility = 'visible'
             document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
@@ -446,241 +163,25 @@ async def on_connect(event):
             second_half_disconnect()
     
 
-def display_repl(event):
-    document.getElementById('repl').style.display = 'block'
+#def display_repl(event):
+#    document.getElementById('repl').style.display = 'block'
     #terminal.setOption('disableStdin', True)  # Disable user input 
 
-
-#sensor_info and get terminal in same button
-def on_sensor_info(event):  
-
-    global sensor
-    global stop_loop
-    global device_names
-    #await terminal.send('\x03')
-    #print("STOP-LOOP", stop_loop)
-
-    stop_loop = False
-    if sensor: # this will display sensors!
-
-        # next time sensors clicked, will hide sensor info
-        sensors.onclick = close_sensor
-        download.disabled = True
-        connect.disabled = False
-        custom_run_button.disabled = True
-        sensor = False #so that on next click it displays terminal
-
-        document.getElementById('repl').style.display = 'none'
-
-        # sensors.innerText = 'Get Terminal'
-        sensors.innerText = 'Close'
-        #execute code for thisL 
-        # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
-        #stop_loop = False
-        # Add event listener for user input
-        #event handler when user types in keyboard
-        #counter = 0
-        print("STOP-LOOP", stop_loop)
-        while not stop_loop:
-            #two lines below should go in while loop (checks every time the port info)
-            await terminal.eval(execute_code, 'hidden')
-            port_info_array = await terminal.eval("""port_info
-                                """, 'hidden')
-            #clearing it every time (very important)
-
-            # sensor_info_html = ""  # Initialize HTML content for sensor info
-            sensor_info_html = "<div class='sensor-info-container'>" # Initialize HTML content for sensor info
-
-            #iterating over tuples/ports
-            for t in port_info_array: #if sensors are switched somewhere her, then error cause u don't udpate port_info_array
-                #solution would be to break out of loop if a bool is triggered(port disconnected)
-                
-                if t[0] == 1: #if something is connected to port
-                    #call corresponding funcitons with corresponding ports
-                    #t[2] is function/device id & t[1] is port #
-                    if stop_loop:
-                        break;
-                    #number is tuple with some sort of sensor value
-                    #if anything but color sensor (just display 1 value)
-                        #then 
-
-
-                    number = await terminal.eval(f"""
-                        number = function_dict[{t[2]}]({t[1]})
-                        number
-                        
-                    """, 'hidden')
-
-
-                    #if it is the color sensor process number as a tuple
-                    #where tuple is (color from table 1, r, g , b)
-                    if (t[2] == 61):
-                        #print("SIUU")
-                        #pass
-                        color_info = number
-                        color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
-                        color_name = color_detected[color_info[0] - 1] if 0 < color_info[0] <= len(color_detected) else "Unknown"
-                        # document.querySelector('.colorCircle').style.backgroundColor = 'green'
-                        # <div class="sensor-info-item">
-                        #     <span>Number: {color_info} (Color: {color_name})</span>
-                        #     <span>Device: {device_names[t[2]]}</span>
-                        #     <span>Port: {port_names[t[1]]}</span>
-                        # </div>
-                        # """
-                        sensor_info_html += f"""
-                        <div class="sensor-info">
-                            <div class="sensor-info-item">
-                                <div class="sensor-stack-left">
-                                    <span class="port-name">{port_names[t[1]]}</span>
-                                </div>
-                                <div class="sensor-stack-right">
-                                    <span><img src="images/spike color_sensor_display.png" alt="color sensor"></span>
-                                    <span class="sensor-value">
-                                        <div class="colorCircle" style="background-color: {color_name.lower()};"></div>
-                                        {color_detected[color_info[0] - 1]}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        """
-                    elif (t[2] == 48 or t[2] == 49 or t[2] == 65): #medium motor
-                        sensor_info_html += f"""
-                        <div class="sensor-info">
-                            <div class="sensor-info-item">
-                                <div class="sensor-stack-left">
-                                    <span class="port-name">{port_names[t[1]]}</span>
-                                </div>
-                                <div class="sensor-stack-right">
-                                    <span><img src="images/spike medium_motor_display.png" alt="Motor"></span>
-                                    <span class="sensor-value">{number}&deg;</span>
-                                </div>
-                            </div>
-                        </div>
-                        """
-                    elif (t[2] == 62): #distance sensor
-                        sensor_info_html += f"""
-                        <div class="sensor-info">
-                            <div class="sensor-info-item">
-                                <div class="sensor-stack-left">
-                                    <span class="port-name">{port_names[t[1]]}</span>
-                                </div>
-                                <div class="sensor-stack-right">
-                                    <span><img src="images/spike distance_sensor_display.png" alt="distance sensor"></span>
-                                    <span class="sensor-value">{number} mm</span>
-                                </div>
-                            </div>
-                        </div>
-                        """
-                    elif (t[2] == 63): #force sensor
-                        sensor_info_html += f"""
-                        <div class="sensor-info">
-                            <div class="sensor-info-item">
-                                <div class="sensor-stack-left">
-                                    <span class="port-name">{port_names[t[1]]}</span>
-                                </div>
-                                <div class="sensor-stack-right">
-                                    <span><img src="images/spike push_sensor_display.png" alt="force sensor"></span>
-                                    <span class="sensor-value">{number} N</span>
-                                </div>
-                            </div>
-                        </div>
-                        """
-                    elif (t[2] == 64): #light matrix
-                        sensor_info_html += f"""
-                        <div class="sensor-info">
-                            <div class="sensor-info-item">
-                                <div class="sensor-stack-left">
-                                    <span class="port-name">{port_names[t[1]]}</span>
-                                </div>
-                                <div class="sensor-stack-right">
-                                    <span><img src="images/spike light_matrix_display.png" alt="light matrix"></span>
-                                    <span class="sensor-value">{number}</span>
-                                </div>
-                            </div>
-                        </div>
-                        """
-                    else:
-                        sensor_info_html += f"""
-                            <div class="sensor-info-item">
-                                <span>{number} </span>
-                                <span>Device: {device_names[t[2]]}</span>
-                                <span>Port: {port_names[t[1]]}</span>
-                            </div>
-                        """ 
-
-
-
-            sensor_info_html += "</div>"  # Close the container
-            # Update the sensor info container with new HTML content
-            document.getElementById('sensor-info').innerHTML = sensor_info_html
-
-            #await asyncio.sleep(0.3)
-                        #print("NAHH")
-                        #t is just 1 number (display that number)
-                        
-                    #now display number, device (t[2]), and port t[1]
-                    #instead of returning #, return array of tuple
-                    
-            #print("Number:", number)
-            #time.sleep(1)
-            #counter = counter + 1
-        print("STOP-LOOP True")
-        #print("Back_HERE: ", port_info_array)
-    else: # this will go back to the terminal!
-        close_sensor
-
-def close_sensor(event=None):
-
-    global stop_loop
-    global sensor
-
-    # next time sensors clicked, will hide sensor info
-    sensors.onclick = on_sensor_info
-
-    
-     #enable download button
-    download.disabled = False
-    connect.disabled = False
-    custom_run_button.disabled = False
-    stop_loop = True
-    #asyncio.
-    #time.sleep_ms(1000) #to allow while loop to finish current iteration
-    #await asyncio.sleep(0.1)
-    sensor = True #so that next time it hides repls
-    sensors.innerText = 'Sensor Readings'
-
-    #this code is kind of important.
-    #if the user spams the button, it prevents erros by disabling button for a short time
-    #so that if multiple clicks are made quickly, the same while loop below the if
-    #statement is not called twice
-    #this would result on calling eval again when the first eval call has not yet 
-    #finished. (resulting in error: can't eval 2 things at once)
-    sensor_button = document.getElementById('sensor_readings')
-    sensor_button.disabled = True
-    download.disabled = True #prevent from downloading straight away also 
-    await asyncio.sleep(0.2)  # Wait for 2 seconds
-    sensor_button.disabled = False  # Re-enable the button
-    download.disabled = False
-
-    #clear all sensor info -- redundant but prevents lag errors
-    document.getElementById('sensor-info').innerHTML = "" 
-    #show terminal
-    document.getElementById('repl').style.display = 'block'
     
 
 #NEXT STEP: download more tha n 1 file (length of path). make for loop (chat)
 async def on_load(event):
-    if terminal.connected:
-        download.disabled = True #dont enable user to click downaload again if already in downlaod
-        sensors.disabled = True #dont let user run sensors
-        connect.disabled = True #dont allow user to disconnect
+    if my_globals.terminal.connected:
+        my_globals.download.disabled = True #dont enable user to click downaload again if already in downlaod
+        my_globals.sensors.disabled = True #dont let user run sensors
+        my_globals.connect.disabled = True #dont allow user to disconnect
         print_custom_terminal("Downloading code, please wait...")
         document.getElementById('download-code').innerHTML = 'Downloading Code'
-        sensors.classList.remove('active')
-        custom_run_button.classList.remove('active')
+        my_globals.sensors.classList.remove('active')
+        my_globals.custom_run_button.classList.remove('active')
         # document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
-        git_paths = path.value.split() #gets arrays of urls
+        git_paths = my_globals.path.value.split() #gets arrays of urls
         #download_statuses = [] #will store statuses for each file 
         
         #github = path.value #gets url (useless now)
@@ -689,18 +190,18 @@ async def on_load(event):
             name = current_path.split('/')[-1] 
             print('path, name: ',current_path,name)
             reply = await restapi.get(current_path)
-            status = await terminal.download(name,reply)
-            sensors.disabled = False #re-enable it
-            download.disabled = False
-            connect.disabled = False
+            status = await my_globals.terminal.download(name,reply)
+            my_globals.sensors.disabled = False #re-enable it
+            my_globals.download.disabled = False
+            my_globals.connect.disabled = False
             if not status: 
                 window.alert(f"Failed to load {name}. Click Ok to continue downloading other files")  
 
-        download.disabled = False #dont enable user to click downaload again if already in downlaod
-        sensors.disabled = False #dont let user run sensors
-        connect.disabled = False 
-        sensors.classList.add('active') #controls display
-        custom_run_button.classList.add('active') #controls display
+        my_globals.download.disabled = False #dont enable user to click downaload again if already in downlaod
+        my_globals.sensors.disabled = False #dont let user run sensors
+        my_globals.connect.disabled = False 
+        my_globals.sensors.classList.add('active') #controls display
+        my_globals.custom_run_button.classList.add('active') #controls display
         print_custom_terminal("Download complete!")
         document.getElementById('download-code').innerHTML = 'Download Training Code'
         
@@ -709,7 +210,7 @@ async def on_load(event):
         #copy
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
-        await file_os.getList(terminal, file_list)
+        await file_os.getList(my_globals.terminal, my_globals.file_list)
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
         #await on_select(None)
         #show scroll bar
@@ -725,8 +226,8 @@ def handle_board(event):
     found_key = False
     # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
-        sensors.disabled = True 
-        download.disabled = True
+        my_globals.sensors.disabled = True 
+        my_globals.download.disabled = True
         print_custom_terminal("Running code...")
         # document.getElementById('portInfo').style.display = 'none'
         document.getElementById('gif').style.visibility = 'visible'
@@ -735,12 +236,12 @@ def handle_board(event):
     else:
         code = event.code
 
-    if terminal.connected and not isRunning:
+    if my_globals.terminal.connected and not isRunning:
         isRunning = True
         try:
-            await terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
+            await my_globals.terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
             #await terminal.eval('\x05'+"#**END-CODE**#"+'\x04')
-            terminal.focus()
+            my_globals.terminal.focus()
             print("Hello_ish")
         except:
             print('EXCEPT ERROR')
@@ -754,11 +255,11 @@ def handle_board(event):
         return True
 
 def stop_running_code():
-    sensors.disabled = False 
-    download.disabled = False
+    my_globals.sensors.disabled = False 
+    my_globals.download.disabled = False
     global isRunning
-    if terminal.connected:
-        await terminal.send('\x03')
+    if my_globals.terminal.connected:
+        await my_globals.terminal.send('\x03')
         print('stopped code')
     
     isRunning = False
@@ -772,7 +273,7 @@ window.stop_running_code = stop_running_code
 
 async def on_select(event):
     global file_list_element
-    my_green_editor.code = await file_os.read_code(terminal, file_list_element)
+    my_globals.my_green_editor.code = await file_os.read_code(my_globals.terminal, file_list_element)
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):
@@ -783,35 +284,32 @@ def print_custom_terminal(string):
 def display_gif(imageName):
     window.fadeImage(imageName)
 
-connect = document.getElementById('connect-spike')
-download = document.getElementById('download-code')
-path    = document.getElementById('gitpath')
-sensors = document.getElementById('sensor_readings')
-custom_run_button = document.getElementById('custom-run-button')
+
 #get_repl = document.getElementById('get_repl')
 
-my_green_editor = document.getElementById('MPcode') #for editor
-my_green_editor.addEventListener('mpy-run', handle_board)
-my_green_editor.handleEvent = handle_board
+
+my_globals.my_green_editor.addEventListener('mpy-run', handle_board)
+my_globals.my_green_editor.handleEvent = handle_board
 
 #for list of files
-file_list = document.getElementById('files')
-file_list.onchange = on_select
 
-connect.onclick = on_connect
-download.onclick = on_load
-sensors.onclick = on_sensor_info
+my_globals.file_list.onchange = on_select
+
+my_globals.connect.onclick = on_connect
+my_globals.download.onclick = on_load
+my_globals.sensors.onclick = sensor_mod.on_sensor_info
 
 #start disabled until connected
-sensors.disabled = True 
-download.disabled = True
+my_globals.sensors.disabled = True 
+my_globals.download.disabled = True
 #get_repl.onclick = display_repl
 
-terminal = ampy.Ampy(SPIKE)
-terminal.disconnect_callback = second_half_disconnect
-terminal.newData_callback = on_data_jav #defined for when physical or coded disconnection happens
+my_globals.terminal.disconnect_callback = second_half_disconnect
+my_globals.terminal.newData_callback = print_jav.on_data_jav #defined for when physical or coded disconnection happens
 
-set_dictionary()
+my_gif.set_dictionary()
 
-
+#while (True):
+#    if (not my_globals.terminal.connected):
+#        my_globals.terminal.send('\x03')
 
