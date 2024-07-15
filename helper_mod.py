@@ -5,16 +5,15 @@ import sensor_mod
 import file_os
 
 def stop_running_code():
-    enable_buttons([my_globals.sensors, my_globals.download])
-    global isRunning
     if my_globals.terminal.connected:
         await my_globals.terminal.send('\x03')
         print('stopped code')
-    
-    isRunning = False
-    document.getElementById('gif').style.display = 'none'
-    # document.getElementById('portInfo').style.display = 'block'
-    print_jav.print_custom_terminal("Code execution ended. Please press the button to run the code again.")
+
+        document.getElementById('gif').style.display = 'none'
+        print_jav.print_custom_terminal("Code execution ended. Please press the button to run the code again.")
+        my_globals.found_key = False
+        enable_buttons([my_globals.sensors, my_globals.download])
+
 
 
 def clean_up_disconnect():
@@ -74,37 +73,25 @@ async def on_select(event):
 
 #evaluates code when the green button is pressed
 async def handle_board(event):
-    my_globals.found_key = False
-    # run program for custom buttton to run pyscript editor
     if event.type == 'mpy-run':
-        disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button])
-        print_jav.print_custom_terminal("Running code...")
-        # document.getElementById('portInfo').style.display = 'none'
-        document.getElementById('gif').style.visibility = 'visible'
-        document.getElementById('gif').style.display = 'block'
-        code = event.detail.code
-    else:
-        code = event.code
+        if my_globals.terminal.connected:
+            disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button])
+            print_jav.print_custom_terminal("Running code...")
 
-    if my_globals.terminal.connected and not my_globals.isRunning:
-        my_globals.isRunning = True
-        try:
-            await my_globals.terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04') #very important: somehow pastes the whole code before running
-            #await terminal.eval('\x05'+"#**END-CODE**#"+'\x04')
+            document.getElementById('gif').style.visibility = 'visible'
+            document.getElementById('gif').style.display = 'block'
+            code = event.detail.code
+
+            await my_globals.terminal.eval('\x05' + code + "#**END-CODE**#" + '\x04')
             my_globals.terminal.focus()
-            print("Hello_ish")
-        except:
-            print('EXCEPT ERROR')
-            pass
-        finally:
-            if my_globals.isRunning:  #only print completion if not stopped manually
-                print_jav.print_custom_terminal("...")
-            enable_buttons([my_globals.custom_run_button]) #disable and enable custom button to prevent spamming and errors
-            my_globals.isRunning = False
-        return False  #return False to avoid executing on browser
-    else:
-        return True
-    
+            enable_buttons([my_globals.custom_run_button])
+            return False  #return False to avoid executing on browser
+        else:
+            print('terminal not connected')
+            return True
+    # else:
+    #     code = event.code
+
 #take in a list of document elements
 #aka things that look like: sensors = document.getElementById('sensor_readings')
 def disable_buttons(list_to_disable):

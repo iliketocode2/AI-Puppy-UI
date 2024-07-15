@@ -39,7 +39,6 @@ def process_chunks(javi_buffer, chunk):
             my_globals.javi_buffer = my_globals.javi_buffer[start_point + 1:] #start at key index
     
     if my_globals.found_key:
-        #print("HERE")
         print_statements = find_print_statements(my_globals.javi_buffer)
         if print_statements:
             for statement in print_statements:
@@ -59,7 +58,7 @@ def process_chunks(javi_buffer, chunk):
 def on_data_jav(chunk):
     # print("ON-DATA: ", chunk)
     
-    #print("HERERE", javi_buffer)
+    # print("IN BUFFER", my_globals.javi_buffer)
     my_globals.javi_buffer = process_chunks(my_globals.javi_buffer, chunk)
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
