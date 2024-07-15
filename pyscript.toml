@@ -21,6 +21,5 @@ name = "AI Puppy Lesson 1_Jav_June26 Copy"
 "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
 
 
-
 [js_modules.main]
 "https://esm.run/micro-repl@0.5.0/serial" = "micro_repl"

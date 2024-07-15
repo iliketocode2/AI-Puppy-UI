@@ -42,6 +42,7 @@ def on_custom_disconnect(event=None):
 def second_half_disconnect(event=None):
     my_globals.connect.onclick = on_connect
     helper_mod.clean_up_disconnect()
+    print_jav.print_custom_terminal("Saving your code...")
 
 
 async def on_connect(event):
@@ -69,7 +70,6 @@ async def on_connect(event):
         my_globals.progress_bar.value = 75
         print("Before-THEE-LIST")
         await file_os.getList(my_globals.terminal, my_globals.file_list)
-        #print(file_list)
         print("THEE-LIST")
         my_globals.progress_bar.value = 100
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
@@ -115,11 +115,18 @@ async def on_load(event):
         
         #sisenor
         my_globals.progress_bar.style.display = 'block'
+        my_globals.percent_text.style.display = 'block'
+        counter = 1
+
         for current_path in git_paths:
             name = current_path.split('/')[-1] 
             print('path, name: ',current_path,name)
+
+            my_globals.percent_text.innerHTML = "Downloading " + name + " (" + str(counter) + "/" + str(len(git_paths)) + ")"
+
             reply = await restapi.get(current_path)
             status = await my_globals.terminal.download(name,reply)
+            counter += 1
             if not status: 
                 window.alert(f"Failed to load {name}. Click Ok to continue downloading other files")  
         
@@ -133,6 +140,7 @@ async def on_load(event):
         #copy
 
         my_globals.progress_bar.style.display = 'none'
+        my_globals.percent_text.style.display = 'none'
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button])
         print_jav.print_custom_terminal("Download complete!")
         document.getElementById('download-code').innerHTML = 'Download Training Code'
@@ -141,7 +149,6 @@ async def on_load(event):
         
     else:
         window.alert('connect to a processor first')
-
 
 # expose stop_running_code function to JavaScript
 window.stop_running_code = helper_mod.stop_running_code

@@ -51,61 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    //checkCurrentLesson(); //get rid of this
-
     function createObject(object, variableName) {
         globalThis[variableName] = object
     }
-
-    //function that maps python object (left) to the global js variable
-    // exports python functions to javascript
-    //This way we can call python functions in JS
-    //object is python object. VariableName is what you want it to be called in JS
-    //called in pythonn
-   // function createObject(object, variableName) {
-       // globalThis[variableName] = object
-    //}
-
-    //JAV-CODE (above)
-
-/*
-    function setButtonState(button, isActive) {
-        if (isActive) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    }
-
-    function updateButtonStates(isConnected, isSensorMode) {
-        setButtonState(downloadButton, isConnected && !isSensorMode);
-        setButtonState(sensorButton, isConnected);
-        setButtonState(runButton, isConnected && !isSensorMode);
-    }
-
-    // Initial state
-    updateButtonStates(false, false);
-
-    // Connect button click handler
-    connectButton.addEventListener('click', function() {
-        const isConnected = !this.classList.contains('connected');
-        this.classList.toggle('connected');
-        this.textContent = isConnected ? 'Disconnect' : 'Connect Spike Prime';
-        //isConnected = isConnected && python_funct.
-        updateButtonStates(isConnected, false);
-    });
-    */
-
-    /*
-    // Sensor button click handler
-    sensorButton.addEventListener('click', function() {
-        if (this.classList.contains('active')) {
-            const isSensorMode = this.textContent === 'Sensor Readings';
-            this.textContent = isSensorMode ? 'Get Terminal' : 'Sensor Readings';
-            updateButtonStates(true, isSensorMode);
-        }
-    });
-    */
 
     let is_running = false;
     // connect 'run python code' js button to mpy-editor
@@ -210,5 +158,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const messages = document.getElementById('terminalMessages');
         terminal.scrollTop = messages.scrollHeight;
     };
+
+
+
+    // // Function to save the content of the editor to localStorage
+    // function saveContent() {
+    //     console.log('saving content...');
+    //     const content = document.getElementById('MPcode').code;
+    //     localStorage.setItem('key', content);
+    // }
+
+    // // Function to load the content from localStorage
+    // function loadContent() {
+    //     console.log('loading content...');
+    //     const content = localStorage.getItem('key');
+    //     if (content) {
+    //         // document.getElementById('MPcode').code = content;
+    //         // document.getElementById('putTextHere').innerHTML = content;
+    //         document.getElementById('MPcode').code = content;
+    //     }
+    // }
+
+
+    // // buttonClick = document.getElementById('clickIT');
+    // // buttonClick.addEventListener('click', loadContent, true)
+
+
+    // // Save content every 5 seconds
+    // setInterval(saveContent, 5000);
+
+    // Load the content when the page loads
+    // window.onload = loadContent;
 
 });

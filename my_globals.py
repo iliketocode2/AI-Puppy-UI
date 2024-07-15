@@ -26,9 +26,8 @@ def init():
         6: "/flash/Main_Lesson6.py"
     }
 
-
     #elements
-    global connect, download, path, sensors, custom_run_button, my_green_editor, file_list, progress_bar, custom_terminal_ele
+    global connect, download, path, sensors, custom_run_button, my_green_editor, file_list, progress_bar, custom_terminal_ele, percent_text, percent_div
     connect = document.getElementById('connect-spike')
     download = document.getElementById('download-code')
     path    = document.getElementById('gitpath')
@@ -39,8 +38,11 @@ def init():
     #for list of files
     file_list = document.getElementById('files')
     custom_terminal_ele = document.getElementById('customTerminalMessage')
+    percent_text = document.getElementById('progress-percent')
+    percent_div = document.getElementById('progressDiv')
 
   
     #terminal
     global terminal
+    # terminal = ampy.Ampy(SPIKE, progress_bar)
     terminal = ampy.Ampy(SPIKE, progress_bar)

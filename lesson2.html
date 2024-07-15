@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
     <script type="module" src="https://cdn.jsdelivr.net/npm/@pyscript/core@0.4.46/dist/core.js"></script>
     <script src="script.js"></script>
+    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body id = "lesson2">
@@ -64,8 +65,9 @@
                     <button class="button1" id="sensor_readings">Sensor Readings</button>
                     <div id="sensor-info" class="sensor-info-container"></div>
                 </div>
-                <div class="progress-container">
-                    <progress id="progress" value="0" max="100"> 0% </progress> 
+                <div class="progress-container" id="progressDiv">
+                    <progress id="progress" value="0" max="100"></progress> 
+                    <span class="progress-text" id="progress-percent">0%</span>
                 </div>
             </div>
 
@@ -111,7 +113,7 @@
                             <script id="MPcode" type="mpy-editor" env="ble" class="mpy-editor-container"></script>
                         </div>
                     </div>
-                    <div class="slider"></div>
+                    <div class="slider">...</div>
                     <div class="box right-box" id="resizeBox">
                         <div class="tab">
                             <button class="tablinks active" id="customTerminalButton">Terminal</button>

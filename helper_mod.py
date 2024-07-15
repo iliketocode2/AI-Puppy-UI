@@ -63,8 +63,11 @@ async def remove_files():
         new_option.text = "You do not have the right file. Please click the download button"
         # new_option.value = "new_file.py" # how you could add a new file
         my_globals.file_list.appendChild(new_option)
+        my_globals.download.style.display = 'block'
         print('end of if statement')
     else:
+        print('not empty')
+        my_globals.download.style.display = 'none'
         await on_select(None) #**needed for uploading 1st file
 
 async def on_select(event):

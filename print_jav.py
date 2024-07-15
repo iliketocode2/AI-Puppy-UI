@@ -46,6 +46,11 @@ def process_chunks(javi_buffer, chunk):
                 print_statement = statement.strip()
                 #print("SISENOR: ", print_statement)
                 print_custom_terminal(print_statement) #print to print terminal
+
+                #add custom repsonses on error here!
+                if print_statement.find("OSError:") != -1:
+                    print_custom_terminal("Make sure your devices are plugged into the proper ports!")
+
                 my_gif.get_gif(my_globals.current_gif_dictionary, print_statement)
 
             
