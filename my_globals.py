@@ -2,6 +2,7 @@
 #checking commit cover fix 
 
 from pyscript import document
+from pyscript.js_modules import file_library
 import ampy
 def init():
     #variables
@@ -28,6 +29,8 @@ def init():
 
     #elements
     global connect, download, path, sensors, custom_run_button, my_green_editor, file_list, progress_bar, custom_terminal_ele, percent_text, percent_div
+    global save_btn, upload_file_btn, fileName
+    save_btn = document.getElementById('save_button')
     connect = document.getElementById('connect-spike')
     download = document.getElementById('download-code')
     path    = document.getElementById('gitpath')
@@ -36,10 +39,18 @@ def init():
     my_green_editor = document.getElementById('MPcode') #for editor
     progress_bar = document.getElementById('progress')
     #for list of files
-    file_list = document.getElementById('files')
+    file_list = document.getElementById('files') #HEREE***
     custom_terminal_ele = document.getElementById('customTerminalMessage')
     percent_text = document.getElementById('progress-percent')
     percent_div = document.getElementById('progressDiv')
+    upload_file_btn = document.getElementById('chooseFileButton')
+    fileName = document.getElementById('fileRead') #not sure what fileName represents
+
+    #from pyscript.js_modules import file_library
+    #JS-classes instances
+    global saving_js_module
+    saving_js_module = file_library.newFile()
+
 
   
     #terminal

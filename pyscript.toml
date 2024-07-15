@@ -7,19 +7,22 @@ name = "AI Puppy Lesson 1_Jav_June26 Copy"
 "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_os.py" = "file_os.py"
 
 #COMMENT THIS OUT BEFORE COMMIT
-# "/my_globals.py" = "./my_globals.py"
-# "/sensor_mod.py" ="./sensor_mod.py"
-# "/print_jav.py" = "./print_jav.py"
-# "/my_gif.py" = "./my_gif.py"
-# "/helper_mod.py" = "./helper_mod.py"
+"/my_globals.py" = "./my_globals.py"
+"/sensor_mod.py" ="./sensor_mod.py"
+"/print_jav.py" = "./print_jav.py"
+"/my_gif.py" = "./my_gif.py"
+"/helper_mod.py" = "./helper_mod.py"
 
 #COMMENT THIS OUT WHILE EDITING ON LOCAL
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_globals.py" = "./my_globals.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/sensor_mod.py" = "./sensor_mod.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/print_jav.py" = "./print_jav.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_gif.py" = "./my_gif.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
+#"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_globals.py" = "./my_globals.py"
+#"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/sensor_mod.py" = "./sensor_mod.py"
+#"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/print_jav.py" = "./print_jav.py"
+#"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_gif.py" = "./my_gif.py"
+#"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
 
 
 [js_modules.main]
+#"https://javier-laveaga.pyscriptapps.com/jul-15-webpage/latest/jav_will_em_core/save_jav.js" = "save_jav"
+"save_jav.js" = "save_jav.js"
+"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_library.js" = "file_library"
 "https://esm.run/micro-repl@0.5.0/serial" = "micro_repl"

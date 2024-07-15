@@ -627,3 +627,65 @@ progress::-moz-progress-bar {
   }
 
 /*   Progress bar   */
+
+/*Progress text */
+
+.progress-text {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+/*Progress text */
+
+/* File input */
+.custom-file-input {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.custom-file-input input[type="file"] {
+    position: absolute;
+    font-size: 100px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+}
+
+.custom-file-input .button1 {
+    background-color: #998887;
+    border: none;
+    border-radius: 50px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 12px 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 7px;
+    margin-left: 7px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.custom-file-input .button1:hover {
+    background-color: #111827;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-file-input .button1:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.custom-file-input .button1.active {
+    background-color: #111827;
+}
+/* File input */

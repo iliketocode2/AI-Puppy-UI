@@ -3,7 +3,7 @@
 #BLE_CEEO_url = 'https://raw.githubusercontent.com/chrisbuerginrogers/SPIKE_Prime/main/BLE/BLE_CEEO.py'
 #WEEE
 
-from pyscript import document, window
+from pyscript import document, window, when #TODOO: delete when once done with on_upload_file
 from js import window
 import ampy
 import restapi
@@ -32,13 +32,17 @@ def on_custom_disconnect(event=None):
     if (my_globals.sensors.onclick == sensor_mod.close_sensor):
         print('clearing sensor data')
         await sensor_mod.close_sensor()
-
-    second_half_disconnect()
+    
+    #Saving files
+    await helper_mod.on_save(None)
     my_globals.physical_disconnect = False
+    second_half_disconnect()
+    
 
     #clear sensor display
     document.getElementById('sensor-info').innerHTML = ""   
 
+#callback when disconnected physically
 def second_half_disconnect(event=None):
     my_globals.connect.onclick = on_connect
     helper_mod.clean_up_disconnect()
@@ -46,7 +50,7 @@ def second_half_disconnect(event=None):
 
 
 async def on_connect(event):
-    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.connect, my_globals.custom_run_button])
+    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
     my_globals.connect.innerHTML = 'Connecting...'
     await my_globals.terminal.board.connect('repl')
 
@@ -78,6 +82,7 @@ async def on_connect(event):
             my_gif.display_gif("gifs/Lesson3/Multiple_sensors.gif")
         
         await helper_mod.remove_files()
+
         
         #enable disconnect
         my_globals.connect.classList.add('connected')
@@ -87,7 +92,7 @@ async def on_connect(event):
         # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
 
         #initializing user interface
-        helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download])
+        helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download, my_globals.save_btn, my_globals.upload_file_btn])
         #show gifs and files
         document.getElementById('files').style.visibility = 'visible'
         document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
@@ -125,6 +130,9 @@ async def on_load(event):
             my_globals.percent_text.innerHTML = "Downloading " + name + " (" + str(counter) + "/" + str(len(git_paths)) + ")"
 
             reply = await restapi.get(current_path)
+            #print("REPLY")
+            #print(reply)
+            #print("REPLY")
             status = await my_globals.terminal.download(name,reply)
             counter += 1
             if not status: 
@@ -150,12 +158,39 @@ async def on_load(event):
     else:
         window.alert('connect to a processor first')
 
+'''
+@when("click", "#local")
+async def on_save(event): 
+    filename = fileName.value
+    name = filename.split('\\')[-1] if filename else 'test.txt'
+    await files.save(content.value, name)
+'''
+#saving funcitons (in progress)
+#grab file_list from globals. (get the value (check that it is oonly of length 1. ))
+
+@when("change", "#fileRead")
+async def on_upload_file(event): 
+    print("JAV")
+    path = my_globals.fileName.value
+    print(path)
+    code_retrieved = await my_globals.saving_js_module.read('fileRead') #saving_js_module is really an instance of the class 'Files' in save_jav.js
+    #content.innerText = code_retrieved
+    #making editor show the code just fetched
+    my_globals.my_green_editor.code = code_retrieved
+    print('file beginning: ',code_retrieved[:10])
+    
+#my_globals.upload_file_btn.onclick = on_upload_file
+
+
+
+
+
 # expose stop_running_code function to JavaScript
 window.stop_running_code = helper_mod.stop_running_code
 
 #get_repl = document.getElementById('get_repl')
 
-
+my_globals.save_btn.onclick = helper_mod.on_save
 my_globals.my_green_editor.addEventListener('mpy-run', helper_mod.handle_board)
 my_globals.my_green_editor.handleEvent = helper_mod.handle_board
 

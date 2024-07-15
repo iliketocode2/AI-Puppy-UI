@@ -22,7 +22,7 @@ def find_print_statements(buffer):
         start_index = end_new_line_index + 1
     return statements
 
-def process_chunks(javi_buffer, chunk):
+def process_chunks(chunk):
     my_globals.javi_buffer += chunk
     #print("BUFFER:",javi_buffer)
     
@@ -64,7 +64,7 @@ def on_data_jav(chunk):
     # print("ON-DATA: ", chunk)
     
     # print("IN BUFFER", my_globals.javi_buffer)
-    my_globals.javi_buffer = process_chunks(my_globals.javi_buffer, chunk)
+    my_globals.javi_buffer = process_chunks(chunk)
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):
