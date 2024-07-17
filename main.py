@@ -151,7 +151,7 @@ async def on_load(event):
         my_globals.percent_text.style.display = 'none'
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button])
         print_jav.print_custom_terminal("Download complete!")
-        document.getElementById('download-code').innerHTML = 'Download Training Code'
+        #document.getElementById('download-code').innerHTML = 'Download Training Code'
         
         #document.getElementById('repl').style.display = 'block'
         
@@ -203,8 +203,7 @@ my_globals.download.onclick = on_load
 my_globals.sensors.onclick = sensor_mod.on_sensor_info
 
 #start disabled until connected
-my_globals.sensors.disabled = True 
-my_globals.download.disabled = True
+helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
 #get_repl.onclick = display_repl
 
 my_globals.terminal.disconnect_callback = second_half_disconnect

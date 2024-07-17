@@ -254,6 +254,13 @@ img.puppyPicture {
     overflow: hidden;
     padding-top: 20px; 
     padding-bottom: 20px;
+    border: 7px solid #ff5eae; /* Pink border color and thickness */
+    border-radius: 10px;
+    padding: 20px; /* Adding padding for consistency with other sections */
+    box-sizing: border-box; /* Ensure padding and border are included in the total width */
+
+
+    
 }
 
 .topDisplay {
@@ -317,7 +324,8 @@ img.puppyPicture {
     height: 88%;
     display: flex;
     gap: 10px;
-    overflow: hidden; /* Hide any potential overflow */
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    
 }
 
 .box {
@@ -331,13 +339,12 @@ img.puppyPicture {
 }
 
 .left-box {
-    flex: 2;
+    flex: 0.1;
     position: relative;
     text-align: center;
 }
 
 .right-box {
-    width: 50vw;
     margin-right: 10px;
     overflow-x: hidden;
     overflow-y: auto; /* Changed from hidden to auto */
@@ -351,6 +358,7 @@ img.puppyPicture {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
 }
 
 .right-box:first-child {
@@ -433,7 +441,10 @@ img.puppyPicture {
 /*---------------------------------------------------------------*/
 
 .runCode{
-    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Adjust the spacing between buttons */
 }
 
 .portInstructions {
@@ -689,3 +700,17 @@ progress::-moz-progress-bar {
     background-color: #111827;
 }
 /* File input */
+
+/* Vertical buttons */
+
+/* Flexbox for vertical buttons */
+.vertical-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Adjust the spacing between buttons */
+}
+
+
+/* Vertical buttons */
+

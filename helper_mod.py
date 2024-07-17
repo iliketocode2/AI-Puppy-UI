@@ -27,12 +27,12 @@ def clean_up_disconnect():
         print('connected')
     print_jav.print_custom_terminal("Disconnected from your Spike Prime.")
     #my_globals.terminal.send('\x03') #to stop any program that is running
-    print('after disconnect, passed x03')
+    #print('after disconnect, passed x03')
     my_globals.terminal.board.disconnect()
 
     #allow user to connect back
     my_globals.connect.innerText = 'Connect Spike Prime'
-    disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn])
+    disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
 
     # hide any gifs
     document.getElementById('gif').style.display = 'none'
@@ -61,7 +61,7 @@ async def remove_files():
         print('end of if statement')
     else:
         print('not empty')
-        my_globals.download.style.display = 'none'
+        #my_globals.download.style.display = 'none'
         await on_select(None) #**needed for uploading 1st file
 
 async def on_select(event):
@@ -103,8 +103,7 @@ def enable_buttons(list_to_disable):
 
 async def on_save(event):
     if (my_globals.file_list.options.length == 1):
-        helper_mod.disable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn])
-
+        helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         #SAVING LOCALLY
         #print("AQUI")
         my_editor_code = my_globals.my_green_editor.code
@@ -127,6 +126,7 @@ async def on_save(event):
         my_globals.progress_bar.style.display = 'none'
         print_jav.print_custom_terminal("Saved on SPIKE!")
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn])
+        print("ENABLED BUTTONS ON SAVE")
 
     else:
         #print(my_globals.my_green_editor.code)

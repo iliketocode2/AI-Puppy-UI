@@ -59,9 +59,9 @@
             <div class="header">
                 <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
                 <div class="topDisplay">
-                    <button class="button1" id="connect-spike">Connect Spike Prime</button>
-                    <button class="button1" id="download-code">Download Training Code</button>
-                    <button class="button1" id="sensor_readings">Sensor Readings</button>
+                    <button class="button1" id="connect-spike">Connect</button>
+                    <button class="button1" id="custom-run-button" data-editor-id="MPcode">Run</button>
+                    <button class="button1" id="save_button" >Save</button>
                     <div id="sensor-info" class="sensor-info-container"></div>
                 </div>
                 <div class="progress-container" id="progressDiv">
@@ -82,17 +82,14 @@
                             <!-- <option disabled>--Please select a file to run--</option> -->
                         </select>
                     </div>
-                    <br>
-                    <button class="button1 runCode" id="custom-run-button" data-editor-id="MPcode">Run Python Code</button>
-                    <br><br>
-                    <button class="button1 runCode" id="save_button" >Save</button>
-                    <br><br>
-                    <div class="custom-file-input">
-                        <input type="file" id="fileRead">
-                        <button class="button1" type="button" id="chooseFileButton">Upload Local File</button>
+                    <div class="vertical-buttons">
+                        <div class="custom-file-input">
+                            <input type="file" id="fileRead">
+                            <button class="button1 runCode" type="button" id="chooseFileButton">Upload Local File</button>
+                        </div>
+                        <button class="button1 runCode" id="download-code">Download Code</button>
+                        <button class="button1 runCode" id="sensor_readings">Sensors</button>
                     </div>
-                    <br><br>
-                    <br><br>
 
                     <div class="portInstructions" id="portInfo">
                         <h3>Port Assignments</h3>
