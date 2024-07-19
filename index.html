@@ -9,8 +9,10 @@
     <script src="script.js"></script>
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--For save button-->
 </head>
 <body id = "lesson1">
+  
      
     <header>
         <nav class="headbar">
@@ -61,8 +63,20 @@
                 <script type="mpy" src="./main.py" config="./pyscript.toml"></script>
                 <div class="topDisplay">
                     <button class="button1" id="connect-spike">Connect</button>
-                    <button class="button1" id="custom-run-button" data-editor-id="MPcode">Run</button>
-                    <button class="button1" id="save_button" >Save</button>
+                     <!--FOR RUN BUTTON-->
+                    <!-- partial:index.partial.html -->
+                    <div class="button-row">
+                        <button class="button | button--toggle button--play" id="custom-run-button" data-editor-id="MPcode"> 
+                            <i class="ph-play | gg-play-button"></i>
+                            <i class="ph-pause | gg-play-stop"></i>
+                        </button>
+                    </div>
+                    <!--button class="button1" id="custom-run-button" data-editor-id="MPcode">Run</button-->
+                    <!--button class="button1" id="custom-run-button" >Run</button-->
+                    <!--button class="button1" id="save_button" >Save</button-->
+                    <button id="save_button" class="button1">
+                        <i class="fa fa-save" ></i>
+                    </button>
                     <div id="sensor-info" class="sensor-info-container"></div>
                 </div>
                 <div class="progress-container" id="progressDiv">
@@ -80,14 +94,15 @@
                         <select name="files" id="files" class="files">
                         </select>
                     </div>
-                        <div class="vertical-buttons">
-                            <div class="custom-file-input">
-                                <input type="file" id="fileRead">
-                                <button class="button1 runCode" type="button" id="chooseFileButton">Upload Local File</button>
-                            </div>
-                            <button class="button1 runCode" id="download-code">Download Code</button>
-                            <button class="button1 runCode" id="sensor_readings">Sensors</button>
+                    <div class="vertical-buttons">
+                        <div class="custom-file-input">
+                            <input type="file" id="fileRead" style="display: none;"> <!--Hide actual file selector. FileRead id important for JS function-->
+                            <button class="button1" type="button" id="chooseFileButton">Upload Local File</button>
                         </div>
+                        <button class="button1" id="download-code">Download Code</button>
+                        <button class="button1" id="sensor_readings">Sensors</button>
+                    </div>
+                    
                     
                     
 
@@ -140,7 +155,8 @@
             </p>
             <p>----------------------------------------------------------------------- &copy;2024. All rights reserved.Tufts.edu.com -----------------------------------------------------------------------</p>
         </footer>
-    </div>
+  
+    
 
     
 </body>

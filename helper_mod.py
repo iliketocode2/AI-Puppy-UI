@@ -10,10 +10,12 @@ def stop_running_code():
         await my_globals.terminal.send('\x03')
         print('stopped code')
 
-        document.getElementById('gif').style.display = 'none'
+        #document.getElementById('gif').style.display = 'none' #do not do this
+        window.fadeImage('') #do this to clear gifs
+
         print_jav.print_custom_terminal("Code execution ended. Please press the button to run the code again.")
         my_globals.found_key = False
-        enable_buttons([my_globals.sensors, my_globals.download])
+        enable_buttons([my_globals.sensors, my_globals.download, my_globals.upload_file_btn, my_globals.save_btn])
 
 
 
@@ -72,7 +74,7 @@ async def on_select(event):
 async def handle_board(event):
     if event.type == 'mpy-run':
         if my_globals.terminal.connected:
-            disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button])
+            disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
             print_jav.print_custom_terminal("Running code...")
 
             document.getElementById('gif').style.visibility = 'visible'
@@ -94,11 +96,18 @@ async def handle_board(event):
 def disable_buttons(list_to_disable):
     for element in list_to_disable:
         element.disabled = True #for actual functioning
-        element.classList.remove('active') #for displaying
+        if element.id == 'custom-run-button':
+            #element.classList.remove('is-active')  # remove the 'is-active' class
+            element.classList.add('disabled')  # add a 'disabled' class
+        else:
+            element.classList.remove('active') #for displaying other buttons
 def enable_buttons(list_to_disable):
     for element in list_to_disable:
         element.disabled = False #controls actually being able to click and activate it/calling corresponding function
-        element.classList.add('active') #controls display
+        if element.id == 'custom-run-button':
+            element.classList.remove('disabled')  # remove the 'disabled' class
+        else:
+            element.classList.add('active') #controls display for other buttons
 
 
 async def on_save(event):
@@ -125,7 +134,7 @@ async def on_save(event):
             window.alert(f"Failed to load {name_file}. Click Ok to continue downloading other files")  
         my_globals.progress_bar.style.display = 'none'
         print_jav.print_custom_terminal("Saved on SPIKE!")
-        helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn])
+        helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print("ENABLED BUTTONS ON SAVE")
 
     else:

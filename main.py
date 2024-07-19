@@ -211,4 +211,10 @@ my_globals.terminal.newData_callback = print_jav.on_data_jav #defined for when p
 
 my_gif.set_dictionary()
 
+
+
+@when("click", "#internet_button")
+async def way_1_print(event):
+    print("INTERNET BUTTON")
+
  

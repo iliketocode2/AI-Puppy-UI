@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
-    const runButton = document.getElementById('custom-run-button');
+    //const runButton = document.getElementById('custom-run-button');
+    //const my_jav_button = document.getElementById('my-button-jav');
+    
 
 
      //JAV-CODE (below)
@@ -54,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createObject(object, variableName) {
         globalThis[variableName] = object
     }
-
+/* 
     let is_running = false;
     // connect 'run python code' js button to mpy-editor
     runButton.addEventListener('click', function() {
@@ -77,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             is_running = false;
         }
     });
+    */
 
     // Code for resizable terminal
     let topBox = document.querySelector('.right-box:first-child');
@@ -158,6 +161,39 @@ document.addEventListener('DOMContentLoaded', function() {
         const messages = document.getElementById('terminalMessages');
         terminal.scrollTop = messages.scrollHeight;
     };
+
+    // Nope. CSS is powerful.
+
+    //const buttons = document.querySelectorAll(".button--toggle");
+    const nice_jav_button = document.querySelector("#custom-run-button");
+    let is_running = false;
+    nice_jav_button.addEventListener("click", function () {
+    nice_jav_button.classList.toggle("is-active");
+    if (!is_running) {
+        // run the code
+        const editor = document.getElementById(this.getAttribute('data-editor-id'));
+        if (editor) {
+            const event = new CustomEvent('mpy-run', {
+                bubbles: true,
+                detail: { code: editor.code }
+            });
+            editor.dispatchEvent(event);
+            is_running = true;
+        }
+    } else {
+        // stop the code
+        window.stop_running_code(); //calling python function
+        is_running = false;
+    }
+    });
+
+    //programmatically click the hidden upload file input element after clicking the Upload button
+    document.getElementById('chooseFileButton').addEventListener('click', function() {
+        document.getElementById('fileRead').click();
+    });
+    
+
+   
 
 
 

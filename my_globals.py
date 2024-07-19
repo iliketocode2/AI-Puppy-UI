@@ -45,6 +45,7 @@ def init():
     percent_div = document.getElementById('progressDiv')
     upload_file_btn = document.getElementById('chooseFileButton')
     fileName = document.getElementById('fileRead') #not sure what fileName represents
+    #nice_jav_button = document.getElementById('my-button-jav')
 
     #from pyscript.js_modules import file_library
     #JS-classes instances
