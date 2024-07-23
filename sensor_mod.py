@@ -129,12 +129,12 @@ function_dict = {
     65: small_motor_print
 }
 
+port_info = [()] * 6
 
 """
 #code for getting port information in tuple form
 #tuple = (1 if connected & recognized, port number, sensor_id)
 execute_code = """
-    port_info = [()] * 6
     for i in range(6):
         #for each port get the device Id
         current_port = i
@@ -143,16 +143,20 @@ execute_code = """
             port_id = device.id(current_port) #this should be either 49, or 61 or 62 or... 65 #handle exception when not found
             # Call the corresponding function if the device ID is found
             if port_id in function_dict:
-                #function_dict[port_id](i)
-                port_info[i] = (1, i, port_id)
+                number = function_dict[port_id](i)
+                port_info[i] = (1, i, port_id, number)
             else:
                 #print(f"No function defined for device ID {port_id}")
-                port_info[i] = (0,0,0)
+                port_info[i] = (0,0,0,0)
         except OSError as e: #nothing connected to it
             # Means port does not have any sensor connected to it
-            port_info[i] = (0,0,0)
+            port_info[i] = (0,0,0,0)
             #print("YAA")
             #print(f"Port {current_port} error: {e}")
+
+port_info
+
+
 """
 
 
@@ -180,29 +184,24 @@ async def on_sensor_info(event):
     my_globals.sensors.innerText = 'Close'
     #execute code for thisL 
     # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
-    #stop_loop = False
-    # Add event listener for user input
-    #event handler when user types in keyboard
-    #counter = 0
     print("STOP-LOOP", my_globals.stop_loop)
     color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
+
     while not my_globals.stop_loop:
         #two lines below should go in while loop (checks every time the port info)
         
         #if and break statements added because if disconnected physically (aka suddenly), we must not do eval. 
         #if not my_globals.terminal.connected:
         #    break
-        await my_globals.terminal.eval(execute_code, 'hidden') 
-        #if not my_globals.terminal.connected:
-        #    break
-        port_info_array = await my_globals.terminal.eval("""port_info
-                            """, 'hidden')
-        #clearing it every time (very important)
+        #print("Before execute")
+        port_info_array = await my_globals.terminal.eval(execute_code, 'hidden') 
+
 
         # sensor_info_html = ""  # Initialize HTML content for sensor info
         sensor_info_html = "<div class='sensor-info-container'>" # Initialize HTML content for sensor info
 
         #iterating over tuples/ports
+        #print("before port_array")
         for t in port_info_array: #if sensors are switched somewhere her, then error cause u don't udpate port_info_array
             #solution would be to break out of loop if a bool is triggered(port disconnected)
             
@@ -217,11 +216,7 @@ async def on_sensor_info(event):
                 if not my_globals.terminal.connected:
                     break
                 #t[2] is function/device id & t[1] is port #
-                number = await my_globals.terminal.eval(f"""
-                    number = function_dict[{t[2]}]({t[1]})
-                    number
-                    
-                """, 'hidden')
+                number = t[3]
 
 
                 #if it is the color sensor process number as a tuple
@@ -322,15 +317,19 @@ async def on_sensor_info(event):
 
         sensor_info_html += "</div>"  # Close the container
         # Update the sensor info container with new HTML content
-        print("In_LOOOP")
+        #print("In_LOOOP")
         document.getElementById('sensor-info').innerHTML = sensor_info_html
+        print("In LOOP ")
 
     print("STOP-LOOP True")
 
 async def close_sensor(event=None):
     print("In_CLose")
+    helper_mod.disable_buttons([my_globals.sensors, my_globals.download])
     my_globals.stop_loop = True
-    await asyncio.sleep(0.3) #to allow while loop to finish its current iteration
+    #(min of 0.32 - worst case scenario (when you trigger stop_loop boolean
+    # in close sensor right before calling eval in while loop of on_sensor info ))
+    await asyncio.sleep(0.5) #to allow while loop to finish its current iteration 
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = on_sensor_info
@@ -351,19 +350,13 @@ async def close_sensor(event=None):
     #statement is not called twice
     #this would result on calling eval again when the first eval call has not yet 
     #finished. (resulting in error: can't eval 2 things at once)
-    sensor_button = document.getElementById('sensor_readings')
-    sensor_button.disabled = True
-    my_globals.download.disabled = True #prevent from downloading straight away also
-    await asyncio.sleep(0.2) 
+    #helper_mod.disable_buttons([my_globals.sensors, my_globals.download])
+    #await asyncio.sleep(0.2) 
     
     #clear all sensor info -- redundant but prevents lag errors
     #document.getElementById('sensor-info').innerHTML = "" 
     print("REACHED")
     #show terminal
     document.getElementById('repl').style.display = 'block'
-
-    
-    sensor_button.disabled = False  # Re-enable the button
-    my_globals.download.disabled = False
-
+    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.sensors])
    

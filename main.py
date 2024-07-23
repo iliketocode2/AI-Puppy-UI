@@ -93,6 +93,7 @@ async def on_connect(event):
                 print("TIMEOUT", timeout_count)
                 if timeout is not None and timeout_count >= max_timeout_count:
                     print("PROBLEM HERE")
+                    document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reload page
                     break
             
             #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)

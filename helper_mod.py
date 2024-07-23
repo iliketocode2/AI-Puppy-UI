@@ -84,6 +84,7 @@ async def remove_files():
                 print("TIMEOUT", timeout_count)
                 if timeout is not None and timeout_count >= max_timeout_count:
                     print("PROBLEM HERE")
+                    document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reload page
                     break
             
             #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)
@@ -99,7 +100,7 @@ async def handle_board(event):
     
     if event.type == 'mpy-run':
         if my_globals.terminal.connected:
-            #disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
+            disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
             print_jav.print_custom_terminal("Running code...")
 
             document.getElementById('gif').style.visibility = 'visible'
