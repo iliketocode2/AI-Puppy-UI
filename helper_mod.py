@@ -4,6 +4,7 @@ import print_jav
 import sensor_mod
 import file_os
 import helper_mod
+import asyncio
 
 def stop_running_code():
     if my_globals.terminal.connected:
@@ -33,12 +34,10 @@ def clean_up_disconnect():
     my_globals.terminal.board.disconnect()
 
     #allow user to connect back
-    my_globals.connect.innerText = 'Connect Spike Prime'
+    my_globals.connect.innerText = 'Connect'
     disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
 
-    # hide any gifs
-    document.getElementById('gif').style.display = 'none'
-    # document.getElementById('portInfo').style.display = 'block'
+    
 
     #make the connect button green
     if (document.getElementById("connect-spike").classList.contains('connected')):
@@ -47,6 +46,7 @@ def clean_up_disconnect():
 
 #removes files from the dropdown list of files (not the microprocessor). Removes all files except the one needed for the current lesson
 async def remove_files():
+    window.stopFadingWarningIcon() #important for resetting fading (avoids conflicts of having multiple fadings at once)
     # make only the file that matches the page appear
     for i in range(my_globals.file_list.options.length - 1, -1, -1):
         option = my_globals.file_list.options.item(i)
@@ -57,14 +57,38 @@ async def remove_files():
     if my_globals.file_list.options.length == 0:
         new_option = document.createElement('option')
         new_option.text = "You do not have the right file. Please click the download button"
+        window.startFadingWarningIcon() 
         # new_option.value = "new_file.py" # how you could add a new file
         my_globals.file_list.appendChild(new_option)
-        my_globals.download.style.display = 'block'
+        #my_globals.download.style.display = 'block' #nobueno- problems in shifting download icon
         print('end of if statement')
     else:
         print('not empty')
+        window.stopFadingWarningIcon()
+
+        #timeout for on_select (this could have been done by just calling on_select once)
+        #but we are calling on_select multiple times until it doesn't give errors (usually it doesnt)
         #my_globals.download.style.display = 'none'
-        await on_select(None) #**needed for uploading 1st file
+        timeout = 1  # Timeout duration in seconds (change this)
+        timeout_count = 0
+        max_timeout_count = 10 * timeout  # Adjust as necessary
+        
+        while True:
+            try:
+                await on_select(None)  # Attempt to call on_select
+                print("on_select completed successfully")
+                break
+            except Exception as e:
+                print(f"An error occurred while calling on_select: {e}")
+                timeout_count += 1
+                print("TIMEOUT", timeout_count)
+                if timeout is not None and timeout_count >= max_timeout_count:
+                    print("PROBLEM HERE")
+                    break
+            
+            #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)
+            await asyncio.sleep(0.1)  # Short delay before retrying 
+
 
 async def on_select(event):
     print("on selectsiuu")
@@ -72,9 +96,10 @@ async def on_select(event):
 
 #evaluates code when the green button is pressed
 async def handle_board(event):
+    
     if event.type == 'mpy-run':
         if my_globals.terminal.connected:
-            disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
+            #disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
             print_jav.print_custom_terminal("Running code...")
 
             document.getElementById('gif').style.visibility = 'visible'

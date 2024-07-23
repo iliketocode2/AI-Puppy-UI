@@ -10,6 +10,8 @@
     <link rel="icon" type="image/png" href="images/favicon-32x32.png">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!--For save button-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  <!--For download exception icon-->
+
 </head>
 <body id = "lesson1">
   
@@ -77,11 +79,13 @@
                     <button id="save_button" class="button1">
                         <i class="fa fa-save" ></i>
                     </button>
-                    <div id="sensor-info" class="sensor-info-container"></div>
-                </div>
-                <div class="progress-container" id="progressDiv">
-                    <progress id="progress" value="0" max="100"></progress> 
-                    <span class="progress-text" id="progress-percent">0%</span>
+                    <div class="status-container">
+                        <div id="sensor-info" class="sensor-info-container"></div>
+                        <div class="progress-container" id="progressDiv">
+                            <progress id="progress" value="0" max="100"></progress> 
+                            <span class="progress-text" id="progress-percent">0%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -97,12 +101,19 @@
                     <div class="vertical-buttons">
                         <div class="custom-file-input">
                             <input type="file" id="fileRead" style="display: none;"> <!--Hide actual file selector. FileRead id important for JS function-->
-                            <button class="button1" type="button" id="chooseFileButton">Upload Local File</button>
+                            <button class="button1" type="button" id="chooseFileButton">
+                                <i class="fa fa-upload"></i>
+                            </button>
                         </div>
-                        <button class="button1" id="download-code">Download Code</button>
+                        <!--button class="button1" id="download-code">Download Code</button-->
+                        <button id="download-code" class="button1">
+                         
+                            <i class="fa fa-download"></i>
+                        </button>
+                        
                         <button class="button1" id="sensor_readings">Sensors</button>
                     </div>
-                    
+
                     
                     
 
@@ -156,9 +167,15 @@
             <p>----------------------------------------------------------------------- &copy;2024. All rights reserved.Tufts.edu.com -----------------------------------------------------------------------</p>
         </footer>
   
-    
+        <div class="document-icon-container">
+            <div class="document-icon">
+                <div class="checkmark"></div>
+            </div>
+        </div>
+         
 
     
 </body>
+
 </html>
 

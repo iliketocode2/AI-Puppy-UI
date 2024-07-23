@@ -164,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Nope. CSS is powerful.
 
+    /**/ 
     //const buttons = document.querySelectorAll(".button--toggle");
     const nice_jav_button = document.querySelector("#custom-run-button");
     let is_running = false;
@@ -192,6 +193,37 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('fileRead').click();
     });
     
+    //For fading in image of the warning sign exclamtionm mark
+    window.startFadingWarningIcon = startFadingWarningIcon;
+    let fadeInterval;
+    function startFadingWarningIcon() {
+        const downloadButton = document.getElementById('download-code');
+
+        fadeInterval = setInterval(() => {
+            if (downloadButton.classList.contains('fade-in')) {
+                downloadButton.classList.remove('fade-in');
+                downloadButton.classList.add('fade-out');
+            } else {
+                downloadButton.classList.remove('fade-out');
+                downloadButton.classList.add('fade-in');
+            }
+        }, 500); // Adjust interval time as needed
+    }
+    
+    window.stopFadingWarningIcon = stopFadingWarningIcon;
+    function stopFadingWarningIcon() {
+        clearInterval(fadeInterval);
+        const downloadButton = document.getElementById('download-code');
+        downloadButton.classList.remove('fade-in', 'fade-out');
+    }
+
+    // Example usage: Start fading in and out the warning icon
+    //startFadingWarningIcon();
+
+    // Example usage: Stop fading after 10 seconds
+    //setTimeout(stopFadingWarningIcon, 10000);
+
+
 
    
 

@@ -85,20 +85,8 @@ def color_sensor_print(port_num):
         my_color = 8
     elif sensor_color is color.WHITE:
         my_color = 9
-    
-    color_info[0] = my_color
-    
-    rgbi = color_sensor.rgbi(port_num)
-    
-    color_info[1] = rgbi[0] #red
-    color_info[2] = rgbi[1] #green
-    color_info[3] = rgbi[2] #blue
-    
-    color_info_tuple = tuple(color_info)
-        
-    #print("My-COlor: ", color_info_tuple)
-    
-    return color_info_tuple
+
+    return my_color
     
 def distance_sensor_print(port_num):
     #print("distance sensor", port_num)
@@ -183,10 +171,10 @@ async def on_sensor_info(event):
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = close_sensor
-    helper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button])
+    helper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
     sensor = False #so that on next click it displays terminal
 
-    document.getElementById('repl').style.display = 'none'
+    #document.getElementById('repl').style.display = 'none'
 
     # sensors.innerText = 'Get Terminal'
     my_globals.sensors.innerText = 'Close'
@@ -197,6 +185,7 @@ async def on_sensor_info(event):
     #event handler when user types in keyboard
     #counter = 0
     print("STOP-LOOP", my_globals.stop_loop)
+    color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
     while not my_globals.stop_loop:
         #two lines below should go in while loop (checks every time the port info)
         
@@ -237,12 +226,12 @@ async def on_sensor_info(event):
 
                 #if it is the color sensor process number as a tuple
                 #where tuple is (color from table 1, r, g , b)
+                # changed color_info[0] to number. since number is now the color number
                 if (t[2] == 61):
                     #print("SIUU")
                     #pass
-                    color_info = number
-                    color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
-                    color_name = color_detected[color_info[0] - 1] if 0 < color_info[0] <= len(color_detected) else "Unknown"
+                    #checking to see that color returned by SPIKE is in list of known colors
+                    color_name = color_detected[number - 1] if 0 < number <= len(color_detected) else "Unknown"
                     # document.querySelector('.colorCircle').style.backgroundColor = 'green'
                     # <div class="sensor-info-item">
                     #     <span>Number: {color_info} (Color: {color_name})</span>
@@ -260,7 +249,7 @@ async def on_sensor_info(event):
                                 <span><img src="images/spike color_sensor_display.png" alt="color sensor"></span>
                                 <span class="sensor-value">
                                     <div class="colorCircle" style="background-color: {color_name.lower()};"></div>
-                                    {color_detected[color_info[0] - 1]}
+                                    {color_detected[number - 1]}
                                 </span>
                             </div>
                         </div>
@@ -345,7 +334,7 @@ async def close_sensor(event=None):
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = on_sensor_info
-    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button])
+    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
    # await asyncio.sleep(1)  # Wait for 2 seconds
     document.getElementById('sensor-info').innerHTML = " "
     print("CLEARED")
@@ -353,7 +342,7 @@ async def close_sensor(event=None):
     #time.sleep_ms(1000) #to allow while loop to finish current iteration
     #await asyncio.sleep(0.1)
     my_globals.sensor = True #so that next time it hides repls
-    my_globals.sensors.innerText = 'Sensor Readings'
+    my_globals.sensors.innerText = 'Sensors'
 
     #**PREVENTS SPAMMING
     #this code is kind of important.

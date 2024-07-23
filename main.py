@@ -34,6 +34,9 @@ def on_custom_disconnect(event=None):
         await sensor_mod.close_sensor()
     
     #Saving files
+    #prompt user to see if they want to save on spike prime
+    #if yes call save
+    
     await helper_mod.on_save(None)
     my_globals.physical_disconnect = False
     second_half_disconnect()
@@ -45,8 +48,9 @@ def on_custom_disconnect(event=None):
 #callback when disconnected physically
 def second_half_disconnect(event=None):
     my_globals.connect.onclick = on_connect
+    window.fadeImage(' ') #do this to clear gifs
     helper_mod.clean_up_disconnect()
-    print_jav.print_custom_terminal("Saving your code...")
+    
 
 
 async def on_connect(event):
@@ -73,7 +77,29 @@ async def on_connect(event):
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
         my_globals.progress_bar.value = 75
         print("Before-THEE-LIST")
-        await file_os.getList(my_globals.terminal, my_globals.file_list)
+
+        #ERROR CHECKING
+        timeout = 1  # Timeout duration in seconds (change this)
+        timeout_count = 0
+        max_timeout_count = 10 * timeout  # Adjust as necessary
+        while True:
+            try:
+                await file_os.getList(my_globals.terminal, my_globals.file_list)
+                print("get_list completed successfully")
+                break
+            except Exception as e:
+                print(f"An error occurred while calling get_list: {e}")
+                timeout_count += 1
+                print("TIMEOUT", timeout_count)
+                if timeout is not None and timeout_count >= max_timeout_count:
+                    print("PROBLEM HERE")
+                    break
+            
+            #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)
+            await asyncio.sleep(0.1)  # Short delay before retrying 
+        #ERROR CHECKING
+
+
         print("THEE-LIST")
         my_globals.progress_bar.value = 100
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
@@ -108,9 +134,9 @@ async def on_connect(event):
 async def on_load(event):
     print("on load")
     if my_globals.terminal.connected:
-        helper_mod.disable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button])
+        helper_mod.disable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print_jav.print_custom_terminal("Downloading code, please wait...")
-        document.getElementById('download-code').innerHTML = 'Downloading Code'
+        #document.getElementById('download-code').innerHTML = 'Downloading Code'
         # document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
 
         git_paths = my_globals.path.value.split() #gets arrays of urls
@@ -149,7 +175,7 @@ async def on_load(event):
 
         my_globals.progress_bar.style.display = 'none'
         my_globals.percent_text.style.display = 'none'
-        helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button])
+        helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print_jav.print_custom_terminal("Download complete!")
         #document.getElementById('download-code').innerHTML = 'Download Training Code'
         
