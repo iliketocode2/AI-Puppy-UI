@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Nope. CSS is powerful.
 
-    /**/ 
+    /*FOR HITTING RUN BUTON*/ 
     //const buttons = document.querySelectorAll(".button--toggle");
     const nice_jav_button = document.querySelector("#custom-run-button");
     let is_running = false;
@@ -216,6 +216,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const downloadButton = document.getElementById('download-code');
         downloadButton.classList.remove('fade-in', 'fade-out');
     }
+
+    // window.handleResponse = handleResponse;
+    // function handleResponse(response) {
+    //     document.getElementById('overlay').style.display = 'none';
+    //     if (response === 'yes') {
+    //         console.log('User chose to save on SPIKE');
+    //         // Add your save logic here
+    //     } else if (response === 'no') {
+    //         console.log('User chose not to save on SPIKE');
+    //         // Add your disconnect logic here
+    //     }
+    // }
 
     // Example usage: Start fading in and out the warning icon
     //startFadingWarningIcon();

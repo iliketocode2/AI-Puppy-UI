@@ -31,19 +31,20 @@ def on_custom_disconnect(event=None):
     #if sensor data is displayed, hide it, bring back the terminal, and reset
     if (my_globals.sensors.onclick == sensor_mod.close_sensor):
         print('clearing sensor data')
+        print("IN IFahahh")
         await sensor_mod.close_sensor()
     
     #Saving files
     #prompt user to see if they want to save on spike prime
-    #if yes call save
-    
-    await helper_mod.on_save(None)
-    my_globals.physical_disconnect = False
-    second_half_disconnect()
+    #if yes call save  
+    #print("BEFORE OVERLAY")
+    document.getElementById('overlay').style.display = 'flex'
+    #print("AFTER OVERLAY")
+    #if (my_globals.save_on_disconnect):
+    #    await helper_mod.on_save(None) #causes problem TODOO: Fix THIS
     
 
-    #clear sensor display
-    document.getElementById('sensor-info').innerHTML = ""   
+
 
 #callback when disconnected physically
 def second_half_disconnect(event=None):
@@ -119,13 +120,17 @@ async def on_connect(event):
         # display_gif("nobgimages/aipuppy5_480-removebg-preview.png")
 
         #initializing user interface
-        helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download, my_globals.save_btn, my_globals.upload_file_btn])
+        
         #show gifs and files
         document.getElementById('files').style.visibility = 'visible'
         document.getElementById('repl').style.display = 'block' #allow user to input only after paste is done
         #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
 
         my_globals.progress_bar.style.display = 'none'
+        helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download, my_globals.save_btn, my_globals.upload_file_btn])
+
+        await sensor_mod.on_sensor_info(None) #display sensors
+
 
     else:
         #allow user to connect back if they clicked 'cancel' when choosing the port to connect to
@@ -134,8 +139,10 @@ async def on_connect(event):
 #NEXT STEP: download more tha n 1 file (length of path). make for loop (chat)
 async def on_load(event):
     print("on load")
+    await sensor_mod.close_sensor() #close sensors
+    print("SIMON")
+    #helper_mod.disable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
     if my_globals.terminal.connected:
-        helper_mod.disable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print_jav.print_custom_terminal("Downloading code, please wait...")
         #document.getElementById('download-code').innerHTML = 'Downloading Code'
         # document.getElementById('repl').style.display = 'none' #hide repl to prevent from seeing output in repl
@@ -167,7 +174,30 @@ async def on_load(event):
         
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
-        await file_os.getList(my_globals.terminal, my_globals.file_list)
+
+        #ERROR CHECKING (for getList)
+        timeout = 1  # Timeout duration in seconds (change this)
+        timeout_count = 0
+        max_timeout_count = 10 * timeout  # Adjust as necessary
+        while True:
+            try:
+                await file_os.getList(my_globals.terminal, my_globals.file_list)
+                print("get_list completed successfully")
+                break
+            except Exception as e:
+                print(f"An error occurred while calling get_list: {e}")
+                timeout_count += 1
+                print("TIMEOUT", timeout_count)
+                if timeout is not None and timeout_count >= max_timeout_count:
+                    print("PROBLEM HERE")
+                    document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reload page
+                    break
+            
+            #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)
+            #await asyncio.sleep(0.1)  # Short delay before retrying 
+        #ERROR CHECKING
+
+        #AQUIIIII
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
         await helper_mod.remove_files() #remove every files from dropdown menu except desired lesson file
         #await on_select(None)
@@ -176,8 +206,12 @@ async def on_load(event):
 
         my_globals.progress_bar.style.display = 'none'
         my_globals.percent_text.style.display = 'none'
+        #await asyncio.sleep(0.4)  # Short delay before enablign download
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print_jav.print_custom_terminal("Download complete!")
+        #await asyncio.sleep(0.1)  # Short delay before calling sensors
+        await sensor_mod.on_sensor_info(None) #display sensors
+        
         #document.getElementById('download-code').innerHTML = 'Download Training Code'
         
         #document.getElementById('repl').style.display = 'block'
@@ -209,11 +243,40 @@ async def on_upload_file(event):
 #my_globals.upload_file_btn.onclick = on_upload_file
 
 
+def yes_on_disconnect(event):
+    document.getElementById('overlay').style.display = 'none'
+    my_globals.save_on_disconnect = True
+    await helper_mod.on_save(None) #causes problem TODOO: Fix THIS
+    my_globals.physical_disconnect = False
+    second_half_disconnect()
+    
+    #clear overlay
+    
+    #clear sensor display
+    document.getElementById('sensor-info').innerHTML = ""   
+    helper_mod.enable_buttons([my_globals.connect])
 
+    
+def no_on_disconnect(event):
+    document.getElementById('overlay').style.display = 'none'
+    my_globals.save_on_disconnect = True
+    my_globals.physical_disconnect = False
+    second_half_disconnect()
+    
+    
+    #clear sensor display
+    document.getElementById('sensor-info').innerHTML = ""  
+    helper_mod.enable_buttons([my_globals.connect]) 
+    
 
 
 # expose stop_running_code function to JavaScript
 window.stop_running_code = helper_mod.stop_running_code
+
+# expose stop_running_code function to JavaScript
+window.disconnect_calls_on_save = helper_mod.disconnect_calls_on_save
+window.on_save = helper_mod.on_save
+
 
 #get_repl = document.getElementById('get_repl')
 
@@ -228,11 +291,15 @@ my_globals.file_list.onchange = helper_mod.on_select
 my_globals.connect.onclick = on_connect
 my_globals.download.onclick = on_load
 my_globals.sensors.onclick = sensor_mod.on_sensor_info
+my_globals.yes_btn.onclick = yes_on_disconnect
+my_globals.no_btn.onclick = no_on_disconnect
+
 
 #start disabled until connected
 helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
 #get_repl.onclick = display_repl
 
+helper_mod.enable_buttons([my_globals.connect])
 my_globals.terminal.disconnect_callback = second_half_disconnect
 my_globals.terminal.newData_callback = print_jav.on_data_jav #defined for when physical or coded disconnection happens
 

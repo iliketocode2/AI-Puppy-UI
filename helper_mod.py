@@ -6,36 +6,51 @@ import file_os
 import helper_mod
 import asyncio
 
+import time
 def stop_running_code():
+    my_globals.isRunning = False
+    my_globals.found_key = False
     if my_globals.terminal.connected:
         await my_globals.terminal.send('\x03')
+        print_jav.print_custom_terminal("Code execution ended. Please press the button to run the code again.")
+        #await asyncio.sleep(0.1)  # prevent spamming 
+        enable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn, my_globals.connect])
+
+        await sensor_mod.on_sensor_info(None) #display sensors
         print('stopped code')
 
         #document.getElementById('gif').style.display = 'none' #do not do this
         window.fadeImage('') #do this to clear gifs
 
-        print_jav.print_custom_terminal("Code execution ended. Please press the button to run the code again.")
-        my_globals.found_key = False
-        enable_buttons([my_globals.sensors, my_globals.download, my_globals.upload_file_btn, my_globals.save_btn])
+    
+        #enable_buttons([my_globals.sensors, my_globals.download, my_globals.upload_file_btn, my_globals.save_btn])
 
 
 
 def clean_up_disconnect():
     print("CLEANSHEESH")
     #if you are reading sensors and you physicaly disconnect
-    if(my_globals.sensors.onclick == sensor_mod.close_sensor and my_globals.physical_disconnect): 
+    if(my_globals.sensors.onclick == sensor_mod.close_sensor): 
         print_jav.print_custom_terminal("Physically Disconnected while reading sensors - RELOAD PAGE")
         document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reload page
+    #print('after disconnect, passed x03')
     if my_globals.terminal.connected:
         print('connected')
+        print('after disconnect, passed x03')
+        my_globals.terminal.send('\x03') #to stop any program that is running
+        my_globals.terminal.board.disconnect()
+    else:
+        print("DISCONNECTED")
+    if(my_globals.isRunning):
+        document.getElementById('custom-run-button').click() #Display is not a ring running anymore
+
     print_jav.print_custom_terminal("Disconnected from your Spike Prime.")
-    #my_globals.terminal.send('\x03') #to stop any program that is running
-    #print('after disconnect, passed x03')
-    my_globals.terminal.board.disconnect()
+
 
     #allow user to connect back
     my_globals.connect.innerText = 'Connect'
     disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
+    enable_buttons([my_globals.connect])
 
     
 
@@ -96,9 +111,20 @@ async def on_select(event):
     my_globals.my_green_editor.code = await file_os.read_code(my_globals.terminal, my_globals.file_list)
 
 #evaluates code when the green button is pressed
+#running code = no sensors: stop code: running sensors/ start code
+#times_array = []
 async def handle_board(event):
-    
+   
+
     if event.type == 'mpy-run':
+        my_globals.isRunning = True
+        print("SIUUU")
+        #global times_array
+        #start_time = time.time()
+        await sensor_mod.close_sensor()
+        #end_time = time.time()
+        #times_array.append(end_time - start_time)
+        #print("My_array:", times_array)
         if my_globals.terminal.connected:
             disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
             print_jav.print_custom_terminal("Running code...")
@@ -135,8 +161,14 @@ def enable_buttons(list_to_disable):
         else:
             element.classList.add('active') #controls display for other buttons
 
+#function that is called in JS when disconnecting
+async def disconnect_calls_on_save():
+    await on_save(None)
+    await asyncio.sleep(2)  # allow download to finish before enabling sensors
+
 
 async def on_save(event):
+    await sensor_mod.close_sensor()
     if (my_globals.file_list.options.length == 1):
         helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         #SAVING LOCALLY
@@ -161,6 +193,11 @@ async def on_save(event):
         my_globals.progress_bar.style.display = 'none'
         print_jav.print_custom_terminal("Saved on SPIKE!")
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
+        await asyncio.sleep(0.1)  # allow download to finish before enabling sensors
+        
+        #when the function on_save is called when disconnecting (either by yes_on_disconnect or no_on_disconnect)
+        if (not my_globals.save_on_disconnect):
+            await sensor_mod.on_sensor_info(None) #display sensors (only call this )
         print("ENABLED BUTTONS ON SAVE")
 
     else:

@@ -29,7 +29,7 @@ def init():
 
     #elements
     global connect, download, path, sensors, custom_run_button, my_green_editor, file_list, progress_bar, custom_terminal_ele, percent_text, percent_div
-    global save_btn, upload_file_btn, fileName
+    global save_btn, upload_file_btn, fileName, save_on_disconnect, yes_btn, no_btn
     save_btn = document.getElementById('save_button')
     connect = document.getElementById('connect-spike')
     download = document.getElementById('download-code')
@@ -46,6 +46,10 @@ def init():
     upload_file_btn = document.getElementById('chooseFileButton')
     fileName = document.getElementById('fileRead') #not sure what fileName represents
     #nice_jav_button = document.getElementById('my-button-jav')
+    save_on_disconnect = False
+    yes_btn = document.getElementById('Yes-btn')
+    no_btn = document.getElementById('No-btn')
+    
 
     #from pyscript.js_modules import file_library
     #JS-classes instances

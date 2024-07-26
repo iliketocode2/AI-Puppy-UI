@@ -165,6 +165,7 @@ port_info
 #sensor_info and get terminal in same button
 async def on_sensor_info(event):
     print("ON-SENSOR")  
+    #helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download, my_globals.save_btn, my_globals.upload_file_btn])
 
     #global sensor
     global device_names
@@ -175,7 +176,8 @@ async def on_sensor_info(event):
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = close_sensor
-    helper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
+    print("SIUMAMA")
+    #shelper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
     sensor = False #so that on next click it displays terminal
 
     #document.getElementById('repl').style.display = 'none'
@@ -325,7 +327,7 @@ async def on_sensor_info(event):
 
 async def close_sensor(event=None):
     print("In_CLose")
-    helper_mod.disable_buttons([my_globals.sensors, my_globals.download])
+    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.connect])
     my_globals.stop_loop = True
     #(min of 0.32 - worst case scenario (when you trigger stop_loop boolean
     # in close sensor right before calling eval in while loop of on_sensor info ))
@@ -333,14 +335,13 @@ async def close_sensor(event=None):
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = on_sensor_info
-    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
+    #helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.connect])
    # await asyncio.sleep(1)  # Wait for 2 seconds
     document.getElementById('sensor-info').innerHTML = " "
     print("CLEARED")
     #asyncio.
     #time.sleep_ms(1000) #to allow while loop to finish current iteration
     #await asyncio.sleep(0.1)
-    my_globals.sensor = True #so that next time it hides repls
     my_globals.sensors.innerText = 'Sensors'
 
     #**PREVENTS SPAMMING
@@ -358,5 +359,5 @@ async def close_sensor(event=None):
     print("REACHED")
     #show terminal
     document.getElementById('repl').style.display = 'block'
-    helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.sensors])
+    #helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.sensors])
    

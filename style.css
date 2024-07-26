@@ -160,6 +160,10 @@ img.puppyPicture {
     box-sizing: border-box;
 }
 
+#sensor_readings {
+    display: none;
+}
+
 #gitpath {
     display: none; /* Hide the textarea */
 }
@@ -304,22 +308,29 @@ img.puppyPicture {
     outline-offset: 2px;
 }
 
+
 #connect-spike {
     background-color: green;
     color: rgb(255, 255, 255);
     cursor: pointer;
 }
+    
 
-#connect-spike.connected {
-    color: #b4bcd0;
+#connect-spike.button1.connected {
     background-color: #f33232;
-    cursor: pointer;
 }
 
+#connect-spike.button1:not(.active) {
+    background-color: rgb(129, 133, 143);
+    cursor: default;
+}
+
+/*
 #connect-spike:hover {
     color: rgb(255, 255, 255);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+    */
 
 .flexBox {
     height: 88%;
@@ -1018,8 +1029,8 @@ button {
 }
 
 /* For overlay when disconnecting*/
- /* Overlay */
- .overlay {
+/* Overlay */
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -1062,6 +1073,12 @@ button {
     color: white;
 }
 
+.subtitle {
+    font-size: 0.8em; /* Adjust this value to make the subtitle smaller */
+    color: gray; /* Optional: to differentiate the subtitle color */
+}
+
+
 /* For overlay when disconnecting*/
 
 
@@ -1075,4 +1092,12 @@ button {
 }
 
 
-
+/*For hyperlink*/
+.special-link {
+    color: black;
+    font-weight: bold;
+    text-decoration: underline; /* Ensures the link is underlined */
+}
+.special-link:hover {
+    text-decoration: underline; /* Ensures the link stays underlined on hover */
+}

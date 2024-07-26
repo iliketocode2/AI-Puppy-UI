@@ -28,7 +28,7 @@
     <div class="container">
         <div class="section title-section">
             <h1>AI Puppy Lesson 2: Sit and Stand</h1>
-            <p style="font-size:20px">Train your puppy to sit and stand based on a distance sensor</p>
+            <p style="font-size:20px">Train your puppy to sit and stand based on how close it detects your hand to be!</p>
         </div>
         
         <div class="two-boxes-container">
@@ -38,13 +38,13 @@
             </div>
             <div class="yellow-box">
                 <h2>Tools Used</h2>
-                <p style="font-size:18px">Touch sensor & provided code</p>
+                <p style="font-size:18px">Distance sensor & motors</p>
             </div>
         </div>
 
         <div class="section go-sections">
             <h2>Example Ideas</h2>
-            <p>Build a puppy that can be petted!</p>
+            <p>Build a puppy that is able to sit and stand!</p>
             <img class="puppyPicture" src="nobgimages/aipuppy4_360-removebg-preview.png" alt="Puppy 4">
             <img class="puppyPicture" src="nobgimages/aipuppy5_480-removebg-preview.png" alt="Puppy 5">
             <img class="puppyPicture" src="nobgimages/aipuppy2_360-removebg-preview.png" alt="Puppy 2">
@@ -52,10 +52,9 @@
 
         <div class="section go-sections">
             <h2>Tips & Troubleshooting</h2>
-            <p>Make sure your distance sensor ("puppy") is reading values when you train it.</p>
-            <p>Make sure the hub buttons are accessible.</p>
-            <img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Spike with pet mechanism">
-            <img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Spike with pet mechanism">
+            <!--img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Spike with pet mechanism"-->
+            <!--img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Spike with pet mechanism"-->
+            <img class="puppyPicture" src="nobgimages/image_2.png" alt="Puppy 2">
         </div>
 
       
@@ -85,6 +84,18 @@
                             <span class="progress-text" id="progress-percent">0%</span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="overlay" class="overlay">
+                <div class="modal">
+                    <p>
+                        Do you want to save on SPIKE? <br> 
+                        <span class="subtitle"> (gives option to save locally first) </span>
+    
+                    </p>
+                    <button id= "Yes-btn" class="btn-yes" >Yes</button>
+                    <button id = "No-btn" class="btn-no" >No</button>
                 </div>
             </div>
 
@@ -166,7 +177,7 @@
 
         <div class="section go-sections">
             <h2>Extended Thinking</h2>
-            <p>How does changing the amount of training data points collected impact the accuracy of displaying emotions?</p>
+            <p>How does changing the amount of training data points collected impact what your puppy does?</p>
             <img src="nobgimages/th-removebg-preview (1).png" alt="Your brain if you think about this" width="100px" height="auto">
         </div>
 

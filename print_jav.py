@@ -70,3 +70,5 @@ def on_data_jav(chunk):
 def print_custom_terminal(string):
     my_globals.custom_terminal_ele.innerHTML += string + " <br>"
     window.setTimeout(window.scrollTerminalToBottom, 0)
+
+
