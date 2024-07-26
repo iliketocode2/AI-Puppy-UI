@@ -143,6 +143,40 @@ img.puppyPicture {
     overflow-y: hidden;
 }
 
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 20px; */
+    margin: 20px;
+}
+
+.text-box {
+    flex: 1;
+    max-width: 200px;
+    font-size: 16px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    flex: 2;
+    height: 200px;
+    width: auto;
+}
+
+.image-container img {
+    max-width: 45%;
+    height: auto;
+    margin: 0 5px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+
 /*hide green button from default pyscript editor*/
 .mpy-editor-run-button {
     display: none !important;
@@ -184,7 +218,6 @@ img.puppyPicture {
     flex: 0 0 auto;
     min-width: 100px; /* Adjust this value based on your desired width */
     max-width: calc(25% - 10px); /* This allows 2 items per row on most screens */
-    /* border: 2px solid red; */
     margin-right: 15px;
     margin-left: 5px;
 }
@@ -253,11 +286,13 @@ img.puppyPicture {
     height: 85vh;
     border-radius: 10px;
     /* border: 7px solid #000; */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); */
     overflow: hidden;
     padding-top: 20px; 
     padding-bottom: 20px;
+    margin: 10px;
     border: 7px solid #ff5eae; /* Pink border color and thickness */
+    background-color: #f9f9f9;
     border-radius: 10px;
     padding: 20px; /* Adding padding for consistency with other sections */
     box-sizing: border-box; /* Ensure padding and border are included in the total width */
@@ -513,12 +548,13 @@ img.puppyPicture {
     border-radius: 5px;
     height: auto;
     margin: auto;
-    margin-top: 25px;
+    /* margin-top: 25px; */
     width: 100%;
 }
 
 /*Aquii*/
 #gif{
+    display: none;
     max-height: 350px;
     width: 300px;
     height: auto;
@@ -678,11 +714,13 @@ progress::-moz-progress-bar {
 .custom-file-input {
     position: relative;
     display: inline-block;
+    justify-content: center;
     width: auto;
     height: auto;
     overflow: hidden;
     margin: 0 auto;
     padding: 0;
+    text-align: center;
 }
 
 .custom-file-input input[type="file"] {
@@ -713,11 +751,9 @@ progress::-moz-progress-bar {
 /* Vertical buttons */
 
 /* Flexbox for vertical buttons */
-.vertical-buttons {
+.horizontal-buttons {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 15px; /* Adjust the spacing between buttons */
     width: 100%;
     max-width: 200px; /* Adjust this value to match the file selector width */
     margin: 0 auto;
@@ -962,12 +998,14 @@ button {
     border-radius: 50%; /* Make the button circular */
     width: 60px; /* Adjust width */
     height: 60px; /* Adjust height */
+    margin: auto;
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
     cursor: pointer; /* Pointer cursor on hover */
     overflow: visible; /* Ensure the icon doesn't overflow */
     position: relative; /* Positioning context for any absolute elements */
+    /* margin-left: -20px; */
 }
 
 /* Style the Font Awesome icon */
@@ -1009,10 +1047,11 @@ button {
 
 /* Style the button to be circular and center its content */
 #chooseFileButton {
-    border: none; /* Remove border if needed */
     border-radius: 50%; /* Make the button circular */
     width: 60px; /* Adjust width */
     height: 60px; /* Adjust height */
+    margin: auto;
+    margin-right: 0;
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
