@@ -12,7 +12,7 @@ ai.button_color(hub_color1)
 print('**Now in training mode')
 
 train_num = 3
-
+print("DUSMA")
 print('**Train your puppy to be HAPPY when stroked or patted!')
 print('**A stroke means you press the touch sensor for a long time and a pat means you press the touch sensor for a shorter amount of time!') # no need for this on webpage, gif will explain
 print('**Press right button to record a data point before using the touch sensor. You are recording %s data points.' % (train_num))
