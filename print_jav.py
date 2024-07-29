@@ -68,7 +68,7 @@ def on_data_jav(chunk):
 
 #display custom code in editor, give delay on autoscroll function to ensure all new content has loaded
 def print_custom_terminal(string):
-    my_globals.custom_terminal_ele.innerHTML += string + " <br>"
+    my_globals.custom_terminal_ele.innerHTML += string + " <br> <br>"
     window.setTimeout(window.scrollTerminalToBottom, 0)
 
 

@@ -103,3 +103,33 @@ back in python:
                     """
 
 '''
+
+'''
+JS code: 
+/* 
+    let is_running = false;
+    // connect 'run python code' js button to mpy-editor
+    runButton.addEventListener('click', function() {
+        if (!is_running) {
+            // run the code
+            const editor = document.getElementById(this.getAttribute('data-editor-id'));
+            if (editor) {
+                const event = new CustomEvent('mpy-run', {
+                    bubbles: true,
+                    detail: { code: editor.code }
+                });
+                editor.dispatchEvent(event);
+                this.innerHTML = 'Stop Running Code';
+                is_running = true;
+            }
+        } else {
+            // stop the code
+            window.stop_running_code(); //calling python function
+            this.innerHTML = 'Run Python Code';
+            is_running = false;
+        }
+    });
+    */
+
+
+'''

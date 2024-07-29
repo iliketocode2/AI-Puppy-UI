@@ -1,15 +1,24 @@
+/**
+ * @file script.js
+ * @description Main script for handling various UI interactions and functionality for the Spike Prime AI Puppy project.
+ * @authors 
+ *  - William Goldman
+ *  - Javier Laveaga
+ * @version 1.0
+ */
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    //change colors of download block and sensor data block
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
-    //const runButton = document.getElementById('custom-run-button');
-    //const my_jav_button = document.getElementById('my-button-jav');
     
-
-
-     //JAV-CODE (below)
     window.checkCurrentLesson = checkCurrentLesson;
+    /**
+     * @function checkCurrentLesson
+     * @description Determines the current lesson based on the body ID and performs actions accordingly.
+     * @returns {number} The lesson number.
+     */
     function checkCurrentLesson() {
         // Get the ID of the body element
         var currentLesson = document.body.id;
@@ -53,34 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function createObject(object, variableName) {
-        globalThis[variableName] = object
-    }
-/* 
-    let is_running = false;
-    // connect 'run python code' js button to mpy-editor
-    runButton.addEventListener('click', function() {
-        if (!is_running) {
-            // run the code
-            const editor = document.getElementById(this.getAttribute('data-editor-id'));
-            if (editor) {
-                const event = new CustomEvent('mpy-run', {
-                    bubbles: true,
-                    detail: { code: editor.code }
-                });
-                editor.dispatchEvent(event);
-                this.innerHTML = 'Stop Running Code';
-                is_running = true;
-            }
-        } else {
-            // stop the code
-            window.stop_running_code(); //calling python function
-            this.innerHTML = 'Run Python Code';
-            is_running = false;
-        }
-    });
-    */
-
     // Code for resizable terminal
     let topBox = document.querySelector('.right-box:first-child');
     let bottomBox = document.getElementById("resizeBox");
@@ -93,6 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     slider.addEventListener('mousedown', initDrag, false);
 
+    /**
+     * @function initDrag
+     * @description Initializes the drag event for resizing terminal boxes.
+     * @param {MouseEvent} e - The mousedown event.
+     */
     function initDrag(e) {
         startY = e.clientY;
         startTopHeight = topBox.offsetHeight;
@@ -102,6 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.addEventListener('mouseup', stopDrag, false);
     }
 
+    /**
+     * @function doDrag
+     * @description Handles the dragging for resizing terminal boxes.
+     * @param {MouseEvent} e - The mousemove event.
+     */
     function doDrag(e) {
         let newTopHeight = startTopHeight + e.clientY - startY;
         let newBottomHeight = startBottomHeight - (e.clientY - startY);
@@ -112,6 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    /**
+     * @function stopDrag
+     * @description Stops the dragging event for resizing terminal boxes.
+     */
     function stopDrag() {
         document.documentElement.removeEventListener('mousemove', doDrag, false);
         document.documentElement.removeEventListener('mouseup', stopDrag, false);
@@ -130,6 +125,12 @@ document.addEventListener('DOMContentLoaded', function() {
         changeTabTerminal(event, 'debug');
     });
       
+    /**
+     * @function changeTabTerminal
+     * @description Changes the displayed terminal tab.
+     * @param {Event} evt - The click event.
+     * @param {string} tabName - The name of the tab to display.
+     */
     function changeTabTerminal(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -146,6 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // fade the gifs in and out
     window.fadeImage = fadeImage;
+    /**
+     * @function fadeImage
+     * @description Fades an image in and out.
+     * @param {string} newSrc - The new source of the image.
+     */
     function fadeImage(newSrc) {
         const img = document.getElementById('gif');
         img.style.opacity = '0';
@@ -161,8 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const messages = document.getElementById('terminalMessages');
         terminal.scrollTop = messages.scrollHeight;
     };
-
-    // Nope. CSS is powerful.
 
     /*FOR HITTING RUN BUTON*/ 
     //const buttons = document.querySelectorAll(".button--toggle");
@@ -196,6 +200,10 @@ document.addEventListener('DOMContentLoaded', function() {
     //For fading in image of the warning sign exclamtionm mark
     window.startFadingWarningIcon = startFadingWarningIcon;
     let fadeInterval;
+    /**
+     * @function startFadingWarningIcon
+     * @description Starts the fading animation for the warning icon.
+     */
     function startFadingWarningIcon() {
         const downloadButton = document.getElementById('download-code');
 
@@ -211,63 +219,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     window.stopFadingWarningIcon = stopFadingWarningIcon;
+    /**
+     * @function stopFadingWarningIcon
+     * @description Stops the fading animation for the warning icon.
+     */
     function stopFadingWarningIcon() {
         clearInterval(fadeInterval);
         const downloadButton = document.getElementById('download-code');
         downloadButton.classList.remove('fade-in', 'fade-out');
     }
-
-    // window.handleResponse = handleResponse;
-    // function handleResponse(response) {
-    //     document.getElementById('overlay').style.display = 'none';
-    //     if (response === 'yes') {
-    //         console.log('User chose to save on SPIKE');
-    //         // Add your save logic here
-    //     } else if (response === 'no') {
-    //         console.log('User chose not to save on SPIKE');
-    //         // Add your disconnect logic here
-    //     }
-    // }
-
-    // Example usage: Start fading in and out the warning icon
-    //startFadingWarningIcon();
-
-    // Example usage: Stop fading after 10 seconds
-    //setTimeout(stopFadingWarningIcon, 10000);
-
-
-
-   
-
-
-
-    // // Function to save the content of the editor to localStorage
-    // function saveContent() {
-    //     console.log('saving content...');
-    //     const content = document.getElementById('MPcode').code;
-    //     localStorage.setItem('key', content);
-    // }
-
-    // // Function to load the content from localStorage
-    // function loadContent() {
-    //     console.log('loading content...');
-    //     const content = localStorage.getItem('key');
-    //     if (content) {
-    //         // document.getElementById('MPcode').code = content;
-    //         // document.getElementById('putTextHere').innerHTML = content;
-    //         document.getElementById('MPcode').code = content;
-    //     }
-    // }
-
-
-    // // buttonClick = document.getElementById('clickIT');
-    // // buttonClick.addEventListener('click', loadContent, true)
-
-
-    // // Save content every 5 seconds
-    // setInterval(saveContent, 5000);
-
-    // Load the content when the page loads
-    // window.onload = loadContent;
-
 });
