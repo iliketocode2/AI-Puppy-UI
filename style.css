@@ -115,13 +115,13 @@ main {
     text-align: center;
 }
 
-a {
+/* a {
     color: #4CAF50;
     text-decoration: none;
     font-size: 18px;
     margin-top: 20px;
     display: inline-block;
-}
+} */
 
 a:hover {
     color: #66bb6a;
@@ -1134,9 +1134,10 @@ button {
 /*For hyperlink*/
 .special-link {
     color: black;
-    font-weight: bold;
-    text-decoration: underline; /* Ensures the link is underlined */
+    text-decoration: none;
 }
 .special-link:hover {
     text-decoration: underline; /* Ensures the link stays underlined on hover */
+    color: black;
+    font-weight: bold;
 }

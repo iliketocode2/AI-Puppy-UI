@@ -34,7 +34,9 @@
         <div class="two-boxes-container">
             <div class="yellow-box">
                 <h2>Machine Learning Type</h2>
-                <p style="font-size:18px">1D K-Nearest Neighbor</p>
+                <p style="font-size:18px">
+                    <a href="https://www.geeksforgeeks.org/k-nearest-neighbours/" class="special-link">1D K-Nearest Neighbor</a>
+                </p>
             </div>
             <div class="yellow-box">
                 <h2>Tools Used</h2>
@@ -52,11 +54,19 @@
 
         <div class="section go-sections">
             <h2>Tips & Troubleshooting</h2>
-            <!--img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Spike with pet mechanism"-->
-            <!--img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Spike with pet mechanism"-->
-            <img class="puppyPicture" src="nobgimages/image_2.png" alt="Puppy 2">
+            <div class="content-wrapper">
+                <div class="text-box left">
+                    <p>It may be helpful to attach angled or curved LEGO pieces so it can sit and stand easier.</p>
+                </div>
+                <div class="image-container">
+                    <img class="puppyPicture" src="nobgimages/tips3-removebg-preview.png" alt="Force sensor with gear">
+                    <img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Hub with gear and buttons">
+                </div>
+                <div class="text-box right">
+                    <p>Make sure the left, center, and right hub buttons are easily accessible</p>
+                </div>
+            </div>
         </div>
-
       
         <div class="container2">
             <div class="header">
@@ -110,16 +120,15 @@
                         <select name="files" id="files" class="files">
                         </select>
                     </div>
-                    <div class="vertical-buttons">
-                        <div class="custom-file-input">
-                            <input type="file" id="fileRead" style="display: none;"> <!--Hide actual file selector. FileRead id important for JS function-->
-                            <button class="button1" type="button" id="chooseFileButton">
-                                <i class="fa fa-upload"></i>
-                            </button>
-                        </div>
+                    <div class="gifFrame"><img id="gif"></div>
+                    <div class="horizontal-buttons">
+                        <input type="file" id="fileRead" style="display: none;"> <!--Hide actual file selector. FileRead id important for JS function-->
+                        <button class="button1" type="button" id="chooseFileButton">
+                            <i class="fa fa-upload"></i>
+                        </button>
+
                         <!--button class="button1" id="download-code">Download Code</button-->
                         <button id="download-code" class="button1">
-                         
                             <i class="fa fa-download"></i>
                         </button>
                         
@@ -143,8 +152,7 @@
                             <p>In port</p>
                             <p class="big">C</p>
                         </div>
-                    </div>
-                    <div class="gifFrame"><img id="gif"></div>     
+                    </div>     
 
                 </div>
                 <div class="right-container">
@@ -156,8 +164,8 @@
                     <div class="slider">...</div>
                     <div class="box right-box" id="resizeBox">
                         <div class="tab">
-                            <button class="tablinks active" id="customTerminalButton">Terminal</button>
-                            <button class="tablinks" id="defaultTerminalButton">Debug</button>
+                            <button class="tablinks active" id="customTerminalButton" style="color: black;">Terminal</button>
+                            <button class="tablinks" id="defaultTerminalButton" style="color: black;">Debug</button>
                         </div>
                         <div id="debug" class="tabcontent">
                             <div id="repl"></div>
