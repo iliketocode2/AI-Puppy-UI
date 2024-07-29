@@ -1,6 +1,6 @@
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light_matrix, sound, light
-ai = CEEO_AI.CEEO_AI()
+ai = CEEO_AI.CEEO_AI() # Library of CEEO AI functions
 
 ### ADD YOUR SENSOR, MOTORS, AND PORTS HERE ###
 # Choose one sensor to use for this lesson!
@@ -15,11 +15,11 @@ motors = [legL,legR]
 # Add up to 2-5 tricks here! Comment out the functions you don't use
 def trick1():
     # Code trick here
-    print("trick1")
     
 def trick2():
     # Code trick here
-    print("trick2")
+
+## UNCOMMENT THE TRICK FUNCTIONS BELOW TO ADD MORE ##
 
 #def trick3():
     # Code trick here
@@ -32,32 +32,33 @@ def trick2():
 
 
 ### PUPPY TRAINING MODE ###
-train_color1 = color.AZURE
-ai.button_color(train_color1)
+hub_color1 = color.AZURE # This line and the line below changes the color of the hub button so you know when puppy is in training mode!
+ai.button_color(hub_color1)
 print('**Now in training mode')
 train_num = 5 # Number of samples you want to take for teaching each trick
 
 print('**Use your chosen sensor to train your puppy to do tricks!')
 print('**Add %s data samples for your 1st trick by interacting with the sensor and pressing the right button!' % (train_num))
 print('**You should hear a beep when a data point is recorded.')
-for i in range(train_num):
+for i in range(train_num): # For loop repeats the code inside of it! Adding more data values will improve the puppy's learning!
     ai.wait_for_right_button()
-    ai.add_data('trick1',ai.get_distance(sensor)) # ADD SENSOR COMMAND HERE, GET RID OF STRING
+    ai.add_data('trick1',SENSOR FUNCTION HERE) # ADD SENSOR FUNCTION HERE
     sound.beep(220)
-    utime.sleep(0.75)
+    utime.sleep(0.25)
     
-train_color2 = color.BLUE
-ai.button_color(train_color2)
+hub_color2 = color.BLUE # Changing the hub button color because we're switching the trick being trained
+ai.button_color(hub_color2)
 sound.beep(440)
 
 print('**Now add data samples for your next trick!')
 print('**Make sure you are interacting with the sensor differently, so your puppy will be able to know what trick to perform after training!')
 for i in range(train_num):
     ai.wait_for_right_button()
-    ai.add_data('trick2',ai.get_distance(sensor)) # ADD SENSOR COMMAND HERE, GET RID OF STRING
+    ai.add_data('trick2',SENSOR FUNCTION HERE) # ADD SENSOR FUNCTION HERE
     sound.beep(220)
-    utime.sleep(0.75)
-# Add code like the code above to train your puppy to do more tricks!!!
+    utime.sleep(0.25)
+# Add code like the code above to train your puppy to do more tricks!!! If you want to do this it would be a good idea to add more for loops!
+
 
 # PUPPY IS TRAINED
 
@@ -65,13 +66,13 @@ for i in range(train_num):
 ### PUPPY PLAY MODE ###
 print('**Press right button to exit training mode and play with your puppy!')
 ai.wait_for_right_button() # Now in play mode!
-play_color = color.MAGENTA
-ai.button_color(play_color)
+hub_color3 = color.MAGENTA
+ai.button_color(hub_color3)
 sound.beep(880)
 print('**Puppy is trained!')
-K = 3
+K = 3 # How many nearest neighbors do you want to consider?
 while not button.pressed(button.LEFT):
-    guess_sensor = ai.get_distance(sensor)# PUT SENSOR COMMAND HERE
+    guess_sensor = # PUT SENSOR FUNCTION HERE
     guess = ai.KNN_1D(guess_sensor, K)
     if guess == 'trick1':
         trick1()

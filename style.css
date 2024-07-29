@@ -805,7 +805,6 @@ button {
     width: 60px;
     height: 60px;
     position: relative;
-    background-color: black;
 }
 .button--play:after {
     content: "";
@@ -880,7 +879,7 @@ button {
 
 .button.disabled {
     --color-background-secondary: rgb(129, 133, 143);
-    --color-border: rgb(129, 133, 143);
+    --color-border: rgb(143, 134, 129);
     --color-accent: rgb(255, 255, 255);
 }
 

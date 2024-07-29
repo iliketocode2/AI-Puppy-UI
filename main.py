@@ -65,7 +65,31 @@ def second_half_disconnect(event=None):
     window.fadeImage(' ') #do this to clear gifs
     helper_mod.clean_up_disconnect()
     
-
+async def call_get_list():
+    #ERROR CHECKING
+    timeout = 1  # Timeout duration in seconds (change this)
+    timeout_count = 0
+    max_timeout_count = 10 * timeout  # Adjust as necessary
+    while True:
+        try:
+            await file_os.getList(my_globals.terminal, my_globals.file_list)
+            print("get_list completed successfully")
+            break
+        except Exception as e:
+            print(f"An error occurred while calling get_list: {e}")
+            timeout_count += 1
+            print("TIMEOUT", timeout_count)
+            if timeout is not None and timeout_count >= max_timeout_count:
+                print("PROBLEM HERE")
+                document.getElementById(f"""lesson{my_globals.lesson_num}
+                                        -link""").click() #reload page
+                break
+        
+        #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 
+        # 1 sec)
+        await asyncio.sleep(0.1)  # Short delay before retrying 
+    #ERROR CHECKING
+    
 
 async def on_connect(event):
     """
@@ -102,29 +126,7 @@ async def on_connect(event):
         my_globals.progress_bar.value = 75
         print("Before-THEE-LIST")
 
-        #ERROR CHECKING
-        timeout = 1  # Timeout duration in seconds (change this)
-        timeout_count = 0
-        max_timeout_count = 10 * timeout  # Adjust as necessary
-        while True:
-            try:
-                await file_os.getList(my_globals.terminal, my_globals.file_list)
-                print("get_list completed successfully")
-                break
-            except Exception as e:
-                print(f"An error occurred while calling get_list: {e}")
-                timeout_count += 1
-                print("TIMEOUT", timeout_count)
-                if timeout is not None and timeout_count >= max_timeout_count:
-                    print("PROBLEM HERE")
-                    document.getElementById(f"""lesson{my_globals.lesson_num}
-                                            -link""").click() #reload page
-                    break
-            
-            #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 
-            # 1 sec)
-            await asyncio.sleep(0.1)  # Short delay before retrying 
-        #ERROR CHECKING
+        await call_get_list()
 
 
         print("THEE-LIST")
@@ -133,8 +135,6 @@ async def on_connect(event):
 
         if my_globals.lesson_num == 3: #display this at the very beginning
             my_gif.display_gif("gifs/Lesson3/Multiple_sensors.gif")
-        
-        await helper_mod.remove_files()
 
         
         #enable disconnect
@@ -158,8 +158,10 @@ async def on_connect(event):
             my_globals.custom_run_button, my_globals.sensors, 
             my_globals.download, my_globals.save_btn, 
             my_globals.upload_file_btn])
+        
+        await helper_mod.remove_files() #updated
 
-        await sensor_mod.on_sensor_info(None) #display sensors
+       #await sensor_mod.on_sensor_info(None) #display sensors
 
 
     else:
@@ -210,31 +212,10 @@ async def on_load(event):
         #initializng file list code, hide scroll bar
         document.getElementById('terminalFrameId').style.overflow = 'hidden'
 
-        #ERROR CHECKING (for getList)
-        timeout = 1  # Timeout duration in seconds (change this)
-        timeout_count = 0
-        max_timeout_count = 10 * timeout  # Adjust as necessary
-        while True:
-            try:
-                await file_os.getList(my_globals.terminal, my_globals.file_list)
-                print("get_list completed successfully")
-                break
-            except Exception as e:
-                print(f"An error occurred while calling get_list: {e}")
-                timeout_count += 1
-                print("TIMEOUT", timeout_count)
-                if timeout is not None and timeout_count >= max_timeout_count:
-                    print("PROBLEM HERE")
-                    document.getElementById(f"lesson{my_globals.lesson_num}-link").click() #reload page
-                    break
-            
-            #(this is why timeout is in seconds --> 0.1 * max_timeout_count = 1 sec)
-            #await asyncio.sleep(0.1)  # Short delay before retrying 
-        #ERROR CHECKING
+        await call_get_list()
 
         #AQUIIIII
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
-        await helper_mod.remove_files() #remove every files from dropdown menu except desired lesson file
         #await on_select(None)
         #show scroll bar
         #copy
@@ -245,7 +226,9 @@ async def on_load(event):
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, my_globals.connect, my_globals.custom_run_button, my_globals.save_btn, my_globals.upload_file_btn])
         print_jav.print_custom_terminal("Download complete!")
         #await asyncio.sleep(0.1)  # Short delay before calling sensors
-        await sensor_mod.on_sensor_info(None) #display sensors
+        #await sensor_mod.on_sensor_info(None) #display sensors
+        await helper_mod.remove_files() #remove every files from dropdown menu except desired lesson file (updated)
+
         
         #document.getElementById('download-code').innerHTML = 'Download Training Code'
         
