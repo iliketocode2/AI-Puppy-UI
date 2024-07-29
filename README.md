@@ -1,5 +1,8 @@
 # AI Puppy
 
+## Authors
+[Izzy Morales](https://github.com/izzymorales), [Javier Laveaga](https://github.com/javier-la200426), [William Goldman](https://github.com/iliketocode2), [Rachael Azrialy](https://github.com/razrialy), [Emmett Berryman](https://github.com/Emmettberryman)
+
 ## About
 The goal of this project is to have students learn about training and coding different AI models through interactive lessons on our website. Each lesson requires students to build a puppy-like robot using a Lego Spike Prime, attaching various sensors and parts to the robot. Over the course of six lessons, students will develop an understanding of 1D-K Learning and Linear Regression. 
 
