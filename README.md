@@ -5,16 +5,18 @@ The goal of this project is to have students learn about training and coding dif
 
 This project is planned to scale to future placemats, built by the Tufts CEEO.
 
-
-## Overview
-The site includes many similar features of the Lego Spike IDE:
-- Live sensor readings
-- Download and uplaod code onto and from the Lego Spike and your computer
-- Edit code and view terminal messages
-![User Interfacec Overview](https://github.com/user-attachments/assets/bef1dbfa-7326-4838-9671-3ca2ab7584fe)
-
-
 ## Using this tool
 1. Visit the [website](https://iliketocode2.github.io/AI-Puppy-UI/).
 2. Connect a Spike Prime into your computer using a micro usb to usb-c or micro usb to usb cord.
 3. Press the 'Connect' button and follow prompts to download the proper file for each lesson and run and edit your code.
+
+## Overview
+At the top of each page the current lesson and lesson tip and tricks are displayed. Each page features the exact sensors/motors needed to complete each lesson. Finally, extension questions are below the code editor.
+
+In addition to the lesson-specific features, this site includes many similar features of the Lego Spike IDE:
+- Live sensor readings
+- Download and uplaod code onto and from the Lego Spike and your computer
+- Edit code and view terminal messages
+  
+![User Interfacec Overview](https://github.com/user-attachments/assets/bef1dbfa-7326-4838-9671-3ca2ab7584fe)
+
