@@ -297,7 +297,6 @@ h2 {
     padding: 20px; /* Adding padding for consistency with other sections */
     box-sizing: border-box; /* Ensure padding and border are included in the total width */
 
-
     
 }
 
@@ -783,7 +782,6 @@ button {
 }
 
 .button {
-  
   border-radius: 50%;
   padding: 0;
   border: 0;
@@ -797,65 +795,67 @@ button {
   position: relative;
   background-color: var(--color-background-secondary);
   border: 1px solid var(--color-border);
-  
+}
+
+.button-row{
+    z-index: 3;
 }
 
 .button--play {
-  width: 60px;
-  height: 60px;
-  position: relative;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    background-color: black;
 }
-
 .button--play:after {
-  content: "";
-  display: block;
-  width: calc(100% + 10px);
-  height: calc(100% + 10px);
-  z-index: -1;
-  left: -5px;
-  top: -5px;
-  position: absolute;
-  background-image: conic-gradient(transparent, var(--spinner));
-  border-radius: 99em;
-  opacity: 0;
-  
+    content: "";
+    display: block;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    z-index: -1;
+    left: -5px;
+    top: -5px;
+    position: absolute;
+    background-image: conic-gradient(transparent, var(--spinner));
+    border-radius: 99em;
+    opacity: 0;
 
 }
-
 .button--play .ph-play,
 .button--play .ph-pause {
-  grid-row-start: 1;
-  grid-column-start: 1;
-  transition: opacity 0.15s ease, transform 0.25s ease;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    transition: opacity 0.15s ease, transform 0.25s ease;
 }
+
 .button--play.is-active:after {
-  opacity: 1;
-  -webkit-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
+    z-index: -1;
+    opacity: 1;
+    animation: spin 2s linear infinite;
 }
 
 .button--play .ph-play {
-  opacity: 1;
+    opacity: 1;
 }
 
 .button--play .ph-pause {
-  opacity: 0;
-  transform: rotate(0);
+    opacity: 0;
+    transform: rotate(0);
 }
 
 .button--play.is-active .ph-play {
-  opacity: 0;
-  transform: rotate(180deg);
+    opacity: 0;
+    transform: rotate(180deg);
 }
 
 .button--play.is-active .ph-pause {
-  opacity: 1;
-  transform: rotate(180deg);
+    opacity: 1;
+    transform: rotate(180deg);
 }
 
 .button--play.is-active:after {
-  opacity: 1;
-  animation: spin 2s linear infinite;
+    opacity: 1;
+    animation: spin 2s linear infinite;
 }
 
 .button:not(.disabled):hover {
@@ -865,24 +865,14 @@ button {
 }
 
 .button.is-active {
-  color: var(--color-accent);
-}
-
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
+    color: var(--color-accent);
 }
 
 @keyframes spin {
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
-
-
-
-
 
 .button--play.disabled:after {
     opacity: 0;
@@ -892,48 +882,40 @@ button {
     --color-background-secondary: rgb(129, 133, 143);
     --color-border: rgb(129, 133, 143);
     --color-accent: rgb(255, 255, 255);
-    
-    
 }
 
-
-
-
-  
-
-  /*PLay image for button*/
+/* Play image for button */
 .gg-play-button {
     box-sizing: border-box;
     position: relative;
     display: block;
     transform: scale(var(--ggs, 1));
-    width: 48px; /* Increased width */
-    height: 48px; /* Increased height */
+    width: 48px;
+    height: 48px;
 }
-  
+
 .gg-play-button::before {
     content: "";
     display: block;
     box-sizing: border-box;
     position: absolute;
     width: 0;
-    height: 24px; /* Adjusted height */
+    height: 24px;
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
-    border-left: 16px solid; /* Adjusted size */
-    top: 12px; /* Adjusted position */
-    left: 17px; /* Adjusted position */
+    border-left: 16px solid;
+    top: 12px;
+    left: 17px;
 }
 
-
-/*STOP image for run button*/
+/* STOP image for run button */
 .gg-play-stop {
     box-sizing: border-box;
     position: relative;
     display: block;
     transform: scale(var(--ggs, 1));
-    width: 20px; /* Increased width */
-    height: 20px; /* Increased height */
+    width: 20px;
+    height: 20px;
     background: currentColor;
 }
 
