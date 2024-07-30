@@ -1,6 +1,7 @@
 /**
  * @file script.js
- * @description Main script for handling various UI interactions and functionality for the Spike Prime AI Puppy project.
+ * @description Main script for handling various UI interactions and 
+ * functionality for the Spike Prime AI Puppy project.
  * @authors 
  *  - William Goldman
  *  - Javier Laveaga
@@ -16,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.checkCurrentLesson = checkCurrentLesson;
     /**
      * @function checkCurrentLesson
-     * @description Determines the current lesson based on the body ID and performs actions accordingly.
+     * @description Determines the current lesson based on the body ID and 
+     * performs actions accordingly.
      * @returns {number} The lesson number.
      */
     function checkCurrentLesson() {
@@ -116,13 +118,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Switch between the custom terminal and the debugger
     let customTerminal = document.getElementById('customTerminalButton');
     let defaultTerminal = document.getElementById('defaultTerminalButton');
-
+    
     customTerminal.addEventListener("click", (event) => {
+        window.not_debugging() //calling python function
         changeTabTerminal(event, 'terminal');
     });
 
+    //This one is the Debug terminal
     defaultTerminal.addEventListener("click", (event) => {
+        console.log('IN DEBUG')
+        window.debugging_time(); //calling python function
         changeTabTerminal(event, 'debug');
+        //call python funciton which disables custom terminal button
     });
       
     /**
@@ -192,7 +199,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     });
 
-    //programmatically click the hidden upload file input element after clicking the Upload button
+    //programmatically click the hidden upload file input 
+    //element after clicking the Upload button
     document.getElementById('chooseFileButton').addEventListener('click', function() {
         document.getElementById('fileRead').click();
     });

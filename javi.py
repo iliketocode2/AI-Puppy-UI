@@ -133,3 +133,26 @@ JS code:
 
 
 '''
+
+#called when displaying all sensors except the color sensor
+def display_sensors(source, alt, number, port_name, sensor_info_html):
+    sensor_info_html += f"""
+    <div class="sensor-info">
+        <div class="sensor-info-item">
+            <div class="sensor-stack-left">
+                <span class="port-name">{port_name}</span>
+            </div>
+            <div class="sensor-stack-right">
+                <span><img src="{source}" alt="{alt}"></span>
+                <span class="sensor-value">{number}</span>
+            </div>
+        </div>
+    </div>
+    """
+    return sensor_info_html
+
+source = "images/spike medium_motor_display.png"
+                    alt = "Motor"
+                    port_name = port_names[t[1]]
+                    sensor_info_html = display_sensors(source, alt, number,
+                                                    port_name, sensor_info_html) 

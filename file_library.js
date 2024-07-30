@@ -1,4 +1,4 @@
-//  from ChatGPT
+//  from ChatGPT and Chris Rogers
 
 function readFile(file) {
     return new Promise((resolve, reject) => {

@@ -1,12 +1,20 @@
+"""
+sensor_mod.py
+
+This module interfaces with LEGO devices, processes sensor data, and displays 
+it on a web interface.
+
+Authors: Javier Laveaga and William Goldman
+
+"""
+
 import my_globals
 import asyncio
 from pyscript import document
 import time
 import helper_mod
 
-#defi
-#making dictionary here because I think that it is less efficient if I were
-# to send all these strings from chip to computer (thus chip only sends digits)
+#Ids of LEGO devices
 device_names = {
     48: "medium_motor",
     49: "big_motor",
@@ -27,6 +35,8 @@ port_names = {
     4: 'E',
     5: 'F'
 }
+
+#code that gets pasted when on connecting
 sensor_code = """
 
 import device
@@ -132,15 +142,16 @@ function_dict = {
 port_info = [()] * 6
 
 """
-#code for getting port information in tuple form
-#tuple = (1 if connected & recognized, port number, sensor_id)
+
+#tuple = (1 if connected & recognized, port number, sensor_id, number)
+#Code that executes (eval) on every instance of sensor while loop
 execute_code = """
     for i in range(6):
         #for each port get the device Id
         current_port = i
         try:
             #below is line that will give you error (potentially)
-            port_id = device.id(current_port) #this should be either 49, or 61 or 62 or... 65 #handle exception when not found
+            port_id = device.id(current_port) #this should be either 49,61,62...
             # Call the corresponding function if the device ID is found
             if port_id in function_dict:
                 number = function_dict[port_id](i)
@@ -164,20 +175,21 @@ port_info
 
 #sensor_info and get terminal in same button
 async def on_sensor_info(event):
-    print("ON-SENSOR")  
-    #helper_mod.enable_buttons([my_globals.connect, my_globals.custom_run_button, my_globals.sensors, my_globals.download, my_globals.save_btn, my_globals.upload_file_btn])
+    """
+    Handles sensor information display logic, toggles between sensor info and terminal view.
 
+    Args:
+        event (Event): The event triggering the sensor information display.
+    """
+    print("ON-SENSOR")  
     #global sensor
     global device_names
-    #await terminal.send('\x03')
-    #print("STOP-LOOP", stop_loop)
 
     my_globals.stop_loop = False
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = close_sensor
     print("SIUMAMA")
-    #shelper_mod.disable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn])
     sensor = False #so that on next click it displays terminal
 
     #document.getElementById('repl').style.display = 'none'
@@ -187,127 +199,60 @@ async def on_sensor_info(event):
     #execute code for thisL 
     # [(1, 0, 61), (0, 0, 0), (1, 2, 63), (1, 3, 48), (1, 4, 62), (1, 5, 64)]
     print("STOP-LOOP", my_globals.stop_loop)
-    color_detected = ["Red", "Green", "Blue", "Magenta", "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
+    color_detected = ["Red", "Green", "Blue", "Magenta", 
+                      "Yellow", "Orange", "Azure", "Black", "White", "Unknown"]
 
     while not my_globals.stop_loop:
-        #two lines below should go in while loop (checks every time the port info)
-        
-        #if and break statements added because if disconnected physically (aka suddenly), we must not do eval. 
-        #if not my_globals.terminal.connected:
-        #    break
-        #print("Before execute")
-        port_info_array = await my_globals.terminal.eval(execute_code, 'hidden') 
+        port_info_array = await my_globals.terminal.eval(execute_code, 'hidden')
 
 
-        # sensor_info_html = ""  # Initialize HTML content for sensor info
-        sensor_info_html = "<div class='sensor-info-container'>" # Initialize HTML content for sensor info
+        # Initialize HTML content for sensor info
+        sensor_info_html = "<div class='sensor-info-container'>" 
 
-        #iterating over tuples/ports
-        #print("before port_array")
-        for t in port_info_array: #if sensors are switched somewhere her, then error cause u don't udpate port_info_array
-            #solution would be to break out of loop if a bool is triggered(port disconnected)
-            
+        #t[2] is function/device id & t[1] is port num
+        #iterating over tuples/ports and displaying on website
+        for t in port_info_array: 
+            port_name = port_names[t[1]]
             if t[0] == 1: #if something is connected to port
                 #call corresponding funcitons with corresponding ports
                 if my_globals.stop_loop:
                     break
                 #number is tuple with some sort of sensor value
-                #if anything but color sensor (just display 1 value)
-                    #then 
 
                 if not my_globals.terminal.connected:
                     break
-                #t[2] is function/device id & t[1] is port #
-                number = t[3]
-
-
-                #if it is the color sensor process number as a tuple
-                #where tuple is (color from table 1, r, g , b)
-                # changed color_info[0] to number. since number is now the color number
+                number = t[3] #number associated with device
+                #For color sensor
                 if (t[2] == 61):
-                    #print("SIUU")
-                    #pass
-                    #checking to see that color returned by SPIKE is in list of known colors
-                    color_name = color_detected[number - 1] if 0 < number <= len(color_detected) else "Unknown"
-                    # document.querySelector('.colorCircle').style.backgroundColor = 'green'
-                    # <div class="sensor-info-item">
-                    #     <span>Number: {color_info} (Color: {color_name})</span>
-                    #     <span>Device: {device_names[t[2]]}</span>
-                    #     <span>Port: {port_names[t[1]]}</span>
-                    # </div>
-                    # """
-                    sensor_info_html += f"""
-                    <div class="sensor-info">
-                        <div class="sensor-info-item">
-                            <div class="sensor-stack-left">
-                                <span class="port-name">{port_names[t[1]]}</span>
-                            </div>
-                            <div class="sensor-stack-right">
-                                <span><img src="images/spike color_sensor_display.png" alt="color sensor"></span>
-                                <span class="sensor-value">
-                                    <div class="colorCircle" style="background-color: {color_name.lower()};"></div>
-                                    {color_detected[number - 1]}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    """
+                    #checking to see that color returned by SPIKE is in list of
+                    # known colors
+                    color_name = (
+                        color_detected[number - 1] 
+                        if 0 < number <= len(color_detected) else "Unknown"
+                    )
+                    sensor_info_html = display_color_sensor(port_name, 
+                                    color_name.lower(), color_detected, number,
+                                    sensor_info_html)
                 elif (t[2] == 48 or t[2] == 49 or t[2] == 65): #medium motor
-                    sensor_info_html += f"""
-                    <div class="sensor-info">
-                        <div class="sensor-info-item">
-                            <div class="sensor-stack-left">
-                                <span class="port-name">{port_names[t[1]]}</span>
-                            </div>
-                            <div class="sensor-stack-right">
-                                <span><img src="images/spike medium_motor_display.png" alt="Motor"></span>
-                                <span class="sensor-value">{number}&deg;</span>
-                            </div>
-                        </div>
-                    </div>
-                    """
+                    source = "images/spike medium_motor_display.png"
+                    alt = "Motor"
+                    sensor_info_html = display_sensors(source, alt, number,
+                                            port_name, "°", sensor_info_html) 
                 elif (t[2] == 62): #distance sensor
-                    sensor_info_html += f"""
-                    <div class="sensor-info">
-                        <div class="sensor-info-item">
-                            <div class="sensor-stack-left">
-                                <span class="port-name">{port_names[t[1]]}</span>
-                            </div>
-                            <div class="sensor-stack-right">
-                                <span><img src="images/spike distance_sensor_display.png" alt="distance sensor"></span>
-                                <span class="sensor-value">{number} mm</span>
-                            </div>
-                        </div>
-                    </div>
-                    """
+                    source = "images/spike distance_sensor_display.png" 
+                    alt = "distance sensor"
+                    sensor_info_html = display_sensors(source, alt, number,
+                                            port_name, "mm", sensor_info_html) 
                 elif (t[2] == 63): #force sensor
-                    sensor_info_html += f"""
-                    <div class="sensor-info">
-                        <div class="sensor-info-item">
-                            <div class="sensor-stack-left">
-                                <span class="port-name">{port_names[t[1]]}</span>
-                            </div>
-                            <div class="sensor-stack-right">
-                                <span><img src="images/spike push_sensor_display.png" alt="force sensor"></span>
-                                <span class="sensor-value">{number} N</span>
-                            </div>
-                        </div>
-                    </div>
-                    """
+                    source = "images/spike push_sensor_display.png"
+                    alt = "force sensor"
+                    sensor_info_html = display_sensors(source, alt, number,
+                                            port_name, "N", sensor_info_html) 
                 elif (t[2] == 64): #light matrix
-                    sensor_info_html += f"""
-                    <div class="sensor-info">
-                        <div class="sensor-info-item">
-                            <div class="sensor-stack-left">
-                                <span class="port-name">{port_names[t[1]]}</span>
-                            </div>
-                            <div class="sensor-stack-right">
-                                <span><img src="images/spike light_matrix_display.png" alt="light matrix"></span>
-                                <span class="sensor-value">{number}</span>
-                            </div>
-                        </div>
-                    </div>
-                    """
+                    source = "images/spike light_matrix_display.png"
+                    alt = "light matrix"
+                    sensor_info_html = display_sensors(source, alt, number,
+                                            port_name, "", sensor_info_html) 
                 else:
                     sensor_info_html += f"""
                         <div class="sensor-info-item">
@@ -318,46 +263,112 @@ async def on_sensor_info(event):
                     """ 
 
         sensor_info_html += "</div>"  # Close the container
+
         # Update the sensor info container with new HTML content
-        #print("In_LOOOP")
         document.getElementById('sensor-info').innerHTML = sensor_info_html
         print("In LOOP ")
 
     print("STOP-LOOP True")
 
+
+#called when displaying all sensors except the color sensor
+def display_sensors(source, alt, number, port_name, unit, sensor_info_html):
+    """
+    Updates the sensor information HTML content for non-color sensors.
+
+    Args:
+        source (str): The image source for the sensor.
+        alt (str): The alt text for the sensor image.
+        number (int): The sensor value.
+        port_name (str): The name of the port.
+        unit (str): The unit of measurement for the sensor value.
+        sensor_info_html (str): The current HTML content for sensor information.
+
+    Returns:
+        str: Updated HTML content for sensor information.
+    """
+    sensor_info_html += f"""
+    <div class="sensor-info">
+        <div class="sensor-info-item">
+            <div class="sensor-stack-left">
+                <span class="port-name">{port_name}</span>
+            </div>
+            <div class="sensor-stack-right">
+                <span><img src="{source}" alt="{alt}"></span>
+                <span class="sensor-value">{number} {unit}</span>
+            </div>
+        </div>
+    </div>
+    """
+    return sensor_info_html
+
+
+def display_color_sensor(port_name, color_name, color_array, number, 
+                         sensor_info_html):
+    """
+    Updates the sensor information HTML content for the color sensor.
+
+    Args:
+        port_name (str): The name of the port.
+        color_name (str): The name of the detected color.
+        color_array (list): List of known color names.
+        number (int): The index of the detected color in the color_array.
+        sensor_info_html (str): The current HTML content for sensor information.
+
+    Returns:
+        str: Updated HTML content for sensor information.
+    """
+    sensor_info_html += f"""
+    <div class="sensor-info">
+        <div class="sensor-info-item">
+            <div class="sensor-stack-left">
+                <span class="port-name">{port_name}</span>
+            </div>
+            <div class="sensor-stack-right">
+                <span>
+                <img 
+                src="images/spike color_sensor_display.png" alt="color sensor">
+                </span>
+                <span class="sensor-value">
+                    <div 
+                    class="colorCircle" style="background-color: {color_name};">
+                    </div>
+                    {color_array[number - 1]}
+                </span>
+            </div>
+        </div>
+    </div>
+    """
+    return sensor_info_html
+
+
+
+
+
 async def close_sensor(event=None):
+    """
+    Closes the sensor information display and re-enables other buttons.
+
+    Args:
+        event (Event, optional): The event triggering the sensor information 
+        closure.
+    """
+    
     print("In_CLose")
-    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.connect])
+    #class button1 disabling
+    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
+                    my_globals.custom_run_button, my_globals.upload_file_btn, 
+                    my_globals.save_btn, my_globals.connect])
     my_globals.stop_loop = True
     #(min of 0.32 - worst case scenario (when you trigger stop_loop boolean
-    # in close sensor right before calling eval in while loop of on_sensor info ))
-    await asyncio.sleep(0.5) #to allow while loop to finish its current iteration 
+    #in close sensor right before calling eval in while loop of on_sensor info))
+    await asyncio.sleep(0.5) #allow while loop to finish its current iteration 
 
     # next time sensors clicked, will hide sensor info
     my_globals.sensors.onclick = on_sensor_info
-    #helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.connect])
-   # await asyncio.sleep(1)  # Wait for 2 seconds
     document.getElementById('sensor-info').innerHTML = " "
     print("CLEARED")
-    #asyncio.
-    #time.sleep_ms(1000) #to allow while loop to finish current iteration
-    #await asyncio.sleep(0.1)
     my_globals.sensors.innerText = 'Sensors'
-
-    #**PREVENTS SPAMMING
-    #this code is kind of important.
-    #if the user spams the button, it prevents erros by disabling button for a short time
-    #so that if multiple clicks are made quickly, the same while loop below the if
-    #statement is not called twice
-    #this would result on calling eval again when the first eval call has not yet 
-    #finished. (resulting in error: can't eval 2 things at once)
-    #helper_mod.disable_buttons([my_globals.sensors, my_globals.download])
-    #await asyncio.sleep(0.2) 
-    
-    #clear all sensor info -- redundant but prevents lag errors
-    #document.getElementById('sensor-info').innerHTML = "" 
     print("REACHED")
     #show terminal
-    document.getElementById('repl').style.display = 'block'
-    #helper_mod.enable_buttons([my_globals.download, my_globals.custom_run_button, my_globals.upload_file_btn, my_globals.save_btn, my_globals.sensors])
-   
+    document.getElementById('repl').style.display = 'block'   

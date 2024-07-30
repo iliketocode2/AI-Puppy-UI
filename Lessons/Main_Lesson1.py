@@ -9,6 +9,7 @@ f_sensor = port.F
 hub_color1 = color.AZURE
 ai.button_color(hub_color1)
 
+print('**Jav-SIUU') #change to see if changes sync on lesson files (Jul 30)
 print('**Now in training mode')
 
 train_num = 3
@@ -50,7 +51,7 @@ sound.beep(880)
 
 print('**Puppy is trained!')
 print('**Press force sensor to see faces')
-print('**Press left button to exit program')
+#print('**Press left button to exit program') #delete this #TEST this***
 
 K = 3
 while not button.pressed(button.LEFT):
