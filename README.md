@@ -18,7 +18,7 @@ At the top of each page the current lesson name, lesson tips, and lesson tricks 
 
 In addition to the lesson-specific features, this site includes many similar features of the LEGO SPIKE™ IDE:
 - Live sensor readings
-- The ability to download and upload code onto and from the Lego Spike and your computer
+- The ability to download and upload code onto and from the LEGO SPIKE™ Prime and your computer
 - Code editor and terminal messages
   
 ![User Interface Overview](https://github.com/user-attachments/assets/bef1dbfa-7326-4838-9671-3ca2ab7584fe)
