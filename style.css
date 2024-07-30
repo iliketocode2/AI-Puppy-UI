@@ -108,6 +108,59 @@ body {
     transform: none;
 }
 
+/*---------------------------Tips and Troubleshooting LESSON 3---------------------------------*/
+
+.container3 {
+    padding: 20px;
+}
+
+.column {
+    padding: 10px;
+}
+
+.threeCol{
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.title {
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.basic {
+    font-size: 18px;
+    margin-top: -10px;
+}
+
+.code-block {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 0;
+    white-space: pre-wrap;
+    text-align: left;
+}
+
+.red-text {
+    color: rgb(235, 60, 60);
+}
+
+.green-text {
+    color: green;
+}
+
+.blue-text{
+    color: rgb(0, 119, 255);
+}
+
+.gray-text{
+    color: gray;
+}
+
 /*-----------------------------------------------------------------------------*/
 
 main {
