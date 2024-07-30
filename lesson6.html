@@ -25,20 +25,21 @@
     </header>
     <div class="container">
         <div class="section title-section">
-            <h1>AI Puppy Lesson 6: Line Following</h1>
-            <p style="font-size:20px">Code your puppy to follow a black line on white paper with the color sensor.</p>
+            <h1>AI Puppy Lesson 6: Puppy Disco</h1>
+            <p style="font-size:20px">Code your puppy to do dance moves! Use reinforcement learning to train it to perform a dance sequence!</p>
         </div>
         
         <div class="two-boxes-container">
             <div class="yellow-box">
                 <h2>Machine Learning Type</h2>
                 <p style="font-size:18px">
-                    <a href="https://www.geeksforgeeks.org/k-nearest-neighbours/" class="special-link">1D K-Nearest Neighbor</a>
+                    <a href="https://www.geeksforgeeks.org/what-is-reinforcement-learning/" class="special-link">Reinforcement Learning</a>,
+                    <a href="https://www.geeksforgeeks.org/q-learning-in-python/" class="special-link">Q-learning</a>
                 </p>
             </div>
             <div class="yellow-box">
                 <h2>Tools Used</h2>
-                <p style="font-size:18px">Color sensor, motors, & starter code</p>
+                <p style="font-size:18px">Color sensor, force sensor, motors, & starter code</p>
             </div>
         </div>
 
@@ -52,17 +53,17 @@
 
         <div class="section go-sections">
             <h2>Tips & Troubleshooting</h2>
-            <div class="content-wrapper">
-                <div class="text-box left">
-                    <p>Make sure your distance sensor ("puppy") is reading values when you train it.</p>
-            </div>
-                <div class="image-container">
-                    <img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Force sensor with gear">
-                    <img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Hub with gear and buttons">
-                </div>
-                <div class="text-box right">
-                    <p>Make sure the hub buttons are accessible.</p>
-                </div>
+            <div class="container3">
+                <p class="basic"><span style="font-weight: bold">READ</span> through the code before you start coding! Make sure your puppy can easily turn!<p>
+                <p class="basic">Code your puppy to go forwards, backwards, left, and right. <span style="font-weight: bold">Code “dance moves” in with those actions too!</span><p>
+                <p class="basic">Be patient! It may take time to get your puppy to do exactly what you want!<p>
+                <p class="basic">Test out your code in the puppy_move function before running the code for the entire lesson.<p>
+                <br>
+                <p class="title"><span style="font-weight: bold">TRAINING YOUR PUPPY:</span><p>
+                <p class="basic">Press the <span style="font-weight: bold">left button</span> if your puppy leaves the dance floor. This is a very bad reward. Your puppy will have to start the sequence over.<p>
+                <p class="basic">Press the <span style="font-weight: bold">right button</span> if your puppy does the wrong move, but stays on the dance floor. This is not a great reward.<p>
+                <p class="basic">Press the <span style="font-weight: bold">force sensor for less than a secon</span> if your puppy does the right move! This is a good reward!<p>  
+                <p class="basic">Press the <span style="font-weight: bold">force sensor for a few seconds</span> if your puppy does the right dance move to get to the ending square! This is a great reward!<p>
             </div>
         </div>
 
@@ -160,7 +161,7 @@
                         </div>
                         <div id="terminal" class="tabcontent">
                             <div id="terminalMessages">
-                                <div id="customTerminalMessage">Please connect to a Spike Prime to begin programming.<br><br></div>
+                                <div id="customTerminalMessage">Please connect to a SPIKE™ Prime to begin programming.<br><br></div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +174,7 @@
 
         <div class="section go-sections">
             <h2>Extended Thinking</h2>
-            <p>How does changing the amount of training data points collected impact the accuracy of displaying emotions?</p>
+            <p>What happens if you only give your puppy the worst award (left button) when it does the wrong move? Does it learn the dance sequence faster?</p>
             <img src="nobgimages/th-removebg-preview (1).png" alt="Your brain if you think about this" width="100px" height="auto">
         </div>
 

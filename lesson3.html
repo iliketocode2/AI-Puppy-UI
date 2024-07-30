@@ -26,8 +26,8 @@
     </header>
     <div class="container">
         <div class="section title-section">
-            <h1>AI Puppy Lesson 3: Actions</h1>
-            <p style="font-size:20px">Code your puppy to complete at least 3 actions based on what a sensor reads</p>
+            <h1>AI Puppy Lesson 3: Tricks</h1>
+            <p style="font-size:20px">Code and train your puppy to do at least 2 tricks based on what a sensor reads!</p>
         </div>
         
         <div class="two-boxes-container">
@@ -53,16 +53,35 @@
 
         <div class="section go-sections">
             <h2>Tips & Troubleshooting</h2>
-            <div class="content-wrapper">
-                <div class="text-box left">
-                    <p>Start with coding 2 actions first. You don’t need to use CEEO AI library. Make sure that sensors & motors are defined correctly. If you get an error, look at the line the error is being called at and check syntax & typos. NOTE: Don’t use get_colors, only get_light.</p>
-            </div>
-                <div class="image-container">
-                    <img class="puppyPicture" src="nobgimages/tips2-removebg-preview.png" alt="Force sensor with gear">
-                    <img class="puppyPicture" src="nobgimages/tips1-removebg-preview.png" alt="Hub with gear and buttons">
+            <div class="container3">
+                <div class="threeCol">
+                    <div class="column">
+                        <p class="title"><span style="font-weight: bold;">READ</span> through the code before adding your own code!</p>
+                        <br>
+                        <p class="title">Check for typos</p>
+                    </div>
+                    <div class="column">
+                        <p class="title" style="font-weight: bold;">Use any of the following sensor functions:</p>
+                        <code style="font-family: 'Courier New', Courier, monospace; font-size: 16px;">ai.get_distance<br>ai.get_force<br>ai.get_light</code>
+                        <p class="title" style="font-weight: bold;">Example code below!</p>
+                    </div>
+                    <div class="column">
+                        <p class="title">You do not need to use functions from CEEO_AI to code tricks!</p>
+                        <br>
+                        <p class="title">Make sure your ports are correct</p>
+                    </div>
                 </div>
-                <div class="text-box right">
-                    <p>Make sure the left, center, and right hub buttons are easily accessible</p>
+                <div class="code-block">
+                <span class="blue-text">def</span><span class="red-text"> cool_trick</span>():
+                    motor.run_for_degrees(legL, 90, 720)
+                    motor.stop()
+
+                <span class="blue-text">def</span><span class="red-text"> better_trick</span>():
+                    light_matrix.show_image(light_matrix.IMAGE_PACMAN)
+                    light_matrix.clear()
+                    <span class="gray-text"># For help with coding LEGO motors or hub, go to LEGO's education SPIKE™ webpage!</span>
+
+                ai.add_data(<span class="green-text">'cool trick'</span>, ai.get_light(c_sensor))
                 </div>
             </div>
         </div>
@@ -159,7 +178,7 @@
                         </div>
                         <div id="terminal" class="tabcontent">
                             <div id="terminalMessages">
-                                <div id="customTerminalMessage">Please connect to a Spike Prime to begin programming.<br><br></div>
+                                <div id="customTerminalMessage">Please connect to a SPIKE™ Prime to begin programming.<br><br></div>
                             </div>
                         </div>
                     </div>
@@ -169,7 +188,7 @@
 
         <div class="section go-sections">
             <h2>Extended Thinking</h2>
-            <p>How does changing the amount of training data points collected impact the accuracy of displaying emotions?</p>
+            <p>Can you add more actions and train your puppy to distinguish between them? Can you use a different sensor to train your puppy?</p>
             <img src="nobgimages/th-removebg-preview (1).png" alt="Your brain if you think about this" width="100px" height="auto">
         </div>
 
