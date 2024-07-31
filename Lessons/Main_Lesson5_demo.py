@@ -43,6 +43,7 @@ for i in range(train_num):
 hub_color2 = color.BLUE
 ai.button_color(hub_color2)
 sound.beep(440)
+utime.sleep(1) #for greater pause b/t 2 gifs (not needed for code functionality)
 print('**Collect data for backwards speed and distance')
 for i in range(train_num):
     ai.wait_for_right_button()

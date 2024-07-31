@@ -29,7 +29,6 @@ my_gif_dict_L1 = {
 
 # Dictionary containing lesson-specific GIFs for Lesson 2
 my_gif_dict_L2 = {
-    #this gif is a placeholder -- CHANGE LATER
     "**Move the legs of your puppy so that it is sitting!": 
         "gifs/Lesson2/2gif1.gif", 
     "**You should hear a beep when a data point is recorded.": 
@@ -44,7 +43,6 @@ my_gif_dict_L2 = {
 
 # Dictionary containing lesson-specific GIFs for Lesson 3
 my_gif_dict_L3 = {
-    #this gif is a placeholder -- CHANGE LATER
     "**You should hear a beep when a data point is recorded.": 
         "gifs/Lesson3/0gifright.gif"
 }
@@ -56,10 +54,10 @@ my_gif_dict_L4 = {
 }
 
 my_gif_dict_L5 = {
-    #this gif is a placeholder -- CHANGE LATER
-    #3: "gifs/Lesson1/force_sensor_touch_button.gif" 
-    #"**Collect data for forward speed and distance" : ,
-    #"**Collect data for backwards speed and distance": ,
+    "**Collect data for forward speed and distance" : 
+        "gifs/Lesson5/5gifbackward.gif" ,
+    "**Collect data for backwards speed and distance": 
+        "gifs/Lesson5/5gifforward.gif",
 }
 
 my_gif_dict_L6 = {

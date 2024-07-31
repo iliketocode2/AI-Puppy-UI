@@ -65,6 +65,13 @@ def second_half_disconnect(event=None):
     helper_mod.clean_up_disconnect()
     
 async def call_get_list():
+    """
+    Calls function get_list, which gets the list of files on SPIKE. 
+    It calls it a max amount of 10 times until it succeeds. 
+    (This was done becaue get_list gives errors sometimes when it gets 
+    called. It usually works on the second try)
+    
+    """
     #ERROR CHECKING
     timeout = 1  # Timeout duration in seconds (change this)
     timeout_count = 0
