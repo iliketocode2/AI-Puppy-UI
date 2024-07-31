@@ -152,12 +152,7 @@ async def on_connect(event):
         #terminal.terminal.attachCustomKeyEventHandler(on_user_input)
 
         my_globals.progress_bar.style.display = 'none'
-        helper_mod.enable_buttons([my_globals.connect, 
-            my_globals.custom_run_button, my_globals.sensors, 
-            my_globals.download, my_globals.save_btn, 
-            my_globals.upload_file_btn])
-        my_globals.debug_btn.disabled = False
-        my_globals.terminal_btn.disabled = False
+     
         
         await helper_mod.check_files() #updated (displays sensors)
     else:
@@ -215,13 +210,9 @@ async def on_load(event):
         my_globals.progress_bar.style.display = 'none'
         my_globals.percent_text.style.display = 'none'
         #await asyncio.sleep(0.4)  # Short delay before enablign download
-        helper_mod.enable_buttons([my_globals.download, my_globals.sensors, 
-                            my_globals.connect, my_globals.custom_run_button, 
-                            my_globals.save_btn, my_globals.upload_file_btn,
-                            my_globals.file_list])
         print_jav.print_custom_terminal("Download complete!")
         #check to see that you have appropriate files and update UI
-        await helper_mod.check_files() 
+        await helper_mod.check_files() #enables buttons by calling on_select
         
     else:
         window.alert('connect to a processor first')

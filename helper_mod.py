@@ -45,7 +45,8 @@ def stop_running_code():
         enable_buttons([my_globals.sensors, my_globals.download, 
                         my_globals.custom_run_button, my_globals.save_btn, 
                         my_globals.upload_file_btn, my_globals.connect,
-                        my_globals.file_list])
+                        my_globals.file_list, my_globals.debug_btn, 
+                        my_globals.terminal_btn])
 
         await sensor_mod.on_sensor_info(None) #display sensors
         print('stopped code')
@@ -60,6 +61,7 @@ def debugging_time():
                                 my_globals.file_list])
     await sensor_mod.close_sensor()
     helper_mod.enable_buttons([my_globals.terminal_btn])
+    my_globals.terminal_btn.style.backgroundColor = "red"
 
 #in custom terminal
 def not_debugging():
@@ -68,6 +70,7 @@ def not_debugging():
                             my_globals.sensors, my_globals.connect, 
                             my_globals.custom_run_button, my_globals.save_btn, 
                             my_globals.upload_file_btn, my_globals.file_list])
+    my_globals.terminal_btn.style.backgroundColor = "#ccc"
     await sensor_mod.on_sensor_info(None)
 
 
@@ -115,7 +118,8 @@ def clean_up_disconnect():
     my_globals.connect.innerText = 'Connect'
     disable_buttons([my_globals.sensors, my_globals.download, 
                      my_globals.custom_run_button, my_globals.save_btn, 
-                     my_globals.upload_file_btn, my_globals.file_list])
+                     my_globals.upload_file_btn, my_globals.file_list,
+                     my_globals.debug_btn, my_globals.terminal_btn])
     enable_buttons([my_globals.connect])
 
     #make the connect button green
@@ -228,7 +232,8 @@ async def on_select(event):
     enable_buttons([my_globals.sensors, my_globals.download, 
                     my_globals.custom_run_button, my_globals.save_btn, 
                     my_globals.upload_file_btn, my_globals.connect, 
-                    my_globals.file_list])
+                    my_globals.file_list, my_globals.debug_btn, 
+                    my_globals.terminal_btn])
     await sensor_mod.on_sensor_info(None) #display sensors
 
 #evaluates code when the green button is pressed
@@ -260,7 +265,8 @@ async def handle_board(event):
         if my_globals.terminal.connected:
             disable_buttons([my_globals.sensors, my_globals.download, 
                              my_globals.custom_run_button, 
-                             my_globals.upload_file_btn, my_globals.save_btn])
+                             my_globals.upload_file_btn, my_globals.save_btn,
+                             my_globals.debug_btn, my_globals.terminal_btn])
             print_jav.print_custom_terminal("Running code...")
             if my_globals.lesson_num == 3: #display this at the very beginning
                 my_gif.display_gif("gifs/Lesson3/0gifsensor.gif")
@@ -382,7 +388,7 @@ async def on_save(event):
     helper_mod.enable_buttons([my_globals.download, my_globals.sensors, 
                                my_globals.connect, my_globals.custom_run_button,
                                my_globals.save_btn, my_globals.upload_file_btn, 
-                               my_globals.file_list])
+                               my_globals.file_list, my_globals.debug_btn])
     await asyncio.sleep(0.1)  # allow download to finish before enabling sensors
     
     #only display sensors when save is called by clicking save button

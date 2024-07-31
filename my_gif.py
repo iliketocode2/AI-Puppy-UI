@@ -55,9 +55,9 @@ my_gif_dict_L4 = {
 
 my_gif_dict_L5 = {
     "**Collect data for forward speed and distance" : 
-        "gifs/Lesson5/5gifbackward.gif" ,
-    "**Collect data for backwards speed and distance": 
         "gifs/Lesson5/5gifforward.gif",
+    "**Collect data for backwards speed and distance": 
+        "gifs/Lesson5/5gifbackward.gif",
 }
 
 my_gif_dict_L6 = {

@@ -4,6 +4,9 @@ sensor_mod.py
 This module interfaces with LEGO devices, processes sensor data, and displays 
 it on a web interface.
 
+Note: when doing the eval, we are hiding it using 'hidden'
+This just means that it won't show in the REPL (debug) but it is still there
+
 Authors: Javier Laveaga and William Goldman
 
 """
@@ -359,7 +362,7 @@ async def close_sensor(event=None):
     helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
                     my_globals.custom_run_button, my_globals.upload_file_btn, 
                     my_globals.save_btn, my_globals.connect, 
-                    my_globals.file_list])
+                    my_globals.file_list, my_globals.debug_btn, my_globals.terminal_btn])
     my_globals.stop_loop = True
     #(min of 0.32 - worst case scenario (when you trigger stop_loop boolean
     #in close sensor right before calling eval in while loop of on_sensor info))

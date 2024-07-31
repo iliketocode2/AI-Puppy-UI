@@ -373,10 +373,9 @@ h2 {
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
-
-.button1:not(.active):not(:hover) {
-    background-color: rgb(129, 133, 143);
-    cursor: default;
+/**/
+.button1:not(.active):hover {
+    cursor: not-allowed;
 }
 
 .button1.active {
@@ -397,10 +396,10 @@ h2 {
 }
 
 
+
 #connect-spike {
     background-color: green;
     color: rgb(255, 255, 255);
-    cursor: pointer;
 }
     
 
@@ -410,7 +409,6 @@ h2 {
 
 #connect-spike.button1:not(.active) {
     background-color: rgb(129, 133, 143);
-    cursor: default;
 }
 
 /*
@@ -497,13 +495,13 @@ h2 {
 }
 
 .files {
+    color: #b4bcd0;
+    background-color: #111827;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: #998887;
     border: none;
     border-radius: 5px;
-    color: #ffffff;
     font-weight: bold;
     padding: 7px 9px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -527,15 +525,8 @@ h2 {
 }
 
 .files:hover {
-    background-color: #111827;
-    transform: translateY(-3px);
+    color: rgb(255, 255, 255);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.files:focus {
-    box-shadow: none;
-    outline: 2px solid transparent;
-    outline-offset: 2px;
 }
 
 /* Styling for options */
@@ -546,6 +537,25 @@ h2 {
     white-space: normal; 
     word-wrap: break-word;
 }
+/* Styling for disabled state */
+.files:disabled {
+    background-color: #cccccc; /* Example: Change background color for disabled state */
+    color: #666666;           /* Example: Change text color for disabled state */
+    cursor: not-allowed;      /* Indicate the button is not clickable */
+    box-shadow: none;         /* Remove box shadow */
+    transform: none;          /* Remove transform effect */
+}
+
+/* Disable hover and focus effects when disabled */
+.files:disabled:hover,
+.files:disabled:focus {
+    box-shadow: none;
+    outline: none;
+    transform: none;
+}
+
+/* Styling for options */
+
 
 /*---------------------------------------------------------------*/
 
@@ -649,12 +659,21 @@ h2 {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
+#customTerminalButton:disabled{
+    cursor: not-allowed;
+}
 
 #defaultTerminalButton{
     border-left: 2px solid black;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+#defaultTerminalButton:disabled{
+    cursor: not-allowed;
+}
+
+
+
 
 /*---------------------------terminal vs debug containers---------------------------------*/
 
@@ -842,7 +861,6 @@ button {
   display: grid;
   grid-template-columns: 1fr;
   place-items: center;
-  cursor: pointer;
   width: 60px;
   height: 60px;
   transition: color 0.15s ease, width 0.25s ease-out;
@@ -935,6 +953,7 @@ button {
     --color-background-secondary: rgb(129, 133, 143);
     --color-border: rgb(143, 134, 129);
     --color-accent: rgb(255, 255, 255);
+    cursor: not-allowed;
 }
 
 /* Play image for button */
@@ -981,9 +1000,7 @@ button {
     height: 60px; /* Adjust height */
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
-    cursor: pointer; /* Pointer cursor on hover */
-   
+    justify-content: center; /* Center content horizontally */   
 }
 
 #save_button .fa-save {
@@ -1037,7 +1054,6 @@ button {
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
-    cursor: pointer; /* Pointer cursor on hover */
     overflow: visible; /* Ensure the icon doesn't overflow */
     position: relative; /* Positioning context for any absolute elements */
     /* margin-left: -20px; */
@@ -1090,7 +1106,6 @@ button {
     display: flex; /* Use flexbox to center content */
     align-items: center; /* Center content vertically */
     justify-content: center; /* Center content horizontally */
-    cursor: pointer; /* Pointer cursor on hover */
     overflow: visible; /* Ensure the icon doesn't overflow */
     position: relative; /* Positioning context for any absolute elements */
 }
