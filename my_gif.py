@@ -7,7 +7,7 @@ specific print statements and lesson number.
 
 Authors: Javier Laveaga and William Goldman
 
-Contributors: Emmett Berryman (GIFs)
+Contributors: Emmett Berryman and Izzy Morales (GIFs)
 
 """
 
