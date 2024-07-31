@@ -14,6 +14,7 @@ import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light_matrix, sound, light
 ai = CEEO_AI.CEEO_AI() # Library of CEEO AI functions
 print('**Use your chosen sensor to train your puppy to do tricks!')
+utime.sleep(2)
 
 ### ADD YOUR SENSOR, MOTORS, AND PORTS HERE ###
 # Choose one sensor to use for this lesson!

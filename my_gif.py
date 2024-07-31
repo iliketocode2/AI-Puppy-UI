@@ -59,7 +59,9 @@ my_gif_dict_L4 = {
 
 my_gif_dict_L5 = {
     #this gif is a placeholder -- CHANGE LATER
-    3: "gifs/Lesson1/force_sensor_touch_button.gif" 
+    #3: "gifs/Lesson1/force_sensor_touch_button.gif" 
+    #"**Collect data for forward speed and distance" : ,
+    #"**Collect data for backwards speed and distance": ,
 }
 
 my_gif_dict_L6 = {
