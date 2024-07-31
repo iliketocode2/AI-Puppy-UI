@@ -29,24 +29,24 @@ my_gif_dict_L1 = {
 my_gif_dict_L2 = {
     #this gif is a placeholder -- CHANGE LATER
     "**Move the legs of your puppy so that it is sitting!": 
-        "gifs/Lesson2/Sitting_Down.gif", 
+        "gifs/Lesson2/2gif1.gif", 
     "**You should hear a beep when a data point is recorded.": 
-        "gifs/Lesson2/Recording_sitting.gif",
+        "gifs/Lesson2/2gif2.gif",
     "**Move the legs of your puppy so that it is standing!": 
-        "gifs/Lesson2/Standing-up.gif",
+        "gifs/Lesson2/2gif3.gif",
     "**Now add 5 data samples for standing!":
-        "gifs/Lesson2/Recording_sitting.gif",
+        "gifs/Lesson2/2gif4.gif",
     "**Press right button to exit training mode and play with your puppy!" : 
-        "gifs/Lesson3/holding_button.png"
+        "gifs/Lesson2/2gif5.gif"
 }
 
 # Dictionary containing lesson-specific GIFs for Lesson 3
 my_gif_dict_L3 = {
     #this gif is a placeholder -- CHANGE LATER
     "**Use your chosen sensor to train your puppy to do tricks!": 
-        "gifs/Lesson3/getting_data.gif", 
-    "**Press right button to exit training mode and play with your puppy!": 
-        "gifs/Lesson3/holding_button.png"
+        "gifs/Lesson3/0gifsensor.gif", 
+    "**You should hear a beep when a data point is recorded.": 
+        "gifs/Lesson3/0gifright.gif"
 }
 
 # Placeholder dictionaries for Lessons 4, 5, and 6

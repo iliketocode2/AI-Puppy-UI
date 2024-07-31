@@ -13,6 +13,7 @@ tricks.
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light_matrix, sound, light
 ai = CEEO_AI.CEEO_AI() # Library of CEEO AI functions
+print('**Use your chosen sensor to train your puppy to do tricks!')
 
 ### ADD YOUR SENSOR, MOTORS, AND PORTS HERE ###
 # Choose one sensor to use for this lesson!
@@ -48,8 +49,6 @@ hub_color1 = color.AZURE # This line and the line below changes the color of the
 ai.button_color(hub_color1)
 print('**Now in training mode')
 train_num = 5 # Number of samples you want to take for teaching each trick
-
-print('**Use your chosen sensor to train your puppy to do tricks!')
 print('**Add %s data samples for your 1st trick by interacting with the sensor and pressing the right button!' % (train_num))
 print('**You should hear a beep when a data point is recorded.')
 for i in range(train_num): # For loop repeats the code inside of it! Adding more data values will improve the puppy's learning!

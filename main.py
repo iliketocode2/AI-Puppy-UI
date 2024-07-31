@@ -131,10 +131,6 @@ async def on_connect(event):
         my_globals.progress_bar.value = 100
         document.getElementById('terminalFrameId').style.overflow = 'scroll'
 
-        if my_globals.lesson_num == 3: #display this at the very beginning
-            my_gif.display_gif("gifs/Lesson3/Multiple_sensors.gif")
-
-        
         #enable disconnect
         my_globals.connect.classList.add('connected')
         my_globals.connect.innerHTML = 'Disconnect'
