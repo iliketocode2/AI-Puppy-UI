@@ -45,8 +45,6 @@ my_gif_dict_L2 = {
 # Dictionary containing lesson-specific GIFs for Lesson 3
 my_gif_dict_L3 = {
     #this gif is a placeholder -- CHANGE LATER
-    "**Use your chosen sensor to train your puppy to do tricks!": 
-        "gifs/Lesson3/0gifsensor.gif", 
     "**You should hear a beep when a data point is recorded.": 
         "gifs/Lesson3/0gifright.gif"
 }

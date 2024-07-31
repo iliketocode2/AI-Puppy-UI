@@ -17,7 +17,7 @@ import sensor_mod
 import file_os
 import helper_mod
 import asyncio
-
+import my_gif
 
 def stop_running_code():
     """
@@ -38,6 +38,7 @@ def stop_running_code():
     my_globals.isRunning = False
     my_globals.found_key = False
     if my_globals.terminal.connected:
+        my_gif.display_gif("") #clear gifs when stop running
         await my_globals.terminal.send('\x03')
         print_jav.print_custom_terminal("""Code execution ended. Please press 
                                         the button to run the code again.""")
@@ -261,6 +262,8 @@ async def handle_board(event):
                              my_globals.custom_run_button, 
                              my_globals.upload_file_btn, my_globals.save_btn])
             print_jav.print_custom_terminal("Running code...")
+            if my_globals.lesson_num == 3: #display this at the very beginning
+                my_gif.display_gif("gifs/Lesson3/0gifsensor.gif")
 
             document.getElementById('gif').style.visibility = 'visible'
             document.getElementById('gif').style.display = 'block'
