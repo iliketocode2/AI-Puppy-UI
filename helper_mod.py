@@ -170,6 +170,11 @@ async def check_files():
         #makes error_string be the 'file' that is selected
         my_globals.file_list.value = error_string
         print('end of if statement')
+        enable_buttons([my_globals.sensors, my_globals.download, 
+                my_globals.custom_run_button, my_globals.save_btn, 
+                my_globals.upload_file_btn, my_globals.connect, 
+                my_globals.file_list, my_globals.debug_btn, 
+                my_globals.terminal_btn])
         await sensor_mod.on_sensor_info(None) #display sensors
     else:
         #so that the lesson file is displayed automatically
