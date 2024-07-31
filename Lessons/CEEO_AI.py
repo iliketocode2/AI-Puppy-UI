@@ -1,3 +1,20 @@
+"""
+CEEO_AI.py
+
+***********DO NOT CHANGE THIS FILE*********
+(If you change this file, click download button to download original file again)
+(Downloading will overwrite your file)
+
+Authors: Izzy Morales, Rachael Azrialy
+
+Description:
+This module provides the CEEO_AI class, which encapsulates various AI 
+functionalities for a robotic system. These functionalities include sensor 
+data acquisition, K-Nearest Neighbors (KNN) algorithms for 1D and 3D data,
+linear regression for predictive modeling, and reinforcement learning with 
+Q-Learning.
+
+"""
 import hub, utime, color, motor, urandom
 import force_sensor as fs
 import distance_sensor as ds

@@ -1,3 +1,15 @@
+"""
+Main_Lesson5.py
+
+Author: Izzy Morales
+
+Description:
+This script is designed to train a robotic puppy using distance and force 
+sensors, and motor ports. The user can train the puppy to move forwards 
+or backwards based on the sensor data and linear regression or KNN algorithms.
+
+"""
+
 import hub, utime, motor, color, CEEO_AI
 import force_sensor as fs
 from hub import port, button, light, sound

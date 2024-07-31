@@ -1,3 +1,17 @@
+"""
+Main_Lesson6.py
+
+Author: Izzy Morales
+
+Description:
+This script is designed to train a robotic puppy to perform a dance sequence 
+using reinforcement learning (RL). The puppy will learn to perform various 
+actions, including movements and dance moves, based on sensor input and rewards
+provided by the user.
+
+"""
+
+
 import hub, color_sensor as cs, color, motor, motor_pair, utime, random, CEEO_AI
 from hub import port, button, light_matrix, sound
 ai = CEEO_AI.CEEO_AI()

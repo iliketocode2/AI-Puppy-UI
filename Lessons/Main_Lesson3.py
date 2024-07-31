@@ -1,3 +1,15 @@
+"""
+Main_Lesson3.py
+
+Author: Izzy Morales
+
+Description:
+This script is designed for students to train a robotic puppy using various 
+sensors and motor ports. The user can define up to 5 tricks, train the puppy 
+with sensor data, and then play with the puppy by having it perform the trained
+tricks.
+
+"""
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light_matrix, sound, light
 ai = CEEO_AI.CEEO_AI() # Library of CEEO AI functions

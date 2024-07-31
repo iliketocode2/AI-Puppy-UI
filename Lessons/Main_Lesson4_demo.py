@@ -1,3 +1,17 @@
+"""
+Lesson4_demo.py
+
+****THIS CODE WILL RUN SINCE IT IS COMPLETED** 
+
+Author: Izzy Morales
+
+Description:
+This script is designed to train a robotic puppy using a color sensor 
+and motor ports. The user can train the puppy to react to different colors 
+as if they were different foods.
+
+"""
+
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light_matrix, sound, light
 ai = CEEO_AI.CEEO_AI()

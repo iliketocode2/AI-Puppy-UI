@@ -1,3 +1,14 @@
+"""
+Main_Lesson2.py
+
+Author: Izzy Morales
+
+Description:
+This script is designed to train a robotic puppy using a distance sensor and 
+motor ports. The students can train the puppy to sit or stand based on the 
+distance of an object from the sensor.
+
+"""
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light, sound
 ai = CEEO_AI.CEEO_AI()

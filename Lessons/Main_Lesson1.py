@@ -1,3 +1,17 @@
+"""
+Main_Lesson1.py
+
+Authors: Izzy Morales, Rachael Azrialy
+
+Description:
+This script trains a robotic puppy to respond with emotions (happy or sad) based 
+on interaction with a force sensor. The puppy uses a K-Nearest Neighbors (KNN) 
+algorithm to classify the force sensor input as either a happy or sad 
+interaction.
+
+
+"""
+
 import hub, utime, motor, color, CEEO_AI
 from hub import port, button, light, sound, light_matrix
 ai = CEEO_AI.CEEO_AI()
@@ -9,7 +23,7 @@ f_sensor = port.F
 hub_color1 = color.AZURE
 ai.button_color(hub_color1)
 
-print('**Jav-SIUU') #change to see if changes sync on lesson files (Jul 30)
+print('**Jav-MEssi') #change to see if changes sync on lesson files (Jul 30)
 print('**Now in training mode')
 
 train_num = 3
@@ -51,7 +65,6 @@ sound.beep(880)
 
 print('**Puppy is trained!')
 print('**Press force sensor to see faces')
-#print('**Press left button to exit program') #delete this #TEST this***
 
 K = 3
 while not button.pressed(button.LEFT):

@@ -18,8 +18,6 @@ import file_os
 import helper_mod
 import asyncio
 
-import time
-
 
 def stop_running_code():
     """
