@@ -358,7 +358,8 @@ async def close_sensor(event=None):
     #class button1 disabling
     helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
                     my_globals.custom_run_button, my_globals.upload_file_btn, 
-                    my_globals.save_btn, my_globals.connect])
+                    my_globals.save_btn, my_globals.connect, 
+                    my_globals.file_list])
     my_globals.stop_loop = True
     #(min of 0.32 - worst case scenario (when you trigger stop_loop boolean
     #in close sensor right before calling eval in while loop of on_sensor info))

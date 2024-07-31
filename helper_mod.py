@@ -45,7 +45,8 @@ def stop_running_code():
                                         the button to run the code again.""")
         enable_buttons([my_globals.sensors, my_globals.download, 
                         my_globals.custom_run_button, my_globals.save_btn, 
-                        my_globals.upload_file_btn, my_globals.connect])
+                        my_globals.upload_file_btn, my_globals.connect,
+                        my_globals.file_list])
 
         await sensor_mod.on_sensor_info(None) #display sensors
         print('stopped code')
@@ -54,18 +55,20 @@ def stop_running_code():
         window.fadeImage('') #do this to clear gifs
 
 def debugging_time():
-    my_globals.debug_btn.disabled = True
-    my_globals.terminal_btn.disabled = True
+    #disable file list 
+    #file_list - file list globals
+    helper_mod.disable_buttons([my_globals.debug_btn, my_globals.terminal_btn,
+                                my_globals.file_list])
     await sensor_mod.close_sensor()
-    my_globals.terminal_btn.disabled = False
+    helper_mod.enable_buttons([my_globals.terminal_btn])
 
 #in custom terminal
 def not_debugging():
-    my_globals.terminal_btn.disabled = True
-    my_globals.debug_btn.disabled = False
-    helper_mod.enable_buttons([my_globals.download, my_globals.sensors, 
-                            my_globals.connect, my_globals.custom_run_button, 
-                            my_globals.save_btn, my_globals.upload_file_btn])
+    helper_mod.disable_buttons([my_globals.terminal_btn])
+    helper_mod.enable_buttons([my_globals.debug_btn, my_globals.download, 
+                            my_globals.sensors, my_globals.connect, 
+                            my_globals.custom_run_button, my_globals.save_btn, 
+                            my_globals.upload_file_btn, my_globals.file_list])
     await sensor_mod.on_sensor_info(None)
 
 
@@ -113,7 +116,7 @@ def clean_up_disconnect():
     my_globals.connect.innerText = 'Connect'
     disable_buttons([my_globals.sensors, my_globals.download, 
                      my_globals.custom_run_button, my_globals.save_btn, 
-                     my_globals.upload_file_btn])
+                     my_globals.upload_file_btn, my_globals.file_list])
     enable_buttons([my_globals.connect])
 
     #make the connect button green
@@ -136,6 +139,7 @@ async def check_files():
     Returns:
         None
     """
+   
     #important for resetting fading (avoids conflicts of having multiple
     # fadings at once)
     window.stopFadingWarningIcon() 
@@ -171,6 +175,7 @@ async def check_files():
         print('not empty')
         window.stopFadingWarningIcon()
         await on_select(None)  # Attempt to call on_select
+        
              
 
 
@@ -223,7 +228,8 @@ async def on_select(event):
         await asyncio.sleep(0.1)  # Short delay before retrying 
     enable_buttons([my_globals.sensors, my_globals.download, 
                     my_globals.custom_run_button, my_globals.save_btn, 
-                    my_globals.upload_file_btn, my_globals.connect])
+                    my_globals.upload_file_btn, my_globals.connect, 
+                    my_globals.file_list])
     await sensor_mod.on_sensor_info(None) #display sensors
 
 #evaluates code when the green button is pressed
@@ -296,8 +302,9 @@ def disable_buttons(list_to_disable):
         element.disabled = True #for actual functioning
         if element.id == 'custom-run-button':
             element.classList.add('disabled')  # add a 'disabled' class
-        else:
-            element.classList.remove('active') #for displaying other buttons
+        elif (element.classList.contains('button1')): #if you are a button 1
+            element.classList.remove('active')
+        
 
 
 def enable_buttons(list_to_disable):
@@ -319,11 +326,12 @@ def enable_buttons(list_to_disable):
     for element in list_to_disable:
         #controls actually being able to click and activate it/calling 
         #corresponding function
-        element.disabled = False 
+        element.disabled = False #includes disabling select
         if element.id == 'custom-run-button':
             element.classList.remove('disabled')  # remove the 'disabled' class
-        else:
+        elif (element.classList.contains('button1')): #if you are a button 1
             element.classList.add('active') #controls display for other buttons
+        
 
 
 async def on_save(event):
@@ -349,11 +357,6 @@ async def on_save(event):
         None
     """
     await sensor_mod.close_sensor()
-    helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
-                                my_globals.connect, 
-                                my_globals.custom_run_button, 
-                                my_globals.save_btn, 
-                                my_globals.upload_file_btn])
 
     #SAVING LOCALLY
     my_editor_code = my_globals.my_green_editor.code #code in editor
@@ -377,7 +380,8 @@ async def on_save(event):
     print_jav.print_custom_terminal("Saved on SPIKE!")
     helper_mod.enable_buttons([my_globals.download, my_globals.sensors, 
                                my_globals.connect, my_globals.custom_run_button,
-                               my_globals.save_btn, my_globals.upload_file_btn])
+                               my_globals.save_btn, my_globals.upload_file_btn, 
+                               my_globals.file_list])
     await asyncio.sleep(0.1)  # allow download to finish before enabling sensors
     
     #only display sensors when save is called by clicking save button

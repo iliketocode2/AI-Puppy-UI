@@ -153,6 +153,8 @@ async def on_connect(event):
             my_globals.custom_run_button, my_globals.sensors, 
             my_globals.download, my_globals.save_btn, 
             my_globals.upload_file_btn])
+        my_globals.debug_btn.disabled = False
+        my_globals.terminal_btn.disabled = False
         
         await helper_mod.check_files() #updated (displays sensors)
     else:
@@ -212,7 +214,8 @@ async def on_load(event):
         #await asyncio.sleep(0.4)  # Short delay before enablign download
         helper_mod.enable_buttons([my_globals.download, my_globals.sensors, 
                             my_globals.connect, my_globals.custom_run_button, 
-                            my_globals.save_btn, my_globals.upload_file_btn])
+                            my_globals.save_btn, my_globals.upload_file_btn,
+                            my_globals.file_list])
         print_jav.print_custom_terminal("Download complete!")
         #check to see that you have appropriate files and update UI
         await helper_mod.check_files() 
@@ -304,6 +307,10 @@ my_globals.no_btn.onclick = no_on_disconnect
 helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
                     my_globals.custom_run_button, my_globals.save_btn, 
                     my_globals.upload_file_btn])
+
+my_globals.debug_btn.disabled = True
+my_globals.terminal_btn.disabled = True
+
 helper_mod.enable_buttons([my_globals.connect])
 #set a callback function that is called when disconnection happens
 my_globals.terminal.disconnect_callback = second_half_disconnect
