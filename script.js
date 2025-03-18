@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         //hide mpy editor for lesson 1 and 2
         if (currentLesson === 'lesson1' || currentLesson === 'lesson2'){
-            document.getElementById('hide_on_1_and_2').style.display = 'block';
+            document.getElementById('hide_on_1_and_2').style.display = 'none';
         }
         else{
             document.getElementById('hide_on_1_and_2').style.display = 'block';
@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let defaultTerminal = document.getElementById('defaultTerminalButton');
     
     customTerminal.addEventListener("click", (event) => {
+        console.log("I am clicked");
         window.not_debugging() //calling python function
         changeTabTerminal(event, 'terminal');
     });
