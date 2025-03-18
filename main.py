@@ -105,7 +105,7 @@ async def on_connect(event):
         event (optional): The event triggering the connection.
     """
     helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
-            my_globals.connect, my_globals.custom_run_button, 
+            my_globals.custom_run_button, 
             my_globals.save_btn, my_globals.upload_file_btn])
     my_globals.connect.innerHTML = 'Connecting...'
     await my_globals.terminal.board.connect('repl')
