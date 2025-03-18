@@ -67,7 +67,7 @@ def debugging_time():
 def not_debugging():
     helper_mod.disable_buttons([my_globals.terminal_btn])
     helper_mod.enable_buttons([my_globals.debug_btn, my_globals.download, 
-                            my_globals.sensors, my_globals.connect, 
+                            my_globals.sensors, 
                             my_globals.custom_run_button, my_globals.save_btn, 
                             my_globals.upload_file_btn, my_globals.file_list])
     my_globals.terminal_btn.style.backgroundColor = "#ccc"
