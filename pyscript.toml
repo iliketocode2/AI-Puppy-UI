@@ -23,7 +23,7 @@ name = "AI Puppy Lesson 1_Jav_June26 Copy"
 "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/sensor_mod.py" = "./sensor_mod.py"
 "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/print_jav.py" = "./print_jav.py"
 "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_gif.py" = "./my_gif.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
+"https://raw.githubusercontent.com/milandahal213/AI-Puppy-UI/refs/heads/main/helper_mod.py" = "./helper_mod.py"
 
 
 [js_modules.main]
