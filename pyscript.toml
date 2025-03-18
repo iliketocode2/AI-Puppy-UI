@@ -12,11 +12,11 @@ name = "AI Puppy Lesson 1_Jav_June26 Copy"
 #"core-chris/file_os.py" = "./file_os.py" #LOCAL
 
 #COMMENT THIS OUT BEFORE COMMIT (have this for local edits)
-"/my_globals.py" = "./my_globals.py" #LOCAL
-"/sensor_mod.py" ="./sensor_mod.py" #LOCAL
-"/print_jav.py" = "./print_jav.py" #LOCAL
-"/my_gif.py" = "./my_gif.py" #LOCAL
-"/helper_mod.py" = "./helper_mod.py" #LOCAL
+#"/my_globals.py" = "./my_globals.py" #LOCAL
+#"/sensor_mod.py" ="./sensor_mod.py" #LOCAL
+#"/print_jav.py" = "./print_jav.py" #LOCAL
+#"/my_gif.py" = "./my_gif.py" #LOCAL
+#"/helper_mod.py" = "./helper_mod.py" #LOCAL
 
 #COMMENT THIS OUT WHILE EDITING ON LOCAL
 "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_globals.py" = "./my_globals.py"
