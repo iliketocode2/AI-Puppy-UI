@@ -65,6 +65,7 @@ def debugging_time():
 
 #in custom terminal
 def not_debugging():
+    console.log("test")
     helper_mod.disable_buttons([my_globals.terminal_btn])
     helper_mod.enable_buttons([my_globals.debug_btn, my_globals.download, 
                             my_globals.sensors, 
