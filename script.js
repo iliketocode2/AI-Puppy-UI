@@ -10,6 +10,8 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("I am forcing active");
+    window.not_debugging() //calling python function
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
