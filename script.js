@@ -12,7 +12,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log("I am forcing active");
     window.stop_running_code();
-    window.not_debugging() //calling python function
+    window.not_debugging(); //calling python function
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     customTerminal.addEventListener("click", (event) => {
         console.log("I am clicked");
-        window.not_debugging() //calling python function
+        window.not_debugging(); //calling python function
         changeTabTerminal(event, 'terminal');
     });
 
