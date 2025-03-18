@@ -10,7 +10,7 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("I am forcing active");
+    console.log("I am going to stop");
 
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
