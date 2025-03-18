@@ -11,7 +11,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("I am going to stop");
-
+    not_debugging(); 
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
