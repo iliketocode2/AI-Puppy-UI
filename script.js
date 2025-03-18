@@ -11,6 +11,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("I am forcing active");
+    window.stop_running_code();
     window.not_debugging() //calling python function
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
