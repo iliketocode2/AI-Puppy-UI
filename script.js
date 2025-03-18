@@ -123,14 +123,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     customTerminal.addEventListener("click", (event) => {
         console.log("I am clicked");
-        window.not_debugging(); //calling python function
+        not_debugging(); //calling python function
         changeTabTerminal(event, 'terminal');
     });
 
     //This one is the Debug terminal
     defaultTerminal.addEventListener("click", (event) => {
         console.log('IN DEBUG')
-        window.debugging_time(); //calling python function
+        debugging_time(); //calling python function
         changeTabTerminal(event, 'debug');
         //call python funciton which disables custom terminal button
     });
