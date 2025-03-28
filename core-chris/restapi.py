@@ -5,7 +5,7 @@ headers = {
     "Accept": "*/*",
 }
 
-def get(url):
+async def get(url):
     try:
         response = await fetch(url, method='GET', headers = headers)
         if response.ok:
@@ -18,7 +18,7 @@ def get(url):
         return None   
 
 
-def post(url, headers, body):
+async def post(url, headers, body):
     try:
         response = await fetch(
             url, 

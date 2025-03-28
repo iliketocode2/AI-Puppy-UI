@@ -3,7 +3,8 @@
 # https://cdn.jsdelivr.net/npm/micro-repl@0.5.1/serial.js
 
 from pyscript import window
-from pyscript.js_modules.micro_repl import default as Board
+from js import import_module
+Board = import_module("https://esm.run/micro-repl@0.5.1/serial")
 import json
 
 try:

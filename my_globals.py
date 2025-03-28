@@ -56,8 +56,13 @@ Dependencies:
 """
 from pyscript import document
 from pyscript.js_modules import file_library
-import ampy
+from core_chris import ampy
+import sys
+from js import console
+
+console.log("Setting up global variables...")
 def init():
+    console.log("Initializing global variables...")
     """
     Initializes global variables, UI elements, and configurations for the 
     application. Sets up the environment for interaction with SPIKE and Arduino 
@@ -137,3 +142,5 @@ def init():
     global terminal
     #terminal = ampy.Ampy(SPIKE, progress_bar) #use this if using arduino
     terminal = ampy.Ampy(ARDUINO_NANO, progress_bar)
+
+    console.log("Global variables initialized")

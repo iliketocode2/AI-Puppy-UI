@@ -15,7 +15,7 @@ References:
 
 
 from pyscript import document, window, when
-from js import window
+from js import window, console
 import ampy
 import restapi
 import asyncio
@@ -27,12 +27,21 @@ import print_jav
 import my_gif
 import helper_mod
 
+console.log("main.py is running...")
+
 my_globals.init() #initializing my global variables
+
+# Add debug logging for button states
+console.log("Initial button states:")
+console.log("Connect button disabled:", my_globals.connect.disabled)
+console.log("Connect button active class:", my_globals.connect.classList.contains('active'))
+console.log("Run button disabled:", my_globals.custom_run_button.disabled)
+console.log("Run button disabled class:", my_globals.custom_run_button.classList.contains('disabled'))
 
 ARDUINO_NANO = 128
 SPIKE = 256
 
-def on_custom_disconnect(event=None):
+async def on_custom_disconnect(event=None):
     """
     Handle custom disconnection event from the Spike Prime.
     
@@ -47,9 +56,6 @@ def on_custom_disconnect(event=None):
     
     #give user option to save or not
     document.getElementById('overlay').style.display = 'flex'
-    
-
-
 
 #callback when disconnected physically
 def second_half_disconnect(event=None):
@@ -95,7 +101,7 @@ async def call_get_list():
         # 1 sec)
         await asyncio.sleep(0.1)  # Short delay before retrying 
     #ERROR CHECKING
-    
+
 
 async def on_connect(event):
     """
@@ -104,13 +110,28 @@ async def on_connect(event):
     Args:
         event (optional): The event triggering the connection.
     """
+
     helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
             my_globals.custom_run_button, 
             my_globals.save_btn, my_globals.upload_file_btn])
     my_globals.connect.innerHTML = 'Connecting...'
     await my_globals.terminal.board.connect('repl')
 
+    console.log("Connect button clicked - entering on_connect")
+    try:
+        console.log(f"Terminal object: {my_globals.terminal}")
+        success = await my_globals.terminal.connect('repl')
+        console.log(f"Connection attempt result: {success}")
+        
+        if not success:
+            console.error("Board connection failed")
+            raise Exception("Failed to connect to board")
+    except Exception as e:
+        console.error(f"Connection error: {e}")
+        second_half_disconnect()
+
     if my_globals.terminal.connected:
+        console.log("Successfully connected to board")
         #enable buttons
         #turn on progress bar to indicate begginning of initialization
         my_globals.progress_bar.style.display = 'block' 
@@ -238,7 +259,7 @@ async def on_upload_file(event):
     print('file beginning: ',code_retrieved[:10])
     
 
-def yes_on_disconnect(event):
+async def yes_on_disconnect(event):
     """
     Handle confirmation of saving data on disconnection.
     
@@ -299,13 +320,17 @@ my_globals.no_btn.onclick = no_on_disconnect
 
 #start disabled until connected
 helper_mod.disable_buttons([my_globals.sensors, my_globals.download, 
-                    my_globals.custom_run_button, my_globals.save_btn, 
-                    my_globals.upload_file_btn])
+                    my_globals.save_btn, my_globals.upload_file_btn])
 
 my_globals.debug_btn.disabled = True
 my_globals.terminal_btn.disabled = True
 
-helper_mod.enable_buttons([my_globals.connect])
+# Let HTML handle initial button states
+# my_globals.connect.disabled = False
+# my_globals.connect.classList.add('active')
+# my_globals.custom_run_button.disabled = True
+# my_globals.custom_run_button.classList.add('disabled')
+
 #set a callback function that is called when disconnection happens
 my_globals.terminal.disconnect_callback = second_half_disconnect
 #set a callback function that is called every time data is received 
@@ -314,6 +339,12 @@ my_globals.terminal.newData_callback = print_jav.on_data_jav
 
 #set current dictionary for desired lesson
 my_gif.set_dictionary()
+
+# Add debug logging for initial setup
+console.log("Initializing main.py...")
+console.log("Connect button element:", my_globals.connect)
+console.log("Connect button onclick handler:", my_globals.connect.onclick)
+console.log("Connect button classes:", my_globals.connect.classList.toString())
 
 
  

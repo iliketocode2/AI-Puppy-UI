@@ -8,13 +8,26 @@
  * @version 1.0
  */
 
+console.log("script.js loaded");
 
 document.addEventListener('DOMContentLoaded', function() {
+
     console.log("I am going to stop");
     not_debugging(); 
+
+    console.log("DOM Content Loaded");
+
     const connectButton = document.getElementById('connect-spike');
     const downloadButton = document.getElementById('download-code');
     const sensorButton = document.getElementById('sensor_readings');
+    const runButton = document.getElementById('custom-run-button');
+    
+    // Log initial states but don't modify them
+    console.log("Initial button states (set by HTML):");
+    console.log("Connect button disabled:", connectButton.disabled);
+    console.log("Connect button active class:", connectButton.classList.contains('active'));
+    console.log("Run button disabled:", runButton.disabled);
+    console.log("Run button disabled class:", runButton.classList.contains('disabled'));
     
     window.checkCurrentLesson = checkCurrentLesson;
     /**
