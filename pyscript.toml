@@ -1,29 +1,29 @@
 name = "AI Puppy Lesson 1_Jav_June26 Copy"
 
 [files]
-"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/andrea_terminal.py" = "andrea_terminal.py"
-"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/ampy.py" = "ampy.py"
-"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/restapi.py" = "restapi.py"
-"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_os.py" = "file_os.py"
+# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/andrea_terminal.py" = "andrea_terminal.py"
+# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/ampy.py" = "ampy.py"
+# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/restapi.py" = "restapi.py"
+# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_os.py" = "file_os.py"
 
-#"core-chris/andrea_terminal.py" = "./andrea_terminal.py" #LOCAL
-#"core-chris/ampy.py" = "./ampy.py" #LOCAL
-#"core-chris/restapi.py" = "./restapi.py" #LOCAL
-#"core-chris/file_os.py" = "./file_os.py" #LOCAL
+"core-chris/andrea_terminal.py" = "./andrea_terminal.py" #LOCAL
+"core-chris/ampy.py" = "./ampy.py" #LOCAL
+"core-chris/restapi.py" = "./restapi.py" #LOCAL
+"core-chris/file_os.py" = "./file_os.py" #LOCAL
 
 #COMMENT THIS OUT BEFORE COMMIT (have this for local edits)
-#"/my_globals.py" = "./my_globals.py" #LOCAL
-#"/sensor_mod.py" ="./sensor_mod.py" #LOCAL
-#"/print_jav.py" = "./print_jav.py" #LOCAL
-#"/my_gif.py" = "./my_gif.py" #LOCAL
-#"/helper_mod.py" = "./helper_mod.py" #LOCAL
+"/my_globals.py" = "./my_globals.py" #LOCAL
+"/sensor_mod.py" ="./sensor_mod.py" #LOCAL
+"/print_jav.py" = "./print_jav.py" #LOCAL
+"/my_gif.py" = "./my_gif.py" #LOCAL
+"/helper_mod.py" = "./helper_mod.py" #LOCAL
 
 #COMMENT THIS OUT WHILE EDITING ON LOCAL
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_globals.py" = "./my_globals.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/sensor_mod.py" = "./sensor_mod.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/print_jav.py" = "./print_jav.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_gif.py" = "./my_gif.py"
-"https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
+# "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_globals.py" = "./my_globals.py"
+# "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/sensor_mod.py" = "./sensor_mod.py"
+# "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/print_jav.py" = "./print_jav.py"
+# "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/my_gif.py" = "./my_gif.py"
+# "https://raw.githubusercontent.com/iliketocode2/AI-Puppy-UI/main/helper_mod.py" = "./helper_mod.py"
 
 
 [js_modules.main]
