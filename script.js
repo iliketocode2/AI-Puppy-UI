@@ -12,25 +12,19 @@ console.log("script.js loaded");
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM Content Loaded");
-    const connectButton = document.getElementById('connect-spike');
-    const downloadButton = document.getElementById('download-code');
-    const sensorButton = document.getElementById('sensor_readings');
-    const runButton = document.getElementById('custom-run-button');
+    // const connectButton = document.getElementById('connect-spike');
+    // const downloadButton = document.getElementById('download-code');
+    // const sensorButton = document.getElementById('sensor_readings');
+    // const runButton = document.getElementById('custom-run-button');
     
-    // Log initial states but don't modify them
-    console.log("Initial button states (set by HTML):");
-    console.log("Connect button disabled:", connectButton.disabled);
-    console.log("Connect button active class:", connectButton.classList.contains('active'));
-    console.log("Run button disabled:", runButton.disabled);
-    console.log("Run button disabled class:", runButton.classList.contains('disabled'));
-    
-    window.checkCurrentLesson = checkCurrentLesson;
+    window.checkCurrentLesson = checkCurrentLesson();
     /**
      * @function checkCurrentLesson
      * @description Determines the current lesson based on the body ID and 
      * performs actions accordingly.
      * @returns {number} The lesson number.
      */
+
     function checkCurrentLesson() {
         // Get the ID of the body element
         var currentLesson = document.body.id;
@@ -46,27 +40,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Use the currentLesson variable to determine which lesson you are in
         switch (currentLesson) {
             case "lesson1":
-                console.log("JS:You are in Lesson 1");
+                console.log("JS: You are in Lesson 1");
                 // Additional actions specific to Lesson 1
                 return 1;
             case "lesson2":
-                console.log("JS:You are in Lesson 2");
+                console.log("JS: You are in Lesson 2");
                 // Additional actions specific to Lesson 2
                 return 2;
             case "lesson3":
-                console.log("JS:You are in Lesson 3");
+                console.log("JS: You are in Lesson 3");
                 return 3;
                 // Additional actions specific to Lesson 3
             case "lesson4":
-                console.log("JS:You are in Lesson 4");
+                console.log("JS: You are in Lesson 4");
                 return 4;
                 // Additional actions specific to Lesson 4
             case "lesson5":
-                console.log("JS:You are in Lesson 5");
+                console.log("JS: You are in Lesson 5");
                 return 5;
                 // Additional actions specific to Lesson 5
             case "lesson6":
-                console.log("JS:You are in Lesson 6");
+                console.log("JS: You are in Lesson 6");
                 return 6;
                 // Additional actions specific to Lesson 6
             default:

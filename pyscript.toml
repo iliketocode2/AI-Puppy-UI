@@ -1,15 +1,15 @@
 name = "AI Puppy Lesson 1_Jav_June26 Copy"
 
 [files]
-# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/andrea_terminal.py" = "andrea_terminal.py"
+"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/andrea_terminal.py" = "andrea_terminal.py"
 # "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/ampy.py" = "ampy.py"
-# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/restapi.py" = "restapi.py"
-# "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_os.py" = "file_os.py"
+"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/restapi.py" = "restapi.py"
+"https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_os.py" = "file_os.py"
 
-"core-chris/andrea_terminal.py" = "./andrea_terminal.py" #LOCAL
+# "core-chris/andrea_terminal.py" = "./andrea_terminal.py" #LOCAL
 "core-chris/ampy.py" = "./ampy.py" #LOCAL
-"core-chris/restapi.py" = "./restapi.py" #LOCAL
-"core-chris/file_os.py" = "./file_os.py" #LOCAL
+# "core-chris/restapi.py" = "./restapi.py" #LOCAL
+# "core-chris/file_os.py" = "./file_os.py" #LOCAL
 
 #COMMENT THIS OUT BEFORE COMMIT (have this for local edits)
 "/my_globals.py" = "./my_globals.py" #LOCAL
@@ -30,5 +30,8 @@ name = "AI Puppy Lesson 1_Jav_June26 Copy"
 #"https://javier-laveaga.pyscriptapps.com/jul-15-webpage/latest/jav_will_em_core/save_jav.js" = "save_jav"
 #"file_library.js" = "file_library" #LOCAL
 "https://chrisrogers.pyscriptapps.com/cbr-libraries/latest/core/file_library.js" = "file_library" #UNCOMMENT
-"https://esm.run/micro-repl@0.5.1/serial" = "micro_repl" 
+# "https://esm.run/micro-repl@0.5.1/serial" = "micro_repl" 
+
+"https://cdn.jsdelivr.net/npm/micro-repl@0.8.2/serial.js" = "micro_repl"
+
 #"micro_jav.js" = "micro_repl" #LOCAL

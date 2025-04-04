@@ -1,6 +1,23 @@
+from js import console
+
+console.log("In ampy.py!")
+
 from pyscript import window
 import asyncio
-import andrea_terminal 
+
+try:
+    import andrea_terminal
+    console.log("Successfully imported andrea_terminal")
+except ImportError as e:
+    console.log(f"Failed to import andrea_terminal: {str(e)}")
+    try:
+        # Try with a more explicit path
+        from pyscript import PyImport
+        andrea_terminal = PyImport("andrea_terminal.py")
+        console.log("Imported andrea_terminal using PyImport")
+    except Exception as e2:
+        console.log(f"All attempts to import andrea_terminal failed: {str(e2)}")
+        raise ImportError("Cannot import andrea_terminal, application cannot continue")
 
 code ='''
 import os
@@ -16,6 +33,8 @@ def cksm(file):
 '''
 
 class Ampy(andrea_terminal.Terminal):
+
+    console.log("In Ampy class!")
     def __init__(self, buffer_size = 256, status = None, baudrate = 115200):
         super().__init__(baudrate)
         self.buffer_size = buffer_size
@@ -24,7 +43,11 @@ class Ampy(andrea_terminal.Terminal):
         self.path = None
 
     def update(self, value):
-        if self.status: self.status.value = value
+        try:
+            if self.status:
+                self.status.value = value
+        except Exception as e:
+            console.log(f"Safe update failed: {str(e)}")
 
     async def send(self, payload, eol = True ):
         data = payload + '\r\n' if eol else payload

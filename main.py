@@ -12,26 +12,69 @@ Authors:
 References:
     - xterm.js: https://xtermjs.org/docs/api/terminal/classes/terminal/#options
 """
+import sys
+
+print("main.py is being loaded!")
+try:
+    from js import console
+    import traceback
+    console.log("MAIN.PY IS LOADED - CONSOLE LOG")
+except:
+    print("Failed to access js console")
 
 
 from pyscript import document, window, when
-from js import window, console
-import ampy
-import restapi
-import asyncio
-import time
-import file_os
-import my_globals
-import sensor_mod
-import print_jav
-import my_gif
-import helper_mod
+console.log("loaded up to here 0")
 
-console.log("main.py is running...")
+# from js import window
+# console.log("loaded up to here 1")
+try:
+    import ampy
+    console.log("loaded up to here 2")
+    console.log(f"ampy module: {ampy}")
+    console.log(f"ampy.__file__: {getattr(ampy, '__file__', 'No __file__ attribute')}")
 
-my_globals.init() #initializing my global variables
+    import restapi
+    console.log("loaded up to here 3")
 
-# Add debug logging for button states
+    import asyncio
+    console.log("loaded up to here 4")
+
+    import time
+    console.log("loaded up to here 5")
+
+    import file_os
+    console.log("loaded up to here 6")
+
+    try:
+        import my_globals
+        console.log("loaded up to here 7")
+    except Exception as e:
+        console.log(f"Failed to import my_globals: {str(e)}")
+        console.log(f"Error type: {type(e).__name__}")
+
+    import sensor_mod
+    console.log("loaded up to here 8")
+
+    import print_jav
+    console.log("loaded up to here 9")
+
+    import my_gif
+    console.log("loaded up to here 10")
+
+    import helper_mod
+except Exception as e:
+    console.log("Error importing modules: ", e)
+
+console.log("MAIN.PY IMPORTS COMPLETE")
+
+try:
+    console.log("main.py: running my_globals.init()...")
+    my_globals.init()
+except Exception as e:
+    console.log("Something went wrong initializing global variables: ", e)
+
+
 console.log("Initial button states:")
 console.log("Connect button disabled:", my_globals.connect.disabled)
 console.log("Connect button active class:", my_globals.connect.classList.contains('active'))
